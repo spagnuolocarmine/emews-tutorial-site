@@ -1,0 +1,5 @@
+p_name,p_type,lo_val,hi_val
+zombie_step_size,float,0.1,2.0
+human_step_size,float,1.0,3.0
+zombie_count,int,1,10
+human_count,int,50,150

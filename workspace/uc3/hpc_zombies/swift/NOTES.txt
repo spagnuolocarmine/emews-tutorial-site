@@ -1,0 +1,9 @@
+export TURBINE_USER_LIB=$PWD/lib
+
+
+Run with:
+
+swift-t -n X -p test_sweep.swift -params=./model_parameters.txt -config=../config/config.props
+
+Model is distributed among 4 processes so X needs to be some multiple of 4 with + 1 for the 
+server.

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<parameters>
+					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+						defaultValue="0"
+						isReadOnly="false"
+									
+		/>
+					<parameter name="a" displayName="param a" type="int" 
+						defaultValue="0"
+						isReadOnly="false"
+									
+		/>
+		            <parameter name="b" displayName="param b" type="java.lang.String" 
+						defaultValue="Default"
+						isReadOnly="false"
+						values="'Default' 'Option1' 'Option2'"
+									
+		/>
+					<parameter name="c" displayName="param c" type="double" 
+						defaultValue="0"
+						isReadOnly="false"
+									
+		/>
+					<parameter name="d" displayName="param d" type="rareEarths.parameters.ParameterMap" 
+						defaultValue="7"
+						isReadOnly="true"
+						hide="true"
+						converter="rareEarths.parameters.ParameterMapConverter"									
+		/>
+		            <parameter name="e" displayName="param e" type="java.lang.String" 
+						defaultValue="Big"
+						isReadOnly="false"
+									
+		/>
+					<parameter name="f" displayName="param f" type="double" 
+						defaultValue="0"
+						isReadOnly="false"
+									
+		/>
+					<parameter name="g" displayName="param g" type="rareEarths.parameters.ParameterMap" 
+						defaultValue="8.3"
+						isReadOnly="true"
+						hide="true"
+						converter="rareEarths.parameters.ParameterMapConverter"									
+		/>
+
+</parameters>
+
+

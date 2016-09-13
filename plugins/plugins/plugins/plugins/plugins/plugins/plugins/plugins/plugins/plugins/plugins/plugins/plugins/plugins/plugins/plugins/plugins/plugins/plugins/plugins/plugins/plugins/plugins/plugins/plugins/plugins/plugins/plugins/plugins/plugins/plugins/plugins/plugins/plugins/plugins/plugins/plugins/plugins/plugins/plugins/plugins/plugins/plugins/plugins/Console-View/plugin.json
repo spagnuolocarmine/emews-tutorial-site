@@ -1,0 +1,15 @@
+[{
+    "author": "Carmine Spagnuolo",
+    "version": "1.0",
+    "name": "Console",
+    "url": "",
+	  "contextmenu": [
+	        {
+	            "action": "codiad.Console.run($('#context-menu').attr('data-path'));",
+	            "icon": "icon-info-circled",
+	            "applies-to": "file-only no-external",
+	            "title": "Run"
+	        }
+	    ]
+    
+}]

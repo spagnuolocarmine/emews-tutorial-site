@@ -1,0 +1,1 @@
+stop.at = 150	min.x = -100	min.y = -100	max.x = 99	max.y = 99	grid.buffer = 2	proc.per.x = 2	proc.per.y = 2	distribution.zombie_move = int_uniform, 0, 2

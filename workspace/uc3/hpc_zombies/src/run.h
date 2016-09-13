@@ -1,0 +1,26 @@
+/*
+ * run.h
+ *
+ *  Created on: Dec 2, 2014
+ *      Author: nick
+ */
+
+#ifndef SRC_RUN_H_
+#define SRC_RUN_H_
+
+#include <string>
+#include <mpi.h>
+
+//void seir_model_init(MPI_Comm comm, int n);
+
+/**
+ * Runs the model using the specified configuration file and parameters.
+ *
+ * @param config the repast hpc configuration file
+ * @param parameters a tab separated list of parameters where each parameter
+ * is a key value pair separated by an "=".
+ */
+std::string zombies_model_run(MPI_Comm comm, const std::string& config, const std::string& parameters);
+
+
+#endif /* SRC_RUN_H_ */

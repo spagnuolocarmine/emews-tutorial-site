@@ -1,0 +1,224 @@
+
+\begin{center}
+\scriptsize
+
+\begin{tabular}{r|l}
+ 1 & {\tt require(caret)                          } \\
+ 2 & {\tt require(stats)                          } \\
+ 3 & {\tt require(randomForest)                   } \\
+ 4 & {\tt require(data.table)                     } \\
+ 5 & {\tt                                         } \\
+ 6 & {\tt \#\ Utility\ code\ to\ transform\ elements\ to\ strings\ and\ vice\ versa} \\
+ 7 & {\tt row\_to\_upf\ {\textless}-\ function(x,data\_names)\{} \\
+ 8 & {\tt \ \ paste0(data\_names,\textcolor{swiftstringcolor}{"\ =\ "},x,collapse\ =\ \textcolor{swiftstringcolor}{"\textbackslash{}t"})} \\
+ 9 & {\tt \}                                      } \\
+10 & {\tt                                         } \\
+11 & {\tt \#\ Modified\ to\ apply\ elements\ to\ \textcolor{swiftbuiltincolor}{string}\ over\ rows\ of\ data\ frame} \\
+12 & {\tt rows\_to\_upfs\ {\textless}-\ function(x,data\_names)\{} \\
+13 & {\tt \ \ paste0(apply(x,1,row\_to\_upf,\ data\_names\ =\ data\_names),} \\
+14 & {\tt \ \ \ \ \ \ \ \ \ collapse\ =\ ';')     } \\
+15 & {\tt \}                                      } \\
+16 & {\tt                                         } \\
+17 & {\tt \#\ scaling,\ matrix\ or\ df\ x         } \\
+18 & {\tt create\_scaled\_ev\_df\ {\textless}-\ function(x)\{} \\
+19 & {\tt \ \ sx\ {\textless}-\ scale(x)          } \\
+20 & {\tt \ \ scaling\ {\textless}-\ attr(sx,\textcolor{swiftstringcolor}{"scaled:scale"})} \\
+21 & {\tt \ \ centering\ {\textless}-\ attr(sx,\textcolor{swiftstringcolor}{"scaled:center"})} \\
+22 & {\tt \ \ scaled.df\ {\textless}-\ data.frame(sx,ev\ =\ F,\ cl\ =\ NA)} \\
+23 & {\tt \ \ list(scaled.df\ =\ scaled.df,\ scaling\ =\ scaling,\ } \\
+24 & {\tt \ \ \ \ \ \ \ centering\ =\ centering)  } \\
+25 & {\tt \}                                      } \\
+26 & {\tt                                         } \\
+27 & {\tt                                         } \\
+28 & {\tt \#\ 2\ class\ classification            } \\
+29 & {\tt \#\ 2x2\ confusion\ matrix              } \\
+30 & {\tt get\_accuracy\_precision\_recall\_fscore\ {\textless}-\ function(confusion,positive)\{} \\
+31 & {\tt \ \ p\_i\ =\ which(colnames(confusion)\ ==\ positive)} \\
+32 & {\tt \ \                                     } \\
+33 & {\tt \ \ total\ {\textless}-\ sum(confusion) } \\
+34 & {\tt \ \ tp\ {\textless}-\ confusion[p\_i,p\_i]} \\
+35 & {\tt \ \ tn\ {\textless}-\ confusion[-p\_i,-p\_i]} \\
+36 & {\tt \ \ fp\ {\textless}-\ confusion[p\_i,-p\_i]} \\
+37 & {\tt \ \ fn\ {\textless}-\ confusion[-p\_i,p\_i]} \\
+38 & {\tt \ \                                     } \\
+39 & {\tt \ \ accuracy\ {\textless}-\ (tp\ +\ tn)\ /\ total} \\
+40 & {\tt \ \ precision\ {\textless}-\ tp\ /\ (tp\ +\ fp)} \\
+41 & {\tt \ \ recall\ {\textless}-\ tp\ /\ (tp\ +\ fn)} \\
+42 & {\tt \ \ f1\_score\ {\textless}-\ 2\ *\ precision\ *\ recall\ /\ (precision\ +\ recall)} \\
+43 & {\tt \ \ list(accuracy\ =\ accuracy,\ precision\ =\ precision,\ recall\ =\ recall,\ fscore\ =\ f1\_score)} \\
+44 & {\tt \}                                      } \\
+45 & {\tt                                         } \\
+46 & {\tt \#\ summary\ statistics                 } \\
+47 & {\tt aprfSummary\ {\textless}-\ function(data,\ lev\ =\ NULL,\ model\ =\ NULL)\{} \\
+48 & {\tt \ \ cf\ {\textless}-\ confusionMatrix(data[,\textcolor{swiftstringcolor}{"pred"}],\ data[,\textcolor{swiftstringcolor}{"obs"}])} \\
+49 & {\tt \ \ unlist(get\_accuracy\_precision\_recall\_fscore(as.matrix(cf),lev[2]))} \\
+50 & {\tt \}                                      } \\
+51 & {\tt                                         } \\
+52 & {\tt \#\ main\ active\ learning\ function    } \\
+53 & {\tt main\_function\ {\textless}-\ function(data\_file,} \\
+54 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_cols\ =\ 1:4,} \\
+55 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sse\_threshold\ =\ 1000,} \\
+56 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 100,} \\
+57 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_folds\ =\ 3,} \\
+58 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\_iter\ =\ 20,} \\
+59 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ clustering\ thresholds} \\
+60 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ low\_thresh\ =\ 0.20,} \\
+61 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ high\_thresh\ =\ 0.80,} \\
+62 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_clusters\ =\ 200,} \\
+63 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_random\_sampling\ =\ 20,} \\
+64 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_metric\ =\ \textcolor{swiftstringcolor}{"accuracy"},} \\
+65 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_metric\_value\ =\ 0.99,} \\
+66 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ntree\ =\ 20)\{} \\
+67 & {\tt \ \ synth\_data\ {\textless}{\textless}-\ readRDS(data\_file)} \\
+68 & {\tt \ \ data\_cols\ {\textless}{\textless}-\ data\_cols} \\
+69 & {\tt \ \ df\ {\textless}-\ synth\_data[data\_cols]} \\
+70 & {\tt \ \ res\ {\textless}-\ create\_scaled\_ev\_df(df)} \\
+71 & {\tt \ \ sdf\ {\textless}-\ res\$scaled.df   } \\
+72 & {\tt \ \ data\_names\ {\textless}-\ colnames(df)} \\
+73 & {\tt \ \                                     } \\
+74 & {\tt \ \ sdf.sample\_is\ {\textless}-\ sample(which(!sdf\$ev),n)} \\
+75 & {\tt \ \                                     } \\
+76 & {\tt \ \ \#\ first\ set\ of\ sampled\ parameters\ from\ original\ unscaled\ data} \\
+77 & {\tt \ \ p1\ {\textless}-\ df[sdf.sample\_is,]} \\
+78 & {\tt \ \                                     } \\
+79 & {\tt \ \ \#\ upf\ representation\ of\ parameters} \\
+80 & {\tt \ \ sp1\ {\textless}-\ rows\_to\_upfs(p1,data\_names)} \\
+81 & {\tt \ \                                     } \\
+82 & {\tt \ \ \#\ WAR.Q\ calls                    } \\
+83 & {\tt \ \ OUT\_put(sp1)                       } \\
+84 & {\tt \ \ sr1\ =\ IN\_get()                   } \\
+85 & {\tt \ \                                     } \\
+86 & {\tt \ \ \#\ result\ list\ of\ vectors\ (in\ this\ case\ the\ vectors\ are\ of\ length\ 1)} \\
+87 & {\tt \ \ r1\ {\textless}-\ as.numeric(unlist(strsplit(sr1,\textcolor{swiftstringcolor}{";"})))} \\
+88 & {\tt \ \                                     } \\
+89 & {\tt \ \ \#\ use\ the\ results\ from\ r1\ to\ map\ sdf\$cl\ column\ to\ X0\ and\ X1\ class\ labels} \\
+90 & {\tt \ \ sdf[sdf.sample\_is,\textcolor{swiftstringcolor}{"cl"}]\ {\textless}-\ ifelse(r1\ {\textless}\ sse\_threshold,\textcolor{swiftstringcolor}{"X1"},\textcolor{swiftstringcolor}{"X0"})} \\
+91 & {\tt \ \ \#\ mark\ sdf\$ev\ columns\ to\ TRUE} \\
+92 & {\tt \ \ sdf[sdf.sample\_is,\textcolor{swiftstringcolor}{"ev"}]\ {\textless}-\ TRUE} \\
+93 & {\tt \ \ \textbf{\textcolor{swiftbuiltincolor}{if}}\ (length(unique(sdf[sdf.sample\_is,\textcolor{swiftstringcolor}{"cl"}]))==1)\{} \\
+94 & {\tt 	OUT\_put(\textcolor{swiftstringcolor}{"FINAL"})} \\
+95 & {\tt 	OUT\_put(\textcolor{swiftstringcolor}{"Error:\ only\ found\ 1\ class\ from\ random\ sampling,\ try\ sampling\ more\ or\ changing\ threshold"})} \\
+96 & {\tt 	return(\textcolor{swiftstringcolor}{"ending\ early"})} \\
+97 & {\tt \ \ \}\ \                               } \\
+98 & {\tt \ \ sdf.ev\_is\ {\textless}-\ which(sdf\$ev)} \\
+99 & {\tt \ \ train\_control\ {\textless}-\ trainControl(method=\textcolor{swiftstringcolor}{"repeatedcv"},\ number=10,\ repeats\ =\ 1,\ sampling\ =\ \textcolor{swiftstringcolor}{"up"},} \\
+100 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ classProbs\ =\ T,\ summaryFunction\ =\ aprfSummary)} \\
+101 & {\tt \ \ stat\_names\ {\textless}-\ c(\textcolor{swiftstringcolor}{"accuracy"},\textcolor{swiftstringcolor}{"precision"},\textcolor{swiftstringcolor}{"recall"},\textcolor{swiftstringcolor}{"fscore"})} \\
+102 & {\tt \ \ stat\_sd\_names\ {\textless}-\ paste0(stat\_names,\textcolor{swiftstringcolor}{"SD"})} \\
+103 & {\tt \ \ model\ {\textless}-\ train(x\ =\ sdf[sdf.ev\_is,data\_cols],\ y\ =\ make.names(factor(sdf\$cl[sdf.ev\_is])),\ } \\
+104 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ trControl=train\_control,\ tuneGrid\ =\ data.frame(mtry\ =\ 3),\ } \\
+105 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ method=\textcolor{swiftstringcolor}{"rf"},\ ntree=ntree,\ metric\ =\ \textcolor{swiftstringcolor}{"accuracy"})} \\
+106 & {\tt \ \                                     } \\
+107 & {\tt \ \ \#\ iteration\ variable             } \\
+108 & {\tt \ \ iter\ {\textless}-\ 0               } \\
+109 & {\tt \ \                                     } \\
+110 & {\tt \ \ \#\ data\ accumulators              } \\
+111 & {\tt \ \ cv\_means\ =\ vector(\textcolor{swiftstringcolor}{"list"},\ max\_iter\ +\ 1)} \\
+112 & {\tt \ \ cv\_sds\ =\ vector(\textcolor{swiftstringcolor}{"list"},\ max\_iter\ +\ 1)} \\
+113 & {\tt \ \ \#act\_scores\ =\ vector(\textcolor{swiftstringcolor}{"list"},\ max\_iter\ +\ 1)} \\
+114 & {\tt \ \ \#\ CV\ data\ input                 } \\
+115 & {\tt \ \ cv\_means[[iter\ +\ 1]]\ {\textless}-\ c(iter\ =\ iter,\ model\$results[stat\_names])} \\
+116 & {\tt \ \ cv\_sds[[iter\ +\ 1]]\ {\textless}-\ c(iter\ =\ iter,\ model\$results[stat\_sd\_names])} \\
+117 & {\tt \ \ \#\ Predict\ on\ all\ of\ P\_unev   } \\
+118 & {\tt \ \ sdf.unev\_is\ {\textless}-\ which(!sdf\$ev)} \\
+119 & {\tt \ \ pred\ {\textless}-\ predict(model,newdata\ =\ sdf[sdf.unev\_is,data\_cols],\ type\ =\ \textcolor{swiftstringcolor}{"raw"})} \\
+120 & {\tt \ \                                     } \\
+121 & {\tt \ \ while(iter\ {\textless}\ max\_iter\ \&\ model\$results[target\_metric]\ {\textless}\ target\_metric\_value)\{} \\
+122 & {\tt \ \ \ \ iter\ {\textless}-\ iter\ +\ 1  } \\
+123 & {\tt \ \ \ \ unev\_prob\ {\textless}-\ predict(model,newdata\ =\ sdf[sdf.unev\_is,data\_cols],\ type\ =\ \textcolor{swiftstringcolor}{"prob"})} \\
+124 & {\tt \ \ \ \ \#\ find\ unevaluated\ points\ close\ to\ 0.5} \\
+125 & {\tt \ \ \ \ unev.c\_is\ {\textless}-\ which(unev\_prob[,1]{\textgreater}=low\_thresh\ \&\ unev\_prob[,1]{\textless}=high\_thresh)} \\
+126 & {\tt \ \ \ \ \#\ select\ cluster\ points     } \\
+127 & {\tt \ \ \ \ \textbf{\textcolor{swiftbuiltincolor}{if}}\ (length(unev.c\_is)\ {\textgreater}\ num\_clusters)\{} \\
+128 & {\tt \ \ \ \ \ \ \#\ cluster\ (using\ kmeans)\ iter.max\ set\ at\ same\ as\ sklearn\ k\_means\ default} \\
+129 & {\tt \ \ \ \ \ \ fit\ {\textless}-\ kmeans(sdf[sdf.unev\_is[unev.c\_is],data\_cols],\ num\_clusters,\ iter.max\ =\ 300)} \\
+130 & {\tt \ \ \ \ \ \ \#\ data\ table\ with\ cluster\ id\ and\ proximity\ to\ 0.5\ \textbf{\textcolor{swiftbuiltincolor}{for}}\ the\ prediction} \\
+131 & {\tt \ \ \ \ \ \ dt\ {\textless}-\ data.table(clus\ =\ fit\$cluster,adj\_res\ =\ abs(0.5-unev\_prob[unev.c\_is,1]))} \\
+132 & {\tt \ \ \ \ \ \ \#\ use\ dt\ to\ rank\ by\ clus\ and\ which\ to\ pick\ out\ the\ best\ (closest\ to\ 0)\ indices} \\
+133 & {\tt \ \ \ \ \ \ \#\ out\ of\ the\ unev.c\_is\ indices} \\
+134 & {\tt \ \ \ \ \ \ unev.c\_is\ =\ unev.c\_is[which(dt[,\ .(rank\ =\ frank(-adj\_res,ties.method\ =\ \textcolor{swiftstringcolor}{"random"})),clus][,rank]==\ 1)]} \\
+135 & {\tt \ \ \ \ \}                              } \\
+136 & {\tt \ \ \ \ \#\ indices\ of\ cluster\ points\ wrt\ sdf} \\
+137 & {\tt \ \ \ \ sdf.c\_is\ {\textless}-\ sdf.unev\_is[unev.c\_is]} \\
+138 & {\tt \ \ \ \ \#\ select\ candidate\ random\ sample\ points} \\
+139 & {\tt \ \ \ \ \textbf{\textcolor{swiftbuiltincolor}{if}}\ (length(sdf.c\_is)\ {\textgreater}\ 0\ )\{} \\
+140 & {\tt \ \ \ \ \ \ sdf.crs\_is\ {\textless}-\ sdf.unev\_is[-unev.c\_is]\ } \\
+141 & {\tt \ \ \ \ \}\ \textbf{\textcolor{swiftbuiltincolor}{else}}\ \{} \\
+142 & {\tt \ \ \ \ \ \ sdf.crs\_is\ {\textless}-\ sdf.unev\_is} \\
+143 & {\tt \ \ \ \ \}                              } \\
+144 & {\tt \ \ \ \ stopifnot(all(sdf\$ev[sdf.crs\_is]==F))} \\
+145 & {\tt \ \ \ \ \#\ choose\ random\ sample\ points} \\
+146 & {\tt \ \ \ \ sdf.rs\_is\ {\textless}-\ sample(sdf.crs\_is,num\_random\_sampling)} \\
+147 & {\tt \ \ \ \                                 } \\
+148 & {\tt \ \ \ \ sdf.all\_samples\_is\ {\textless}-\ c(sdf.c\_is,sdf.rs\_is)} \\
+149 & {\tt \ \ \ \ \#\ params\ from\ original\ unscaled\ data} \\
+150 & {\tt \ \ \ \ params\ {\textless}-\ df[sdf.all\_samples\_is,]} \\
+151 & {\tt \ \ \ \                                 } \\
+152 & {\tt \ \ \ \ \#\ upf\ representation\ of\ parameters} \\
+153 & {\tt \ \ \ \ string\_params\ {\textless}-\ rows\_to\_upfs(params,data\_names)} \\
+154 & {\tt \ \ \ \ \#\ WAR.Q\ calls                } \\
+155 & {\tt \ \ \ \ OUT\_put(string\_params)        } \\
+156 & {\tt \ \ \ \ string\_results\ =\ IN\_get()   } \\
+157 & {\tt \ \ \ \                                 } \\
+158 & {\tt \ \ \ \ \#\ results                     } \\
+159 & {\tt \ \ \ \ results\ {\textless}-\ as.numeric(unlist(strsplit(string\_results,\textcolor{swiftstringcolor}{";"})))} \\
+160 & {\tt \ \ \ \                                 } \\
+161 & {\tt \ \ \ \ sdf[sdf.all\_samples\_is,\textcolor{swiftstringcolor}{"cl"}]\ {\textless}-\ ifelse(results\ {\textless}\ sse\_threshold,\textcolor{swiftstringcolor}{"X1"},\textcolor{swiftstringcolor}{"X0"})} \\
+162 & {\tt \ \ \ \ \#\ mark\ sdf\$ev\ columns\ to\ TRUE} \\
+163 & {\tt \ \ \ \ sdf[sdf.all\_samples\_is,\textcolor{swiftstringcolor}{"ev"}]\ {\textless}-\ TRUE} \\
+164 & {\tt \ \ \ \                                 } \\
+165 & {\tt \ \ \ \ \#\ update\ ev\ and\ unev\ indices} \\
+166 & {\tt \ \ \ \ sdf.ev\_is\ {\textless}-\ which(sdf\$ev)} \\
+167 & {\tt \ \ \ \ sdf.unev\_is\ {\textless}-\ which(!sdf\$ev)} \\
+168 & {\tt \ \ \ \                                 } \\
+169 & {\tt \ \ \ \ \#\ Cross\ validate\ currently\ evaluated\ points} \\
+170 & {\tt \ \ \ \ model\ {\textless}-\ train(x\ =\ sdf[sdf.ev\_is,data\_cols],\ y\ =\ make.names(factor(sdf\$cl[sdf.ev\_is])),\ } \\
+171 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ trControl=train\_control,\ tuneGrid\ =\ data.frame(mtry\ =\ 3),\ } \\
+172 & {\tt \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ method=\textcolor{swiftstringcolor}{"rf"},\ ntree=ntree,\ metric\ =\ \textcolor{swiftstringcolor}{"accuracy"})} \\
+173 & {\tt \ \ \ \                                 } \\
+174 & {\tt \ \ \ \ cat(\textcolor{swiftstringcolor}{"Iteration"},iter,\textcolor{swiftstringcolor}{"\textbackslash{}n"})} \\
+175 & {\tt \ \ \ \ cat(\textcolor{swiftstringcolor}{"CV\ scores:\textbackslash{}n"})} \\
+176 & {\tt \ \ \ \ print(unlist(model\$results[stat\_names]))} \\
+177 & {\tt \ \ \ \ cv\_means[[iter\ +\ 1]]\ {\textless}-\ c(iter\ =\ iter,\ model\$results[stat\_names])} \\
+178 & {\tt \ \ \ \ cv\_sds[[iter\ +\ 1]]\ {\textless}-\ c(iter\ =\ iter,\ model\$results[stat\_sd\_names])} \\
+179 & {\tt \ \ \                                   } \\
+180 & {\tt \ \ \ \ pred\ {\textless}-\ predict(model,newdata\ =\ sdf[sdf.unev\_is,data\_cols],\ type\ =\ \textcolor{swiftstringcolor}{"raw"})} \\
+181 & {\tt \ \ \}                                  } \\
+182 & {\tt \ \                                     } \\
+183 & {\tt \ \ \#\ record\ classification          } \\
+184 & {\tt \ \ sdf[sdf.unev\_is,\textcolor{swiftstringcolor}{"cl"}]\ {\textless}-\ as.character(pred)} \\
+185 & {\tt \ \ \#\ record\ probability             } \\
+186 & {\tt \ \ unev\_prob\ {\textless}-\ predict(model,newdata\ =\ sdf[sdf.unev\_is,data\_cols],\ type\ =\ \textcolor{swiftstringcolor}{"prob"})} \\
+187 & {\tt \ \ sdf[sdf.ev\_is,\textcolor{swiftstringcolor}{"prob"}]\ {\textless}-\ 1} \\
+188 & {\tt \ \ pred.c1\_is\ {\textless}-\ which(pred\ ==\ \textcolor{swiftstringcolor}{"X1"})} \\
+189 & {\tt \ \ pred.c0\_is\ {\textless}-\ which(pred\ ==\ \textcolor{swiftstringcolor}{"X0"})} \\
+190 & {\tt \ \ sdf[sdf.unev\_is[pred.c0\_is],\textcolor{swiftstringcolor}{"prob"}]\ {\textless}-\ unev\_prob[pred.c0\_is,\textcolor{swiftstringcolor}{"X0"}]} \\
+191 & {\tt \ \ sdf[sdf.unev\_is[pred.c1\_is],\textcolor{swiftstringcolor}{"prob"}]\ {\textless}-\ unev\_prob[pred.c1\_is,\textcolor{swiftstringcolor}{"X1"}]} \\
+192 & {\tt \ \ stopifnot(all(unev\_prob[pred.c0\_is,\textcolor{swiftstringcolor}{"X0"}]\ {\textgreater}=\ 0.5))} \\
+193 & {\tt \ \ stopifnot(all(unev\_prob[pred.c1\_is,\textcolor{swiftstringcolor}{"X1"}]\ {\textgreater}=\ 0.5))} \\
+194 & {\tt \ \ \#\ add\ ev,\ cl\ and\ prob\ columns\ to\ original\ unscaled\ data} \\
+195 & {\tt \ \ df[c(\textcolor{swiftstringcolor}{"ev"},\textcolor{swiftstringcolor}{"cl"},\textcolor{swiftstringcolor}{"prob"})]\ =\ sdf[c(\textcolor{swiftstringcolor}{"ev"},\textcolor{swiftstringcolor}{"cl"},\textcolor{swiftstringcolor}{"prob"})]} \\
+196 & {\tt \ \ saveRDS(df,\ file=\textcolor{swiftstringcolor}{"df.Rds"})} \\
+197 & {\tt \ \                                     } \\
+198 & {\tt \ \ dt\_cv\_means\ {\textless}-\ data.table::rbindlist(cv\_means)} \\
+199 & {\tt \ \ dt\_cv\_sds\ {\textless}-\ data.table::rbindlist(cv\_sds)} \\
+200 & {\tt \ \                                     } \\
+201 & {\tt \ \ list(df\ =\ df,\ dt\_cv\_means\ =\ dt\_cv\_means,\ dt\_cv\_sds\ =\ dt\_cv\_sds)} \\
+202 & {\tt \}                                      } \\
+203 & {\tt                                         } \\
+204 & {\tt print(\textcolor{swiftstringcolor}{"algorithm\ start!"})} \\
+205 & {\tt \#\ ask\ \textbf{\textcolor{swiftbuiltincolor}{for}}\ parameters\ from\ queue} \\
+206 & {\tt OUT\_put(\textcolor{swiftstringcolor}{"Params"})} \\
+207 & {\tt res\ {\textless}-\ IN\_get()            } \\
+208 & {\tt                                         } \\
+209 & {\tt l\ {\textless}-\ eval(parse(text\ =\ paste0(\textcolor{swiftstringcolor}{"list("},res,\textcolor{swiftstringcolor}{")"})))} \\
+210 & {\tt                                         } \\
+211 & {\tt res2\ {\textless}-\ do.call(main\_function,l)} \\
+212 & {\tt OUT\_put(\textcolor{swiftstringcolor}{"FINAL"})} \\
+213 & {\tt                                         } \\
+214 & {\tt OUT\_put(\textcolor{swiftstringcolor}{"Look\ at\ df.Rds\ \textbf{\textcolor{swiftbuiltincolor}{for}}\ final\ model"})} \\
+215 & {\tt print(\textcolor{swiftstringcolor}{"algorithm\ done."})} \\
+216 & {\tt                                         } \\
+
+\end{tabular}
+\end{center}

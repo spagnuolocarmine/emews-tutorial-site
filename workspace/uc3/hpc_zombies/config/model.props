@@ -1,0 +1,30 @@
+#random.seed = 1284067381
+stop.at = 150
+
+run.number = 1;
+
+# per process
+human.count = 500
+zombie.count = 5
+
+human.step.size = 1.5
+zombie.step.size = 0.5
+
+# world definition props
+min.x = -100
+min.y = -100
+max.x = 99
+max.y = 99 
+grid.buffer = 2
+
+# these must multiply to total number of processes
+proc.per.x = 2
+proc.per.y = 2
+
+# named random number distributions
+distribution.zombie_move = int_uniform, 0, 2
+
+# if this is commented out then no file output
+output.file = ./output/out.csv
+
+
