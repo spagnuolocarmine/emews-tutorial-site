@@ -1,3 +1,2 @@
-# emews-tutorial-site
-Tutorial site for EMEWS framework
+#Tutorial site for EMEWS framework
 
