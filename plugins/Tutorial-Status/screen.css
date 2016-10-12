@@ -1,0 +1,127 @@
+#toc {
+    box-shadow: inset -5px 0 5px 0px #000;
+    padding-top: 10px;
+    color: #fff;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding-bottom: 30px;
+}
+#toc ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#toc li {
+    padding: 5px 10px;
+}
+
+#toc a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+#toc .h2 {
+    margin-left: 10px;
+}
+
+#toc .h3 {
+    margin-left: 30px;
+}
+
+#toc .toc-active {
+    background: lightgray;
+    box-shadow: inset -5px 0px 10px -5px #000;
+}
+
+.sb-left-content {
+    bottom: 576px;
+}
+
+.console-sb {
+    bottom: 176px;
+    height: 300px;
+    left: 0;
+    position: absolute;
+    right: 10px;
+}
+
+.console-list-title {
+    background-color: #303030;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.898) inset;
+    height: 35px;
+    left: 0;
+    overflow: hidden;
+    right: 0;
+    top: 0;
+}
+
+.console-list-title h2 {
+	color: #666666;
+    display: block;
+    float: left;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 10px;
+}
+#editor-top-bar .icon {
+	  color: #666666;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-size: 15px;
+    margin: 5px;
+    padding: 5px;
+}
+.console-list-title .icon {
+	  color: #666666;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-size: 15px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.console {
+    height: 280px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#console-list {
+	display: block;
+  height: 280px;
+	margin: 0px 15px 0px 0px;
+	padding-left: 15px;
+}
+
+#console-list a {
+    background-repeat: no-repeat;
+    background-position: 4px 4px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 27px;
+    width: 100%;
+}
+
+#console-list .directory.open {
+    background-image: url("../../themes/default/filemanager/images/directory_open.png");
+}
+
+.console-item {
+	padding: 2px 0px 2px 5px;
+	width: 100%;
+}
+
+.console-item:hover {
+	border-radius: 3px;
+	background-color: #333333;
+    cursor: pointer;
+}
+
+#console-list img {
+	cursor: pointer;
+	width: 15px;
+}

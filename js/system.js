@@ -57,12 +57,12 @@
         if (typeof(console) === 'undefined') {
             console = {}
             console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function () {};
-        }        
-        
+        }
+
         // Sliding sidebars
         codiad.sidebars.init();
         var handleWidth = 10;
-        
+
         // Messages
         codiad.message.init();
 
@@ -85,11 +85,11 @@
                 'height': ($('body')
                     .outerHeight()) + 'px'
             });
-            $('#root-editor-wrapper')
+        /*    $('#root-editor-wrapper')
                 .css({
                 'height': ($('body')
                     .outerHeight() - 60) + 'px' // TODO Adjust '75' in function of the final tabs height.
-            });
+            });*/
 
             // Run resize command to fix render issues
             codiad.editor.resize();
@@ -102,4 +102,3 @@
     });
 
 })(this, jQuery);
-

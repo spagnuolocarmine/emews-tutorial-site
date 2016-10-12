@@ -12,8 +12,8 @@ class User {
     // PROPERTIES
     //////////////////////////////////////////////////////////////////
 
-    public $username    = '';
-    public $password    = '';
+    public $username    = 'demo';
+    public $password    = 'demo';
     public $project     = '';
     public $projects    = '';
     public $users       = '';
@@ -45,7 +45,7 @@ class User {
         $pass = false;
         $this->EncryptPassword();
         $users = getJSON('users.php');
-        foreach($users as $user){
+      /*  foreach($users as $user){
             if($user['username']==$this->username && $user['password']==$this->password){
                 $pass = true;
                 $_SESSION['user'] = $this->username;
@@ -56,7 +56,8 @@ class User {
         }
 
         if($pass){ echo formatJSEND("success",array("username"=>$this->username)); }
-        else{ echo formatJSEND("error","Incorrect Username or Password"); }
+        else{ echo formatJSEND("error","Incorrect Username or Password"); }*/
+        echo formatJSEND("success",array("");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -160,7 +161,7 @@ class User {
             }
         }
         // Save array back to JSON
-        saveJSON('users.php',$revised_array);
+      //  saveJSON('users.php',$revised_array);
         // Response
         echo formatJSEND("success",null);
     }

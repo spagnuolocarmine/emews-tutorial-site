@@ -26,6 +26,7 @@
                     $('#sb-left').width(sbWidth);
                     $(window).resize();
                     $('#editor-region').trigger('h-resize-init');
+
                 }
 
                 if (localStorage.getItem('codiad.sidebars.lock-left-sidebar') === "false") {
@@ -37,6 +38,7 @@
                     $('#lock-right-sidebar').trigger('click');
                     _this.openRightSidebar();
                 }
+              
             });
 
             $('#lock-left-sidebar')
@@ -59,7 +61,7 @@
 
                 localStorage.setItem('codiad.sidebars.lock-left-sidebar', _this.leftLock);
             });
-            
+
             $('#lock-right-sidebar')
                 .on('click', function() {
                 if (_this.rightLock) {
@@ -115,14 +117,20 @@
                         newWidth = ui.position.left;
                         $("#sb-left")
                             .width(newWidth + 10);
+
                     },
                     stop: function() {
                         $(window).resize();
                         $('#editor-region')
                             .trigger('h-resize-init');
                         localStorage.setItem('codiad.sidebars.sb-left-width', $('#sb-left').width());
+                        var leftw=$(window).width()-$("#sb-left").width();
+                        $("#tutorialtemplate").css("width", leftw+"px");
                     }
                 });
+
+
+
         },
 
         closeLeftSidebar: function() {

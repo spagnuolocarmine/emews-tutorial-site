@@ -46,10 +46,10 @@
             });
 
             // Save [CTRL+S] /////////////////////////////////////////////
-            $.ctrl('83', function() {
+          /*  $.ctrl('83', function() {
                 codiad.active.save();
             });
-
+          */
             // Open in browser [CTRL+O] //////////////////////////////////
             $.ctrl('79', function() {
                 codiad.active.openInBrowser();
@@ -61,9 +61,9 @@
             });
 
             // Replace [CTRL+R] //////////////////////////////////////////
-            $.ctrl('82', function() {
+          /*  $.ctrl('82', function() {
                 codiad.editor.openSearch('replace');
-            });
+            });*/
 
             // Active List Previous [CTRL+UP] ////////////////////////////
             $.ctrl('38', function() {

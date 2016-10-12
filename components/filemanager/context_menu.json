@@ -1,23 +1,5 @@
 [
     {
-        "title": "New File",
-        "icon": "icon-doc-text",
-        "applies-to" : "directory-only",
-        "onclick": "codiad.filemanager.createNode($('#context-menu').attr('data-path'),'file');"
-    },
-    {
-        "title": "New Folder",
-        "icon": "icon-folder",
-        "applies-to" : "directory-only",
-        "onclick": "codiad.filemanager.createNode($('#context-menu').attr('data-path'),'directory');"
-    },
-    {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "directory-only",
-        "onclick": null
-    },
-    {
         "title": "Search",
         "icon": "icon-target",
         "applies-to" : "directory-only",
@@ -28,12 +10,6 @@
         "icon": null,
         "applies-to" : "directory-only",
         "onclick": null
-    },
-    {
-        "title": "Upload Files",
-        "icon": "icon-upload",
-        "applies-to" : "directory-only",
-        "onclick": "codiad.filemanager.uploadToNode($('#context-menu').attr('data-path'));"
     },
     {
         "title": "Preview",
@@ -54,54 +30,6 @@
         "onclick": null
     },
     {
-        "title": "Copy",
-        "icon": "icon-doc",
-        "applies-to" : "both",
-        "onclick": "codiad.filemanager.copyNode($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Paste",
-        "icon": "icon-docs",
-        "applies-to" : "directory-only",
-        "onclick": "codiad.filemanager.pasteNode($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "non-root",
-        "onclick": null
-    },
-    {
-        "title": "Rename",
-        "icon": "icon-pencil",
-        "applies-to" : "non-root",
-        "onclick": "codiad.filemanager.renameNode($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Rename Project",
-        "icon": "icon-pencil",
-        "applies-to" : "root-only",
-        "onclick": "codiad.project.rename($('#context-menu').attr('data-path'),$('#context-menu').attr('data-name'));"
-    },   
-    {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "non-root",
-        "onclick": null
-    },
-    {
-        "title": "Delete",
-        "icon": "icon-cancel-circled",
-        "applies-to" : "non-root",
-        "onclick": "codiad.filemanager.deleteNode($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "both no-external",
-        "onclick": null
-    },
-    {
         "title": "Download",
         "icon": "icon-download",
         "applies-to" : "both no-external",
@@ -112,11 +40,5 @@
         "icon": null,
         "applies-to" : "directory-only",
         "onclick": null
-    },
-    {
-        "title": "Rescan",
-        "icon": "icon-arrows-ccw",
-        "applies-to" : "directory-only",
-        "onclick": "codiad.filemanager.rescan($('#context-menu').attr('data-path'));"
     }
 ]

@@ -3,7 +3,7 @@
  */
 
 (function(global, $){
-    
+
     // Define core
     var codiad = global.codiad,
         scripts= document.getElementsByTagName('script'),
@@ -11,81 +11,98 @@
         curpath = path.split('/').slice(0, -1).join('/')+'/';
 
     // Instantiates plugin
-    $(function() {    
+    $(function() {
         codiad.Tutorial.init();
+        $.loadScript('plugins/Tutorial-View/js/tags.js');
     });
 
     codiad.Tutorial = {
-        
+
         // Allows relative `this.path` linkage
         path: curpath,
 
         init: function() {
 
-            var _this = this;
-            $.get(_this.path+"template.html", function(data){
-                var panelh = $('#editor-region').height() / 3;
+          $( window ).bind("resize", function(){
+            var leftw=$(window).width()-$("#sb-left").width();
+            $("#tutorialtemplate").css("width", leftw+"px");
+            $("#tutorialcontent").css("width", leftw+"px");
 
-                $('#editor-top-bar')
-                .css({
-                    top: panelh + 'px',
-                })
-                .before(data);
+          });
 
-                $('.favorites-sb')
-                .css({
-                    height: panelh + 'px',
-                    left: 0,
-                    right: '10px',
-                    top: 0,
-                    bottom: 'auto'
-                });
+          $('#tutorialtemplate')
+          .css({
+              width: ($(window).width()-$('#sb-left').width())+'px' ,
+              height: ($(window).height()/2 - 20 )+ 'px',
+              left: $('#sb-left').width(),
+              right: '10px',
+              top: 0,
+              bottom: '0px'
+          });
+          $('#tutorialcontent')
+          .css({
+              width: ($(window).width()-$('#sb-left').width())+'px' ,
+              height: ($(window).height()/2 - 20 )+ 'px',
+              left: $('#sb-left').width(),
+              right: '10px',
+              top: 0,
+              bottom: '0px'
+          });
+          $('#editor-region')
+          .css({
+              height: $('#tutorialtemplate').height() + 'px',
+              top: $('#tutorialtemplate').height()  + 'px',
+              bottom:  '0px'
+          });
+          $('#editor-top-bar')
+          .css({
+              top: $('#tutorialtemplate').height() + 'px',
 
-                $('#root-editor-wrapper')
-                .css({
-                    top: (panelh + 35) + 'px',
-                });
-            });
+          });
+          var _this = this;
 
             if ($('.editor-region').size() > 1) {
                 codiad.message.error("Livepreview does not work with split windows");
                 return false;
             }
 
-            amplify.subscribe('active.onOpen', function(path){
-                 _this.open(path+".html");
+           amplify.subscribe('project.onOpen', function(tutorial){
+                _this.open(tutorial);
+                setTimeout(function(){
+              	    codiad.Console.loadTOC();
+              	}, 300);
+
+            });
+            _this.open("tutorialwelcome");
+            setTimeout(function(){
+                codiad.Console.loadTOC();
+            }, 300);
+
+            $('#controls').click(function(){
+              codiad.Tutorial.showControls();
             });
 
-            amplify.subscribe('active.onFocus', function(path){
-                _this.open(path+".html");
-            });
-            amplify.subscribe('filemanager.onIndex', function(path,index){
-                //console.log("dir "+path.path);
-                foldername=path.path.split("/");
-                _this.open(path.path+"/"+foldername[foldername.length-1]+".html");
-              
-            });
-            
+
+          }
+        ,
+        showControls: function(data_file) {
+            var _this = this;
+            codiad.modal.load(200, 'plugins/Tutorial-View/controls.php');
+            codiad.modal.hideOverlay();
+
         },
-
-        /**
-         * 
-         * This is where the core functionality goes, any call, references,
-         * script-loads, etc...
-         * 
-         */
-         
-         open: function(path) {
+         open: function(tutorial) {
              var _this = this;
-             var tutorial_path="workspace/"+path;
+             var tutorial_path=_this.path+"/tutorial/"+tutorial+".html";
             // console.log(tutorial_path);
              $.get(tutorial_path + "?rnd=" + new Date().getTime())
-                .done(function() { 
-                    $('#frame_tutorial').attr("src",tutorial_path);
-                }).fail(function() { 
-                    $('#frame_tutorial').attr("src",_this.path+"error_tutorial.html");
+                .done(function() {
+                    $('#tutorialcontent').load(tutorial_path);
+                    $('#tutorialname').html("Tutorial: "+tutorial);
+                    var leftw=$(window).width()-$("#sb-left").width();
+                    $("#tutorialtemplate").css("width", leftw+"px");
                 })
-             
+
          }
 
     };

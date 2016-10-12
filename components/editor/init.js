@@ -25,7 +25,7 @@
     });
 
     // modes available for selecting
-   /* var availableTextModes = new Array(
+   var availableTextModes = new Array(
         'abap',
 		'abc',
         'actionscript',
@@ -158,8 +158,8 @@
         'xml',
         'xquery',
         'yaml'
-    );*/
-
+    );
+/*
 var availableTextModes = new Array(
         'c_cpp',
         'clojure',
@@ -172,11 +172,11 @@ var availableTextModes = new Array(
         'plain_text',
         'python',
         'r',
-        'scala',  
+        'scala',
         'sh',
         'swift'
     );
-
+*/
     function SplitContainer(root, children, splitType) {
         var _this = this;
 
@@ -416,11 +416,11 @@ var availableTextModes = new Array(
             fileManagerTrigger: false,
             tabSize: 4
         },
-   
+
         rootContainer: null,
 
         fileExtensionTextMode: {},
-        
+
         init: function(){
             this.createSplitMenu();
             this.createModeMenu();
@@ -524,9 +524,17 @@ var availableTextModes = new Array(
             var chType, chArr = [], sc = null, chIdx = null;
             var _this = this;
 
+            var panelh = $('#editor-region').height() / 2;
+            var heditor =panelh-40;
+            el.css({
+
+                height: heditor + 'px'
+            })
+
             if (this.instances.length == 0) {
                 // el.appendTo($('#editor-region'));
                 el.appendTo($('#root-editor-wrapper'));
+
             } else {
 
                 var ch = this.activeInstance.el;
@@ -555,6 +563,10 @@ var availableTextModes = new Array(
             }
 
             var i = ace.edit(el[0]);
+            //THIS IS FOR TUTORIAL
+            i.setReadOnly(true);
+
+
             var resizeEditor = function(){
                 i.resize();
             };
@@ -595,7 +607,6 @@ var availableTextModes = new Array(
 
             return i;
         },
-
         createSplitMenu: function(){
             var _this = this;
             var _splitOptionsMenu = $('#split-options-menu');
@@ -635,9 +646,9 @@ var availableTextModes = new Array(
 
             availableTextModes.sort();
             $.each(availableTextModes, function(i){
-                modeOptions.push('<li><a>'+availableTextModes[i]+'</a></li>');     
+                modeOptions.push('<li><a>'+availableTextModes[i]+'</a></li>');
             });
-                       
+
             var html = '<table><tr>';
             while(true) {
                 html += '<td><ul>';
@@ -656,7 +667,7 @@ var availableTextModes = new Array(
                     break;
                 }
             }
-            
+
             html += '</tr></table>';
             _thisMenu.html(html);
 
@@ -850,7 +861,7 @@ var availableTextModes = new Array(
                 }
             }
             this.applySettings(i);
-            
+
             this.setActive(i);
         },
 
@@ -868,7 +879,7 @@ var availableTextModes = new Array(
                 return 'text';
             }
             e = e.toLowerCase();
-            
+
             if(e in this.fileExtensionTextMode){
                 return this.fileExtensionTextMode[e];
             }else{
@@ -885,7 +896,7 @@ var availableTextModes = new Array(
         // mode - {String} TextMode for this extension
         //
         /////////////////////////////////////////////////////////////////
-        
+
         addFileExtensionTextMode: function(extension, mode){
             if(typeof(extension) != 'string' || typeof(mode) != 'string'){
                 if (console){
@@ -896,17 +907,17 @@ var availableTextModes = new Array(
             mode = mode.toLowerCase();
             this.fileExtensionTextMode[extension] = mode;
         },
-        
+
         /////////////////////////////////////////////////////////////////
         //
         // clear all extension-text mode joins
         //
         /////////////////////////////////////////////////////////////////
-        
+
         clearFileExtensionTextMode: function(){
             this.fileExtensionTextMode = {};
         },
-        
+
         /////////////////////////////////////////////////////////////////
         //
         // Set the editor mode
@@ -1149,7 +1160,7 @@ var availableTextModes = new Array(
             // LocalStorage
             localStorage.setItem('codiad.editor.wrapMode', w);
         },
-        
+
         //////////////////////////////////////////////////////////////////
         //
         // Set last position of modal to be saved
@@ -1181,7 +1192,7 @@ var availableTextModes = new Array(
             // LocalStorage
             localStorage.setItem('codiad.editor.rightSidebarTrigger', t);
         },
-        
+
         //////////////////////////////////////////////////////////////////
         //
         // Set trigger for clicking on the filemanager
@@ -1198,8 +1209,8 @@ var availableTextModes = new Array(
             localStorage.setItem('codiad.editor.fileManagerTrigger', t);
             codiad.project.loadSide();
         },
-        
-        
+
+
         //////////////////////////////////////////////////////////////////
         //
         // set Tab Size
@@ -1220,9 +1231,9 @@ var availableTextModes = new Array(
             }
             // LocalStorage
             localStorage.setItem('codiad.editor.tabSize', s);
-            
+
         },
-        
+
         //////////////////////////////////////////////////////////////////
         //
         // Enable or disable Soft Tabs
@@ -1243,9 +1254,9 @@ var availableTextModes = new Array(
             }
             // LocalStorage
             localStorage.setItem('codiad.editor.softTabs', t);
-            
+
         },
-        
+
         //////////////////////////////////////////////////////////////////
         //
         // Get content from editor
@@ -1344,6 +1355,27 @@ var availableTextModes = new Array(
             if (! i) return;
             i.gotoLine(line, 0, true);
         },
+
+        highlightCode:  function(path,colorclass,from, to){
+                    var mid;
+                    codiad.active.focus(path);
+                    var editor = this.getActive();
+                    var Range = ace.require('ace/range').Range;
+                    editor.getSession().setUseWorker(false);
+                    mid=editor.getSession().addMarker(new Range(from, 0, to, 0),colorclass, "fullLine");
+                    return mid;
+            },
+          clearHighlightCode: function(path, id){
+
+              codiad.active.focus(path);
+              var editor = this.getActive();
+              editor.getSession().setUseWorker(false);
+                setTimeout(function() {
+                  editor.session.removeMarker(id);
+
+                }, 300);
+            },
+
 
         //////////////////////////////////////////////////////////////////
         //
@@ -1523,7 +1555,7 @@ var availableTextModes = new Array(
 
                 break;
             }
-        } 
+        }
 
     };
 

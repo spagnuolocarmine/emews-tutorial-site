@@ -27,19 +27,18 @@
         init: function() {
             // Initialize node listener
             this.nodeListener();
+
             // Load uploader
             $.loadScript("components/filemanager/upload_scripts/jquery.ui.widget.js", true);
             $.loadScript("components/filemanager/upload_scripts/jquery.iframe-transport.js", true);
             $.loadScript("components/filemanager/upload_scripts/jquery.fileupload.js", true);
         },
-
         //////////////////////////////////////////////////////////////////
         // Listen for dbclick events on nodes
         //////////////////////////////////////////////////////////////////
-
         nodeListener: function() {
             var _this = this;
-            
+
             $('#file-manager').on('selectstart', false);
 
             $('#file-manager span')
@@ -157,7 +156,7 @@
                 top = 10;
             }
             var max = $(window).height() - top - 10;
-            
+
             $('#context-menu')
                 .css({
                     'top': top + 'px',
@@ -254,8 +253,8 @@
                             .insertAfter(parentNode);
                     }
                 } else {
-                    parentNode.parent().children('span').removeClass('none');  
-                    parentNode.parent().children('span').addClass('plus');  
+                    parentNode.parent().children('span').removeClass('none');
+                    parentNode.parent().children('span').addClass('plus');
                 }
             }
         },
@@ -311,7 +310,7 @@
                                 }
                                 if(files[index].type == 'directory' && files[index].size > 0) {
                                     nodeClass = 'plus';
-                                } 
+                                }
                                 appendage += '<li><span class="' + nodeClass + '"></span><a class="' + files[index].type + ext + '" data-type="' + files[index].type + '" data-path="' + files[index].name + '">' + name + '</a></li>';
                             });
                             appendage += '</ul>';

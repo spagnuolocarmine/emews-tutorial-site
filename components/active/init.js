@@ -31,7 +31,7 @@
 
         // Path to EditSession instance mapping
         sessions: {},
-        
+
         // History of opened files
         history: [],
 
@@ -49,12 +49,13 @@
         },
 
         open: function(path, content, mtime, inBackground, focus) {
+        
             if (focus === undefined) {
                 focus = true;
             }
-            
+
             var _this = this;
-            
+
             if (this.isOpen(path)) {
                 if(focus) this.focus(path);
                 return;
@@ -354,7 +355,8 @@
             if(focus) {
                 this.focus(path);
             }
-            
+
+
             // Mark draft as changed
             if (this.checkDraft(path)) {
                 this.markChanged(path);
@@ -366,18 +368,19 @@
         //////////////////////////////////////////////////////////////////
 
         focus: function(path, moveToTabList) {
+
             if (moveToTabList === undefined) {
                 moveToTabList = true;
             }
-            
+
             this.highlightEntry(path, moveToTabList);
-            
+
             if(path != this.getPath()) {
                 codiad.editor.setSession(this.sessions[path]);
                 this.history.push(path);
                 $.get(this.controller, {'action':'focused', 'path':path});
             }
-            
+
             /* Check for users registered on the file. */
             this.check(path);
 
@@ -389,7 +392,7 @@
             if (moveToTabList === undefined) {
                 moveToTabList = true;
             }
-            
+
             $('#list-active-files li')
                 .removeClass('active');
 
@@ -407,7 +410,7 @@
                      * dropdown. */
                     var menuItem = session.tabThumb;
                     this.moveDropdownMenuItemToTab(menuItem, true);
-    
+
                     var tab = $('#tab-list-active-files li:last-child');
                     this.moveTabToDropdownMenu(tab);
                 } else {
@@ -494,11 +497,11 @@
                 });
             }
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Save all files
         //////////////////////////////////////////////////////////////////
-        
+
         saveAll: function() {
             var _this = this;
             for(var session in _this.sessions) {
@@ -524,7 +527,7 @@
                 this.close(path);
             }
         },
-        
+
         removeAll: function(discard) {
             discard = discard || false;
             /* Notify listeners. */
@@ -532,7 +535,7 @@
 
             var _this = this;
             var changed = false;
-            
+
             var opentabs = new Array();
             for(var session in _this.sessions) {
                opentabs[session] = session;
@@ -543,10 +546,10 @@
             if(changed && !discard) {
                 codiad.modal.load(450, 'components/active/dialog.php?action=confirmAll');
                 return;
-            } 
-            
+            }
+
             for(var tab in opentabs) {
-                var session = this.sessions[tab]; 
+                var session = this.sessions[tab];
 
                 session.tabThumb.remove();
                 _this.updateTabDropdownVisibility();
@@ -559,7 +562,7 @@
                     if(this != tab) history.push(this);
                 })
                 this.history = history
-                
+
                 delete this.sessions[tab];
                 this.removeDraft(tab);
             }
@@ -597,14 +600,14 @@
                 if(this != path) history.push(this);
             })
             this.history = history
-            
+
             /* Select all the tab tumbs except the one which is to be removed. */
             var tabThumbs = $('#tab-list-active-files li[data-path!="' + path + '"]');
 
             if (tabThumbs.length == 0) {
                 codiad.editor.exterminate();
             } else {
-                
+
                 var nextPath = '';
                 if(this.history.length > 0) {
                     nextPath = this.history[this.history.length - 1];
@@ -741,12 +744,12 @@
 
             var num = $('#tab-list-active-files li').length;
             if (num === 0) return;
-            
+
             var newActive = null;
             var active = null;
-            
+
             if (dir == 'up') {
-                
+
                 // If active is in the tab list
                 active = $('#tab-list-active-files li.active');
                 if(active.length > 0) {
@@ -759,7 +762,7 @@
                         }
                     }
                 }
-                
+
                 // If active is in the dropdown list
                 active = $('#dropdown-list-active-files li.active');
                 if(active.length > 0) {
@@ -771,7 +774,7 @@
                 }
 
             } else {
-                
+
                 // If active is in the tab list
                 active = $('#tab-list-active-files li.active');
                 if(active.length > 0) {
@@ -784,7 +787,7 @@
                         }
                     }
                 }
-                
+
                 // If active is in the dropdown list
                 active = $('#dropdown-list-active-files li.active');
                 if(active.length > 0) {
@@ -806,44 +809,44 @@
 
         initTabDropdownMenu: function() {
             var _this = this;
-            
+
             var menu = $('#dropdown-list-active-files');
             var button = $('#tab-dropdown-button');
             var closebutton = $('#tab-close-button');
-            
+
             menu.appendTo($('body'));
 
             button.click(function(e) {
                 e.stopPropagation();
                 _this.toggleTabDropdownMenu();
             });
-                        
+
             closebutton.click(function(e) {
                 e.stopPropagation();
                 _this.removeAll();
             });
         },
-        
+
         showTabDropdownMenu: function() {
             var menu = $('#dropdown-list-active-files');
             if(!menu.is(':visible')) this.toggleTabDropdownMenu();
         },
-        
+
         hideTabDropdownMenu: function() {
             var menu = $('#dropdown-list-active-files');
             if(menu.is(':visible')) this.toggleTabDropdownMenu();
         },
-        
+
         toggleTabDropdownMenu: function() {
             var _this = this;
             var menu = $('#dropdown-list-active-files');
-            
+
             menu.css({
                 top: $("#editor-top-bar").height() + 'px',
                 right: '20px',
                 width: '200px'
             });
-            
+
             menu.slideToggle('fast');
 
             if(menu.is(':visible')) {
@@ -972,7 +975,7 @@
         //////////////////////////////////////////////////////////////////
         // Factory
         //////////////////////////////////////////////////////////////////
-        
+
         splitDirectoryAndFileName: function(path) {
             var index = path.lastIndexOf('/');
             return {
@@ -980,21 +983,21 @@
                 directory: (path.indexOf('/') == 0)? path.substring(1, index + 1):path.substring(0, index + 1)
             }
         },
-        
+
         createListThumb: function(path) {
             return $('<li data-path="' + path + '"><a title="'+path+'"><span></span><div>' + path + '</div></a></li>');
         },
 
         createTabThumb: function(path) {
             split = this.splitDirectoryAndFileName(path);
-            return $('<li class="tab-item" data-path="' + path + '"><a class="label" title="' + path + '">' 
-                    + split.directory + '<span class="file-name">' + split.fileName + '</span>' 
+            return $('<li class="tab-item" data-path="' + path + '"><a class="label" title="' + path + '">'
+                    + split.directory + '<span class="file-name">' + split.fileName + '</span>'
                     + '</a><a class="close">x</a></li>');
         },
 
         createMenuItemThumb: function(path) {
             split = this.splitDirectoryAndFileName(path);
-            return $('<li data-path="' + path + '"><a title="' + path + '"><span class="label"></span><div class="label">' 
+            return $('<li data-path="' + path + '"><a title="' + path + '"><span class="label"></span><div class="label">'
                     + split.directory + '<span class="file-name">' + split.fileName + '</span>'
                     + '</div></a></li>');
         },

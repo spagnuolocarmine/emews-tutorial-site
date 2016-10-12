@@ -1,12 +1,13 @@
-<?php 
+<?php
     require_once('../../common.php');
 ?>
+
 <label><span class="icon-doc-text big-icon"></span><?php i18n("System Settings"); ?></label>
 <hr>
 <label></label>
 <table class="settings">
     <tr>
-    
+
         <td><?php i18n("Right Sidebar Trigger"); ?></td>
         <td>
             <select class="setting" data-setting="codiad.editor.rightSidebarTrigger">
@@ -16,9 +17,9 @@
         </td>
 
     </tr>
-    
+
     <tr>
-    
+
         <td><?php i18n("Filemanager Trigger"); ?></td>
         <td>
             <select class="setting" data-setting="codiad.editor.fileManagerTrigger">
@@ -28,9 +29,9 @@
         </td>
 
     </tr>
-    
+
     <tr>
-    
+
         <td><?php i18n("Persistent Modal"); ?></td>
         <td>
             <select class="setting" data-setting="codiad.editor.persistentModal">
@@ -40,9 +41,9 @@
         </td>
 
     </tr>
-    
+
     <tr>
-    
+
         <td><?php i18n("Sync system settings on all devices"); ?></td>
         <td>
             <select class="setting" data-setting="codiad.settings.system.sync">
@@ -54,7 +55,7 @@
     </tr>
 
     <tr>
-    
+
         <td><?php i18n("Sync plugin settings on all devices"); ?></td>
         <td>
             <select class="setting" data-setting="codiad.settings.plugin.sync">

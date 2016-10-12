@@ -1,0 +1,93 @@
+<h1>INTRODUCTION</h1>
+<h2>Modern simulation-based application studies are campaigns</h2>
+<p>
+Consisting of large numbers of simulations with many possible
+variations.  Simulations may be run with different parameters,
+possibly as part of an automated model parameter optimization,
+classification, or, more generally, \emph{model exploration} (ME). Constructing the software to run
+such studies at the requisite computational scales is often unnecessarily time-consuming and the resulting
+software artifacts are typically difficult to generalize and
+package for other users.
+</p>
+<p>
+In this tutorial, we present a solution for many of the challenges in
+running large-scale simulation studies.  Our framework, Extreme-scale Model
+Exploration with Swift/T (\B{EMEWS}), uses the general-purpose parallel
+scripting language Swift~\shortcite{STC_2014} to generate highly
+concurrent simulation workflows.  These workflows enable the integration of
+external ME algorithms to coordinate the running and evaluation of large numbers of simulations.  The general-purpose nature of
+the programming model allows the user to supplement the workflows with additional
+analysis and post-processing as well.
+</p>
+<p>
+Here, we focus on agent-based models (ABMs).  Extracting
+knowledge from ABMs requires the use of approximate, heuristic ME methods involving large simulation ensembles. To improve the current state of the art it has been noted elsewhere that: ``\ldots
+there is a clear need to provide software frameworks for
+metaheuristics that promote software reuse and reduce developmental
+effort."~\cite{boussaid_survey_2013} Our design goals are to ease
+software integration while providing scalability to the largest scale
+(petascale plus) supercomputers, running millions of ABMs, thousands
+at a time. Initial scaling studies of \B{EMEWS} have shown robust scalability~\cite{ozik_many_2015}. The tools are also easy to install and run on an ordinary
+laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
+obtained from common OS package repositories.
+
+<ul>
+<li> powerful</li>
+<li> efficient (mention that performance was measured in MTAGS and SC submission, and indicate weak scaling results from SC)</li>
+<li> re-usable</li>
+</ul>
+
+    \includegraphics[scale=0.65]{img/EMEWS-loop}
+    \caption{Overview of Extreme-scale Model Exploration with Swift/T (EMEWS) framework.
+      \label{figure:overview}}
+</p>
+<p>
+\FIG{overview} illustrates the main components of the \B{EMEWS}
+framework.  The main user interface is the Swift script, a high-level
+program.  The core novel contributions of
+\B{EMEWS} are shown in green, these allow the Swift script to access a
+running ME algorithm.  This algorithm can be expressed in Python, R, C, C++,
+Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
+a high-level queue-like interface with (currently) two
+implementations: EQ/Py and EQ/R (EMEWS Queues for
+Python and R).  These allow the Swift script to obtain
+candidate model parameter inputs and return model outputs to the ME.  The
+simulation models are distributed by the Swift/T runtime over a
+potentially large computer system, but smaller systems that run one
+model at a time are also supported.  The simulations can be
+implemented as external applications called through the shell, or
+in-memory libraries accessed directly by Swift (for faster
+invocation).
+</p>
+<p>
+\B{EMEWS} thus offers the following contributions to the science and
+practice of simulation ME studies: \B{1)} it offers the capability to run very large, highly concurrent
+  ensembles of simulations of varying types; \B{2)} it supports a wide class of model exploration algorithms,
+  including those increasingly available to the community via Python and R libraries; and \B{3)} it offers a software sustainability solution, in that simulation
+  studies based around \B{EMEWS} can easily be compared and
+  distributed.
+
+<ul>
+<li> It offers the capability to run very large, highly concurrent
+  ensembles of simulations of varying types;</li>
+<li> It supports a wide class of model exploration algorithms,
+  including those increasingly available to the community via Python and R libraries;</li>
+<li> It offers a software sustainability solution, in that simulation
+  studies based around \B{EMEWS} can easily be compared and
+  distributed.</li>
+</ul>
+</p>
+<h2> Tutorial Goals</h2>
+<p>
+Our tutorial will present these contributions in more detail.  The
+examples use cases presented in this paper are generally runnable
+Swift (not pseudocode) and are published on a \href{https://goo.gl/Wia9Rm}{public repository}~\cite{emews_site}.
+</p>
+<p>
+The remainder of this paper is organized as follows.  In \SLF{related},
+we describe related ABM software, ME libraries, and workflow
+toolkits.  In \SLF{swift}, we describe the Swift programming model in
+detail with examples.  In \SLF{usecases}, we provide complete use
+cases in the ABM context.  We summarize our contributions
+in \SLF{summary}.
+</p>

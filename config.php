@@ -11,16 +11,16 @@
 //////////////////////////////////////////////////////////////////
 
 // PATH TO CODIAD
-define("BASE_PATH", "/home/nick/emews-tutorial-site");
+define("BASE_PATH", "/Library/WebServer/Documents/emews-tutorial-site");
 
 // BASE URL TO CODIAD (without trailing slash)
-define("BASE_URL", "172.16.15.117");
+define("BASE_URL", "127.0.0.1");
 
 // THEME : default, modern or clear (look at /themes)
 define("THEME", "default");
 
 // ABSOLUTE PATH
-define("WHITEPATHS", BASE_PATH . ",/home");
+define("WHITEPATHS", BASE_PATH . ",/Library/WebServer/Documents/emews-tutorial-site");
 
 // SESSIONS (e.g. 7200)
 $cookie_lifetime = "0";

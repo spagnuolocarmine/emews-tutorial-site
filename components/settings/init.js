@@ -5,8 +5,8 @@
  */
 
 (function(global, $){
-    
-    $(function() {    
+
+    $(function() {
         codiad.settings.init();
     });
 
@@ -21,7 +21,7 @@
              *  Storage Event:
              *  Note: Event fires only if change was made in different window and not in this one
              *  Details: http://dev.w3.org/html5/webstorage/#dom-localstorage
-             *  
+             *
              *  Workaround for Storage-Event:
              */
             $('body').append('<iframe src="components/settings/dialog.php?action=iframe"></iframe>');

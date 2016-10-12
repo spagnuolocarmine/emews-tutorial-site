@@ -18,19 +18,19 @@
         dialog: 'components/project/dialog.php',
 
         init: function() {
-            this.loadCurrent();
+          //  this.loadCurrent();
             this.loadSide();
-            
+
             var _this = this;
-            
+
             $('#projects-create').click(function(){
                 codiad.project.create('true');
             });
-            
+
             $('#projects-manage').click(function(){
                 codiad.project.list();
             });
-            
+
             $('#projects-collapse').click(function(){
                 if (!_this._sideExpanded) {
                     _this.projectsExpand();
@@ -53,7 +53,7 @@
                         .append('<ul><li><a id="project-root" data-type="root" class="directory" data-path="' + projectInfo.path + '">' + projectInfo.name + '</a></li></ul>');
                     codiad.filemanager.index(projectInfo.path);
                     codiad.user.project(projectInfo.path);
-                    codiad.message.success(i18n('Project %{projectName}% Loaded', {projectName:projectInfo.name}));
+                    codiad.message.success(i18n('Tutorial %{projectName}% Loaded', {projectName:projectInfo.name}));
                 }
             });
         },
@@ -87,7 +87,7 @@
                 .die('submit'); // Prevent form bubbling
             codiad.modal.load(500, this.dialog + '?action=list');
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Load and list projects in the sidebar.
         //////////////////////////////////////////////////////////////////
@@ -95,17 +95,17 @@
             $('.sb-projects-content').load(this.dialog + '?action=sidelist&trigger='+localStorage.getItem('codiad.editor.fileManagerTrigger'));
             this._sideExpanded = true;
         },
-        
+
         projectsExpand: function() {
             this._sideExpanded = true;
-            $('#side-projects').css('height', 276+'px');
+            $('#side-projects').css('height', 176+'px');
             $('.project-list-title').css('right', 0);
-            $('.sb-left-content').css('bottom', 276+'px');
+            $('.sb-left-content').css('bottom', 176+'px');
             $('#projects-collapse')
                 .removeClass('icon-up-dir')
                 .addClass('icon-down-dir');
         },
-        
+
         projectsCollapse: function() {
             this._sideExpanded = false;
             $('#side-projects').css('height', 33+'px');
@@ -115,7 +115,7 @@
                 .removeClass('icon-down-dir')
                 .addClass('icon-up-dir');
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Open the project manager dialog
         //////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@
                     if(projectPath.indexOf('/') == 0) {
                         create = confirm('Do you really want to create project with absolute path "' + projectPath + '"?');
                     }
-                if(create) {    
+                if(create) {
                     $.get(_this.controller + '?action=create&project_name=' + projectName + '&project_path=' + projectPath + '&git_repo=' + gitRepo + '&git_branch=' + gitBranch, function(data) {
                         createResponse = codiad.jsend.parse(data);
                         if (createResponse != 'error') {
@@ -162,7 +162,7 @@
                 }
             });
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Rename Project
         //////////////////////////////////////////////////////////////////
@@ -176,7 +176,7 @@
                 var projectPath = $('#modal-content form input[name="project_path"]')
                     .val();
                 var projectName = $('#modal-content form input[name="project_name"]')
-                    .val();    
+                    .val();
                 $.get(_this.controller + '?action=rename&project_path=' + projectPath + '&project_name=' + projectName, function(data) {
                    renameResponse = codiad.jsend.parse(data);
                     if (renameResponse != 'error') {
@@ -190,7 +190,7 @@
                 });
             });
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Delete Project
         //////////////////////////////////////////////////////////////////
@@ -236,11 +236,11 @@
                 });
             });
         },
-        
+
         //////////////////////////////////////////////////////////////////
         // Check Absolute Path
         //////////////////////////////////////////////////////////////////
-        
+
         isAbsPath: function(path) {
             if ( path.indexOf("/") == 0 ) {
                 return true;
@@ -261,7 +261,7 @@
                 async: false,
                 success: function(data) {
                     currentResponse = codiad.jsend.parse(data);
-                } 
+                }
              });
             return currentResponse;
         }

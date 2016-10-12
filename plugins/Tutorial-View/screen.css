@@ -1,3 +1,82 @@
+.tutorial h1{
+    font-size: 30px;
+}
+.tutorial h2{
+    font-size: 25px;
+}
+.tutorial h3{
+    font-size: 20px;
+}
+.tutorial h1 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 32px; font-weight: 300; line-height: 38px; margin: 0 0 10px; }
+.tutorial h2 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 22px; font-weight: 300; line-height: 38px; margin: 0 0 10px; }
+.tutorial h3 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 300; line-height: 38px; margin: 0 0 10px; }
+
+
+.tutorial a { color: #fe921f; text-decoration: underline; }
+
+
+.tutorial a:hover { color: #ffffff }
+
+
+.tutorial .date { background: #fe921f; color: #ffffff; display: inline-block; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: bold; line-height: 12px; letter-spacing: 1px; margin: 0 0 30px; padding: 10px 15px 8px; text-transform: uppercase; }
+
+.tutorial {
+  color: #d5dadd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 14px; line-height: 26px; text-indent: 30px; margin: 0;
+  text-align: justify;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom:50px;
+  overflow-y: scroll;
+}
+.tutorial p{
+   margin-top:10px;
+}
+.tutorial ul {
+ margin-top:10px;
+ list-style-type: square;
+ list-style-position: outside;
+ list-style-image: none;
+}
+.tutorial li {
+ list-style-type: square;
+ list-style-position: outside;
+ list-style-image: none;
+}
+
+.table-of-contents {
+  float: right;
+  width: 40%;
+  background: #eee;
+  font-size: 0.8em;
+  padding: 1em 2em;
+  margin: 0 0 0.5em 0.5em;
+}
+.table-of-contents ul {
+  padding: 0;
+}
+.table-of-contents li {
+  margin: 0 0 0.25em 0;
+}
+.table-of-contents a {
+  text-decoration: none;
+}
+.table-of-contents a:hover,
+.table-of-contents a:active {
+  text-decoration: underline;
+}
+
+h3:target {
+  animation: highlight 1s ease;
+}
+
+@keyframes highlight {
+  from { background: yellow; }
+  to { background: white; }
+}
+
+
+
 .favorites-sb {
     bottom: 276px;
     height: 100px;

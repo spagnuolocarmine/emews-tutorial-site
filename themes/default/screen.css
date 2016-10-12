@@ -124,7 +124,7 @@ a:hover,a:active {;
 
 .language-selector {
     position: relative;
-    display: none; 
+    display: none;
 }
 
 .show-language-selector { display: block; float: right; color: #666; margin: 20px 0 0 0; }
@@ -602,7 +602,7 @@ table [class^="icon-"], [class*=" icon-"] {
 
 .sb-left-projects {
     position:absolute;
-    height:276px;
+    height:176px;
     bottom:0;
     left:0;
     right:10px;
