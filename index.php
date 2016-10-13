@@ -1,4 +1,6 @@
 <?php
+
+include('plugins/Tutorial-Status/checktutorial.php');
 //session_start();
 require_once('common.php');
 
@@ -22,6 +24,7 @@ if(isset($_SESSION['theme'])) {
 }
 
 ?>
+
 <!doctype html>
 
 <head>
@@ -68,8 +71,10 @@ if(isset($_SESSION['theme'])) {
           }
       }
   }
+
+
   ?>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
 
@@ -102,47 +107,8 @@ if(isset($_SESSION['theme'])) {
     <script src="js/message.js"></script>
     <script src="js/jsend.js"></script>
     <script src="js/instance.js?v=<?php echo time(); ?>"></script>
-
 <?php
-
-if (!isset($_GET['action'])) {
-   $_GET['action']="End Tutorial";
- }
-
-if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-        case 'tutorial-view':
-            if(!isset($_COOKIE["tutorial"])) {
-            //  setcookie("tutorial", "begin", time() + (86400 * 30), "/");
-            }
-            $path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']),"/");
-            $users = file_exists($path . "/data/users.php");
-            $projects = file_exists($path . "/data/projects.php");
-            $active = file_exists($path . "/data/active.php");
-            if(!$users && !$projects && !$active){  "Error in loading tutorial!";
-            }else {
-                include('plugins/Welcome-Page/workspace.php');
-            }
-        break;
-        case 'restart':
-            //RESET COOKIE AND RELOAD PAGE
-            if(!isset($_COOKIE["tutorial"])) {
-            //  setcookie("tutorial", "begin", time() + (86400 * 30), "/");
-            }
-            $path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']),"/");
-            $users = file_exists($path . "/data/users.php");
-            $projects = file_exists($path . "/data/projects.php");
-            $active = file_exists($path . "/data/active.php");
-            if(!$users && !$projects && !$active){  "Error in loading tutorial!";
-            }else {
-                include('plugins/Welcome-Page/workspace.php');
-            }
-        break;
-        default:
-            include('plugins/Welcome-Page/welcomepage.php');
-        break;
-  }
-}
+  include('plugins/Tutorial-Status/tutorial.php');
 ?>
 
 </body>

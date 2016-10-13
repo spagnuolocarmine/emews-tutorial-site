@@ -83,9 +83,9 @@
             }
 
             //Set a Session Name
-            session_name(md5(BASE_PATH));
+          //  session_name(md5(BASE_PATH));
 
-            session_start();
+          //  session_start();
 
             //Check for external authentification
             if(defined('AUTH_PATH')){
