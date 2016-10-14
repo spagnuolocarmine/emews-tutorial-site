@@ -2,38 +2,38 @@
 
     /*
     *  Copyright (c) Codiad & Kent Safranski (codiad.com), distributed
-    *  as-is and without warranty under the MIT License. See 
+    *  as-is and without warranty under the MIT License. See
     *  [root]/license.txt for more. This information must remain intact.
     */
 
 
     require_once('../../common.php');
-    
+
     //////////////////////////////////////////////////////////////////
     // Verify Session or Key
     //////////////////////////////////////////////////////////////////
-    
+
     checkSession();
 
     switch($_GET['action']){
-    
+
         //////////////////////////////////////////////////////////////
         // List Projects Mini Sidebar
         //////////////////////////////////////////////////////////////
         case 'sidelist':
-            
+
             // Get access control data
             $projects_assigned = false;
             if(file_exists(BASE_PATH . "/data/" . $_SESSION['user'] . '_acl.php')){
                 $projects_assigned = getJSON($_SESSION['user'] . '_acl.php');
             }
-            
-            ?>  
-                    
+
+            ?>
+
             <ul>
-            
+
             <?php
-            
+
             // Get projects JSON data
             $projects = getJSON('projects.php');
             sort($projects);
@@ -43,37 +43,37 @@
                 if($show){
                   if($_GET['trigger'] == 'true') {
                 ?>
-                <li onclick="codiad.project.open('<?php echo($data['path']); ?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
-                
+                <li onclick=" codiad.project.open('<?php echo($data['path']);?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
+
                 <?php
                 } else {
                 ?>
-                <li ondblclick="codiad.project.open('<?php echo($data['path']); ?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
-                
+                <li ondblclick=" codiad.project.open('<?php echo($data['path']); ?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
+
                 <?php
                 }
                 }
-            } 
+            }
             ?>
-            
+
             </ul>
-                    
+
             <?php
-            
+
             break;
-        
+
         //////////////////////////////////////////////////////////////
         // List Projects
         //////////////////////////////////////////////////////////////
-        
+
         case 'list':
-        
+
             // Get access control data
             $projects_assigned = false;
             if(file_exists(BASE_PATH . "/data/" . $_SESSION['user'] . '_acl.php')){
                 $projects_assigned = getJSON($_SESSION['user'] . '_acl.php');
             }
-            
+
             ?>
             <label><?php i18n("Project List"); ?></label>
             <div id="project-list">
@@ -86,9 +86,9 @@
                 </tr>
             </table>
             <div class="project-wrapper">
-            <table width="100%" style="word-wrap: break-word;word-break: break-all;">    
+            <table width="100%" style="word-wrap: break-word;word-break: break-all;">
             <?php
-            
+
             // Get projects JSON data
             $projects = getJSON('projects.php');
             sort($projects);
@@ -125,22 +125,22 @@
             <?php if(checkAccess()){ ?><button class="btn-left" onclick="codiad.project.create();"><?php i18n("New Project"); ?></button><?php } ?>
     		<button class="<?php if(checkAccess()){ echo('btn-right'); } ?>" onclick="codiad.modal.unload();return false;"><?php i18n("Close"); ?></button>
             <?php
-            
+
             break;
-            
+
         //////////////////////////////////////////////////////////////////////
         // Create New Project
         //////////////////////////////////////////////////////////////////////
-        
+
         case 'create':
-        
+
             ?>
             <form>
             <label><?php i18n("Project Name"); ?></label>
             <input name="project_name" autofocus="autofocus" autocomplete="off">
             <label><?php i18n("Folder Name or Absolute Path"); ?></label>
             <input name="project_path" autofocus="off" autocomplete="off">
-                        
+
             <!-- Clone From GitHub -->
             <div style="width: 500px;">
             <table class="hide" id="git-clone">
@@ -164,15 +164,15 @@
                 $action = 'codiad.project.list();';
                 if($_GET['close'] == 'true') {
                     $action = 'codiad.modal.unload();';
-                } 
-            ?>           
+                }
+            ?>
             <button class="btn-left"><?php i18n("Create Project"); ?></button>
 			<button onclick="$('#git-clone').slideDown(300); $(this).hide(); return false;" class="btn-mid"><?php i18n("...From Git Repo"); ?></button>
 			<button class="btn-right" onclick="<?php echo $action;?>return false;"><?php i18n("Cancel"); ?></button>
             <form>
             <?php
             break;
-            
+
         //////////////////////////////////////////////////////////////////
         // Rename
         //////////////////////////////////////////////////////////////////
@@ -180,19 +180,19 @@
         ?>
         <form>
         <input type="hidden" name="project_path" value="<?php echo($_GET['path']); ?>">
-        <label><span class="icon-pencil"></span><?php i18n("Rename Project"); ?></label>    
-        <input type="text" name="project_name" autofocus="autofocus" autocomplete="off" value="<?php echo($_GET['name']); ?>">  
+        <label><span class="icon-pencil"></span><?php i18n("Rename Project"); ?></label>
+        <input type="text" name="project_name" autofocus="autofocus" autocomplete="off" value="<?php echo($_GET['name']); ?>">
         <button class="btn-left"><?php i18n("Rename"); ?></button>&nbsp;<button class="btn-right" onclick="codiad.modal.unload(); return false;"><?php i18n("Cancel"); ?></button>
         <form>
         <?php
-        break;       
-            
+        break;
+
         //////////////////////////////////////////////////////////////////////
         // Delete Project
         //////////////////////////////////////////////////////////////////////
-        
+
         case 'delete':
-        
+
         ?>
             <form>
             <input type="hidden" name="project_path" value="<?php echo($_GET['path']); ?>">
@@ -205,8 +205,7 @@
             <button class="btn-left"><?php i18n("Confirm"); ?></button><button class="btn-right" onclick="codiad.project.list();return false;"><?php i18n("Cancel"); ?></button>
             <?php
             break;
-        
+
     }
-    
+
 ?>
-        

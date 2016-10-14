@@ -1,25 +1,45 @@
+<script src="plugins/Tutorial-Status/js/js.storage.js"></script>
+<script>
+
+</script>
+
 <?php
+
 $action=$_GET['action'];
-function creatNewTutorial(){
-  $basecookie = file_get_contents("plugins/Tutorial-Status/status.json");
-  $value = base64_encode(json_encode($basecookie));
-  setcookie("tutorial", $value, time() + (86400 * 30), "/");
-}
+
   switch ($action) {
       case 'tutorial-view':
-          $cookie = $_COOKIE['tutorial'];
-          if(!isset($cookie)) {
-            creatNewTutorial();
-          }
-          $cookie = json_decode(base64_decode($cookie),true);
+?>
+    <script>
 
-        //  echo "the name is ".$cookie['tutorial'][0];
+       var checkExist=setInterval(function() {
+         if ($('#file-manager').length) {
+            codiad.console.loadTutorial();
+             clearInterval(checkExist);
+           }
+         }, 20);
 
+         //setInterval(function(){
+            // saveTutorial();
+         //}, 3000);
 
+    </script>
+<?php
       break;
       case 'restart':
-          //RESET COOKIE AND RELOAD PAGE
-          creatNewTutorial();
+?>
+      <script>
+      var checkExist=setInterval(function() {
+        if ($('#file-manager').length) {
+            codiad.console.loadDefaultTutorial();
+            codiad.console.saveDefaultTutorial();
+            clearInterval(checkExist);
+          }
+        }, 20);
+
+
+      </script>
+  <?php
       break;
   }
 

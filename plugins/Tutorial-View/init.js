@@ -12,11 +12,11 @@
 
     // Instantiates plugin
     $(function() {
-        codiad.Tutorial.init();
+        codiad.tutorial.init();
         $.loadScript('plugins/Tutorial-View/js/tags.js');
     });
 
-    codiad.Tutorial = {
+    codiad.tutorial = {
 
         // Allows relative `this.path` linkage
         path: curpath,
@@ -69,17 +69,17 @@
            amplify.subscribe('project.onOpen', function(tutorial){
                 _this.open(tutorial);
                 setTimeout(function(){
-              	    codiad.Console.loadTOC();
+              	    codiad.console.loadTOC();
               	}, 300);
 
             });
-            _this.open("tutorialwelcome");
+            /*_this.open("tutorialwelcome");
             setTimeout(function(){
                 codiad.Console.loadTOC();
-            }, 300);
+            }, 300);*/
 
             $('#controls').click(function(){
-              codiad.Tutorial.showControls();
+              codiad.tutorial.showControls();
             });
 
 
@@ -101,10 +101,16 @@
                     $('#tutorialname').html("Tutorial: "+tutorial);
                     var leftw=$(window).width()-$("#sb-left").width();
                     $("#tutorialtemplate").css("width", leftw+"px");
+                    var checkExist=setInterval(function() {
+                      if ($('#toc').length) {
+                          codiad.console.loadTOC();
+                          clearInterval(checkExist);
+                        }
+                      }, 20);
+
                 })
 
          }
-
     };
 
 })(this, jQuery);

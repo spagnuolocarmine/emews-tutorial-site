@@ -39,7 +39,7 @@ class Project extends Common {
             $this->assigned = getJSON($_SESSION['user'] . '_acl.php');
         }
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Get First (Default, none selected)
     //////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ class Project extends Common {
         if($pass){
             echo formatJSEND("success",array("name"=>$this->name,"path"=>$this->path));
         }else{
-            echo formatJSEND("error","Error Opening Project");
+            echo formatJSEND("error","Error Opening Project ");
         }
     }
 
@@ -140,7 +140,7 @@ class Project extends Common {
                     }
                     $this->projects[] = array("name"=>$this->name,"path"=>$this->path);
                     saveJSON('projects.php',$this->projects);
-                    
+
                     // Pull from Git Repo?
                     if($this->gitrepo && filter_var($this->gitrepo, FILTER_VALIDATE_URL) !== false){
                         $this->git_branch = $this->SanitizeGitBranch();
@@ -151,7 +151,7 @@ class Project extends Common {
                         }
                         $this->ExecuteCMD();
                     }
-                    
+
                     echo formatJSEND("success",array("name"=>$this->name,"path"=>$this->path));
                 }else{
                     echo formatJSEND("error","A Project With the Same Name or Path Exists");
@@ -163,7 +163,7 @@ class Project extends Common {
              echo formatJSEND("error","Project Name/Folder is empty");
         }
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Sanitize GitBranch
     //////////////////////////////////////////////////////////////////
@@ -171,8 +171,8 @@ class Project extends Common {
     public function SanitizeGitBranch(){
         $sanitized = str_replace(array("..",chr(40), chr(177),"~","^",":","?","*","[","@{","\\"),array(""),$this->git_branch);
         return $sanitized;
-    }   
-    
+    }
+
     //////////////////////////////////////////////////////////////////
     // Rename
     //////////////////////////////////////////////////////////////////
@@ -231,11 +231,11 @@ class Project extends Common {
         $sanitized = str_replace(" ","_",$this->path);
         return preg_replace('/[^\w-]/', '', $sanitized);
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Clean Path
     //////////////////////////////////////////////////////////////////
-    
+
     function cleanPath(){
 
         // prevent Poison Null Byte injections
@@ -247,11 +247,11 @@ class Project extends Common {
 
         return $path;
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Execute Command
     //////////////////////////////////////////////////////////////////
-    
+
     public function ExecuteCMD(){
         if(function_exists('system')){
             ob_start();

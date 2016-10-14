@@ -1,6 +1,4 @@
 <?php
-
-include('plugins/Tutorial-Status/checktutorial.php');
 //session_start();
 require_once('common.php');
 
@@ -22,6 +20,7 @@ $theme = THEME;
 if(isset($_SESSION['theme'])) {
   $theme = $_SESSION['theme'];
 }
+
 
 ?>
 
@@ -108,6 +107,7 @@ if(isset($_SESSION['theme'])) {
     <script src="js/jsend.js"></script>
     <script src="js/instance.js?v=<?php echo time(); ?>"></script>
 <?php
+  include('plugins/Tutorial-Status/checktutorial.php');
   include('plugins/Tutorial-Status/tutorial.php');
 ?>
 

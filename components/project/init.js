@@ -47,6 +47,7 @@
         loadCurrent: function() {
             $.get(this.controller + '?action=get_current', function(data) {
                 var projectInfo = codiad.jsend.parse(data);
+
                 if (projectInfo != 'error') {
                     $('#file-manager')
                         .html('')
@@ -65,8 +66,10 @@
         open: function(path) {
             var _this = this;
             codiad.finder.contractFinder();
+
             $.get(this.controller + '?action=open&path=' + path, function(data) {
                 var projectInfo = codiad.jsend.parse(data);
+              
                 if (projectInfo != 'error') {
                     _this.loadCurrent();
                     codiad.modal.unload();
