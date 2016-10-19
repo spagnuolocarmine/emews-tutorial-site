@@ -48,7 +48,7 @@
       <?php
 
         break;
-        case "init":
+        case "init" || "home":
             include('plugins/Welcome-Page/welcomepage.php');
         break;
     }
