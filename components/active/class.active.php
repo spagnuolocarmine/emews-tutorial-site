@@ -59,6 +59,7 @@ class Active extends Common {
               }
             }
         }
+          $tainted = FALSE;
         if ($tainted){
             saveJSON('active.php',$this->actives);
         }
@@ -96,7 +97,7 @@ class Active extends Common {
         }
         if($process_add){
             $this->actives[] = array("username"=>$this->username,"path"=>$this->path);
-            saveJSON('active.php',$this->actives);
+          //  saveJSON('active.php',$this->actives);
             echo formatJSEND("success");
         }
     }
@@ -112,7 +113,7 @@ class Active extends Common {
         		$revised_actives[] = array("username"=>$data['username'],"path"=>str_replace($this->path,$this->new_path,$data['path']));
         	}
         }
-        saveJSON('active.php',$revised_actives);
+        //saveJSON('active.php',$revised_actives);
         echo formatJSEND("success");
     }
 
@@ -126,10 +127,10 @@ class Active extends Common {
                 unset($this->actives[$active]);
             }
         }
-        saveJSON('active.php',$this->actives);
+      //  saveJSON('active.php',$this->actives);
         echo formatJSEND("success");
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Remove All Files
     //////////////////////////////////////////////////////////////////
@@ -140,12 +141,12 @@ class Active extends Common {
                 unset($this->actives[$active]);
             }
         }
-        saveJSON('active.php',$this->actives);
+    //    saveJSON('active.php',$this->actives);
         echo formatJSEND("success");
     }
-    
+
     //////////////////////////////////////////////////////////////////
-    // Mark File As Focused 
+    // Mark File As Focused
     //  All other files will be marked as non-focused.
     //////////////////////////////////////////////////////////////////
 
@@ -158,7 +159,7 @@ class Active extends Common {
                 }
             }
         }
-        saveJSON('active.php',$this->actives);
+      //  saveJSON('active.php',$this->actives);
         echo formatJSEND("success");
     }
 

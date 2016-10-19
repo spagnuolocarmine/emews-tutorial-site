@@ -97,7 +97,7 @@ class User {
                 unset($this->actives[$active]);
             }
         }
-        saveJSON('active.php',$this->actives);
+    //    saveJSON('active.php',$this->actives);
 
         // Remove access control list (if exists)
         if(file_exists(BASE_PATH . "/data/" . $this->username . '_acl.php')){

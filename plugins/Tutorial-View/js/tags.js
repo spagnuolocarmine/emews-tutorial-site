@@ -61,6 +61,7 @@ highlightcodeProto.createdCallback = function() {
             });
 
           var scrollTo = $(lielementcode);
+          if(scrollTo != null)
           $("#file-manager").animate({
               scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
@@ -145,6 +146,7 @@ opencodeProto.createdCallback = function() {
             });
 
           var scrollTo = $(lielementcode);
+          if(scrollTo != null)
           $("#file-manager").animate({
               scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 

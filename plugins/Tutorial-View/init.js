@@ -153,6 +153,7 @@
                     var checkExist=setInterval(function() {
                       if ($('#toc').length) {
                           codiad.console.loadTOC();
+                          
                           clearInterval(checkExist);
                         }
                       }, 20);
