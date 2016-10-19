@@ -152,8 +152,9 @@
                     $("#tutorialtemplate").css("width", leftw+"px");
                     var checkExist=setInterval(function() {
                       if ($('#toc').length) {
+                        console.log("load toc");
                           codiad.console.loadTOC();
-                          
+
                           clearInterval(checkExist);
                         }
                       }, 20);
