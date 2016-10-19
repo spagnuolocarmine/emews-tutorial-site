@@ -10,6 +10,7 @@
         path = scripts[scripts.length-1].src.split('?')[0],
         curpath = path.split('/').slice(0, -1).join('/')+'/',
         storage;
+    var loading = false;
 
     // Instantiates plugin
     $(function() {
@@ -75,6 +76,26 @@
                 _this.resize();
                 codiad.project._sideExpanded = true;
             };
+
+            amplify.subscribe('project.onOpen', function(){
+      			     _this.saveTutorial()
+      			});/*
+            amplify.subscribe('active.onOpen', function(){
+                 _this.saveTutorial()
+            });
+            amplify.subscribe('active.onClose', function(){
+                 _this.saveTutorial()
+            });
+            amplify.subscribe('tutorial.onParagraph', function(){
+                 _this.saveTutorial()
+            });
+            amplify.subscribe('tutorial.onHighlight', function(){
+                 _this.saveTutorial()
+            });
+            amplify.subscribe('project.onToc', function(){
+                 _this.saveTutorial()
+            });*/
+
         },
            /**
          * Resize favorite area
@@ -88,45 +109,68 @@
             $('#toc').css("height",($('.console-sb').width())+"px");
         },
         loadDefaultTutorial: function(){
+          loading=true;
           var checkExist=setInterval(function() {
             if ($('#file-manager').length) {
                     setTimeout(function(){
                       codiad.tutorial.open("tutorialwelcome");
-
+                      storage=Storages.localStorage;
+                      storage.set('tutorial','tutorialwelcome');
                     }, 100);
                 clearInterval(checkExist);
               }
             }, 20);
+              loading=false;
         },
         loadTutorial: function(){
           storage=Storages.localStorage;
+
+          if(storage.get('tutorial') == "tutorialwelcome") { this.loadDefaultTutorial();return;}
+
+          loading=true;
           var checkExist=setInterval(function() {
             if ($('#file-manager').length) {
                     setTimeout(function(){
                       codiad.project.open(storage.get('tutorial'));
                       codiad.console.loadParagraph(storage.get('paragraph'));
                       codiad.console.loadTocPosition(storage.get('toc'));
+                      codiad.console.highlightFiles(storage.get('hightlights'));
+                      codiad.console.openFiles(storage.get('files'));
                     }, 100);
                 clearInterval(checkExist);
               }
             }, 20);
+              loading=false;
         },
         saveDefaultTutorial: function(){
-          storage=Storages.localStorage;
-          storage.set('tutorial','uc1');
-          storage.set('paragraph','toc27');
-          storage.set('toc','ttoc27');
-          storage.set('files',["uc1/R/example.r","uc1/R/testdir/test.sh"]);
-          storage.set('highlights',["uc1/scripts/repast.sh","uc1/R/example.r"]);
+          var checkExist=setInterval(function() {
+            if (loading) {
+                  storage=Storages.localStorage;
+                  storage.set('tutorial','uc1');
+                  storage.set('paragraph','toc27');
+                  storage.set('toc','ttoc27');
+                  storage.set('files',["uc1/swift/swiftrun.swift","uc1/scripts/outputcombiner.sh"]);
+                  var maphightlights = new Map();
+
+                  maphightlights["uc1/R/example.r"]=["rgba(0,255,0,0.3)","2","4"];
+                  maphightlights["uc1/R/testdir/test.sh"]=["rgba(0,255,0,0.3)","0","2"];
+                  storage.set('hightlights',maphightlights);
+              clearInterval(checkExist);
+            }
+          }, 20);
+
         },
         saveTutorial: function(){
           storage=Storages.localStorage;
           console.log("save"+codiad.project.getCurrent())
           storage.set('tutorial',codiad.project.getCurrent());
-          // storage.set('paragraph',paragraph);
-          // storage.set('toc',toc);
+        /*  var paid;
+          $("#toc ul").children().each(function(i, value){if($(this).hasClass("toc-active"))paid=$(this).attr("id");});
+          console.log("saved toc t"+paid)
+          storage.set('paragraph',paid);
+          storage.set('toc',"t"+paid);*/
           // storage.set('files',files);
-          // storage.set('highlights',highlights);
+          // storage.set('hightlights',highlights);
         },
         loadTOC: function() {
 
@@ -136,7 +180,9 @@
                     'container': '#tutorialcontent', //element to find all selectors in
                     'smoothScrolling': true, //enable or disable smooth scrolling on click
                     'prefix': 'toc', //prefix for anchor tags and class names
-                    'onHighlight': function(el) {}, //called when a new section is highlighted
+                    'onHighlight': function(el) {
+
+                			}, //called when a new section is highlighted
                     'highlightOnScroll': false, //add class to heading that is currently in focus
                     'highlightOffset': 100, //offset to trigger the next headline
                     'anchorName': function(i, heading, prefix) { //custom function for anchor name
@@ -155,9 +201,11 @@
                     $(this).attr('id', 'ttoc'+index);
 
                 });
+                //$("#toc ul").children().each(function(i, value){$(this).click(function(){codiad.console.saveTutorial() ;});});
         },
         loadParagraph: function (id)
         {
+            if(id == "") return;
           var container = $('#tutorialcontent');
           var checkExist=setInterval(function() {
             if ($("#"+id).length) {
@@ -169,9 +217,11 @@
                 clearInterval(checkExist);
               }
             }, 20);
+            amplify.publish('tutorila.onParagraph', id);
         },
         loadTocPosition: function (id)
         {
+          if(id == "") return;
           var container = $('#toc');
           var checkExist=setInterval(function() {
             if ($("#"+id).length) {
@@ -188,6 +238,40 @@
                 clearInterval(checkExist);
               }
             }, 20);
+              amplify.publish('tutorila.onToc', id);
+        },
+        highlightFiles: function(files)
+        {
+
+          if(files.size == 0) return;
+          setTimeout(function() {
+              if ($("#root-editor-wrapper")) {
+                    Object.keys(files).forEach(function(key) {
+
+                          value = files[key];
+                          var colorvalue=value[0];
+                          var fromline=value[1];
+                          var toline=value[2];
+                          codiad.tutorial.highlightCode(key,fromline,toline,colorvalue);
+
+                    });
+                }
+            }, 1000);
+        },
+        openFiles: function(files)
+        {
+          if(files.length == 0) return;
+          setTimeout(function() {
+              if ($("#root-editor-wrapper")) {
+                    var file;
+                    for(file in files)
+                    {
+                      console.log(files[file]);
+                        codiad.tutorial.openCode(files[file]);
+                    }
+
+                }
+            }, 1000);
         }
 
     };

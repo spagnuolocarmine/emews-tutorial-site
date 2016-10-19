@@ -4,43 +4,40 @@
 </script>
 
 <?php
-
-$action=$_GET['action'];
+$_SESSION['user']="emews-admin";
+$action="init";
+if (isset($_GET) && !empty($_GET))
+  $action=$_GET['action'];
 
   switch ($action) {
       case 'tutorial-view':
 ?>
-    <script>
-
-       var checkExist=setInterval(function() {
-         if ($('#file-manager').length) {
-            codiad.console.loadTutorial();
-             clearInterval(checkExist);
-           }
-         }, 20);
-
-         //setInterval(function(){
-            // saveTutorial();
-         //}, 3000);
-
-    </script>
+    
 <?php
       break;
       case 'restart':
 ?>
-      <script>
-      var checkExist=setInterval(function() {
-        if ($('#file-manager').length) {
-            codiad.console.loadDefaultTutorial();
-            codiad.console.saveDefaultTutorial();
-            clearInterval(checkExist);
-          }
-        }, 20);
 
+  <?php
+      break;
+      case 'init':
+
+?>
+      <script>
+        storage=Storages.localStorage;
+        if( storage.get("tutorial") == "" || storage.get("tutorial") == null)
+        {
+          storage.set('tutorial','tutorialwelcome');
+          storage.set('paragraph','');
+          storage.set('toc','');
+          storage.set('files',[]);
+          storage.set('hightlights',new Map());
+        }
 
       </script>
   <?php
       break;
+
   }
 
 ?>

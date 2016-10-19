@@ -1,6 +1,7 @@
 <?php
     switch ($action) {
-        case 'tutorial-view' || 'restart':
+        case "tutorial-view" :
+
             $path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']),"/");
             $users = file_exists($path . "/data/users.php");
             $projects = file_exists($path . "/data/projects.php");
@@ -9,8 +10,45 @@
             }else {
                 include('plugins/Welcome-Page/workspace.php');
             }
+            ?>
+          <script>
+            var checkExist=setInterval(function() {
+              if ($('#file-manager').length) {
+                 codiad.console.loadTutorial();
+
+                  clearInterval(checkExist);
+                }
+              }, 20);
+          </script>
+      <?php
+
         break;
-        default:
+        case  "restart":
+
+            $path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']),"/");
+            $users = file_exists($path . "/data/users.php");
+            $projects = file_exists($path . "/data/projects.php");
+            $active = file_exists($path . "/data/active.php");
+            if(!$users && !$projects && !$active){  "Error in loading tutorial!";
+            }else {
+                include('plugins/Welcome-Page/workspace.php');
+            }
+            ?>
+          <script>
+            var checkExist=setInterval(function() {
+              if ($('#file-manager').length) {
+                  codiad.console.loadDefaultTutorial();
+                //  codiad.console.saveDefaultTutorial();
+                  clearInterval(checkExist);
+                }
+              }, 20);
+
+
+              </script>
+      <?php
+
+        break;
+        case "init":
             include('plugins/Welcome-Page/welcomepage.php');
         break;
     }

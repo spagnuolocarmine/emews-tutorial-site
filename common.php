@@ -247,19 +247,13 @@
         //////////////////////////////////////////////////////////////////
 
         public static function checkPath($path) {
-            if(file_exists(DATA . "/" . $_SESSION['user'] . '_acl.php')){
-                foreach (getJSON($_SESSION['user'] . '_acl.php') as $projects=>$data) {
-                    if (strpos($path, $data) === 0) {
-                        return true;
-                    }
+
+            foreach(getJSON('projects.php') as $project=>$data){
+                if (strpos($path, $data['path']) === 0) {
+                    return true;
                 }
-            } else {
-                foreach(getJSON('projects.php') as $project=>$data){
-                    if (strpos($path, $data['path']) === 0) {
-                        return true;
-                    }
-                }
-            }
+            }      
+
             return false;
         }
 

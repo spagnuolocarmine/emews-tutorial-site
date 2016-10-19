@@ -1,4 +1,4 @@
-var markers = new Map();
+
 
 // Create a new object based of the HTMLElement prototype
 var highlightcodeProto = Object.create(HTMLElement.prototype);
@@ -19,24 +19,14 @@ highlightcodeProto.createdCallback = function() {
     var fromline=this.getAttribute('from');
     var toline=this.getAttribute('to');
 
-    if(colorvalue)
-    var classcolorname=colorvalue.replace("(","").replace(")","").replace(",","").replace(",","").replace(",","").replace(".","_");
 
-    var stylecolor="."+classcolorname+"{position: absolute;background:"+colorvalue+";z-index: 20;}";
-    $("<div/>", {html: '&shy;<style>' + stylecolor + '</style>'}).appendTo("body");
 
     // Add an event listener to the image.
     span.addEventListener('click', function(e) {
-        codiad.filemanager.openFile(code,true);
 
-        codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+      codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
+
         setTimeout(function(){
-          if(codiad.active)
-          codiad.active.gotoLine(fromline);
-          var newmarker=codiad.editor.highlightCode(code,classcolorname,fromline,toline);;
-          if(markers[code] != undefined && newmarker!=markers[code])
-            codiad.editor.clearHighlightCode(code,markers[code]);
-          markers[code]=newmarker;
           var parent;
           $(e.target).prevAll().each(function(i, value){
 
@@ -149,7 +139,7 @@ opencodeProto.createdCallback = function() {
           var lielementcode;
           var container = $('#file-manager');
           container.find("li").each(function(i, value){
-            
+
               if($(this).find("a").attr("data-path") == code) lielementcode=this;
 
             });

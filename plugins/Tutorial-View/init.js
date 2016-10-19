@@ -9,6 +9,7 @@
         scripts= document.getElementsByTagName('script'),
         path = scripts[scripts.length-1].src.split('?')[0],
         curpath = path.split('/').slice(0, -1).join('/')+'/';
+    var markers = new Map();
 
     // Instantiates plugin
     $(function() {
@@ -85,6 +86,54 @@
 
           }
         ,
+        highlightCode: function(code,fromline,toline,colorvalue)
+        {
+          if(colorvalue)
+          var classcolorname=colorvalue.replace("(","").replace(")","").replace(",","").replace(",","").replace(",","").replace(".","_");
+
+          var stylecolor="."+classcolorname+"{position: absolute;background:"+colorvalue+";z-index: 20;}";
+          $("<div/>", {html: '&shy;<style>' + stylecolor + '</style>'}).appendTo("body");
+          var checkExist=setInterval(function() {
+                if ($('#file-manager ul').length) {
+                  codiad.filemanager.openFile(code,true);
+                    var checkExist2=setInterval(function() {
+                        var container = $('#file-manager');
+
+                          codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+                          if(codiad.active)
+                             codiad.active.gotoLine(fromline);
+                          var newmarker=codiad.editor.highlightCode(code,classcolorname,fromline,toline);;
+                          if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
+                            codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
+                          codiad.tutorial.setHighlightMarker(code,newmarker);
+
+                     clearInterval(checkExist2);
+                  }, 20);
+                clearInterval(checkExist);
+              }
+            }, 20);
+            amplify.publish('tutorial.onHighlight',[code,fromline,toline,colorvalue]);
+        },
+        openCode: function(code)
+        {
+
+          var checkExist=setInterval(function() {
+                if ($('#file-manager').length) {
+                  codiad.filemanager.openFile(code,true);
+                  codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+
+                clearInterval(checkExist);
+              }
+            }, 20);
+        },
+        getHighlightMarker: function(code) {
+            return markers[code];
+
+        },
+        setHighlightMarker: function(code,markerid) {
+            return markers[code]=markerid;
+
+        },
         showControls: function(data_file) {
             var _this = this;
             codiad.modal.load(200, 'plugins/Tutorial-View/controls.php');
