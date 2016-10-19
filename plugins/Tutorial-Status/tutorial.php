@@ -14,7 +14,7 @@
           <script>
             var checkExist=setInterval(function() {
               if ($('#file-manager').length) {
-                 codiad.console.loadTutorial();
+                setTimeout(function(){ codiad.console.loadTutorial();},200);
 
                   clearInterval(checkExist);
                 }
