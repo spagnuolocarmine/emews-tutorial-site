@@ -32,7 +32,9 @@
             var _this = this;
                 $.get(this.path+"template.php", function(data){
                 $('#side-projects').before(data);
+
                 _this.resize();
+
                 //Set hidelistener
                 $('#console-collapse').live('click', function(){
                     if (_this.hide) {
@@ -43,15 +45,17 @@
                         _this.hide = false;
                         //Set height
                         $('.console-sb').css("height","35px");
+                        $('#toc').hide();
                     } else {
                         $('.console').show();
                         $('.console-hr').show();
+                          $('#toc').show();
                         $('#console-collapse').removeClass('icon-up-dir');
                         $('#console-collapse').addClass('icon-down-dir');
                         _this.hide = true;
                         //Set height
                         $('.console-sb').css("height","300px");
-                        $('#toc').css("height","280px");
+
                     }
                     _this.resize();
                 });
@@ -104,9 +108,10 @@
         resize: function() {
             var projectSize = $('.sb-left-projects').height();
             var favoritesSize = $('.console-sb').height();
+
             $('.console-sb').css("bottom", projectSize+"px");
             $('.sb-left-content').css("bottom", projectSize+favoritesSize+"px");
-            $('#toc').css("height",($('.console-sb').width())+"px");
+            $('#toc').css("height",($('.console-sb').height())+"px");
         },
         loadDefaultTutorial: function(){
           loading=true;

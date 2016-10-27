@@ -127,7 +127,7 @@
 
     </div>
 
-    <div id="tutorialtemplate" style="height:50%; top:0px;left:auto; position:fixed;" >
+    <div id="tutorialtemplate" style="height:50%; top:0px; left:auto; position:fixed;" >
       <div class="console-list-title">
         <h2 id="tutorialname"> Welcome in EMEWS Tutorial </h2>
         <a alt="controls" id="controls" class="icon icon-network" title="Controls the tutorial!" ></a> </div>

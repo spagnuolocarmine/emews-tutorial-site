@@ -26,6 +26,9 @@
                     $('#sb-left').width(sbWidth);
                     $(window).resize();
                     $('#editor-region').trigger('h-resize-init');
+                    var leftw=$(window).width()-$("#sb-left").width();
+                    $("#tutorialtemplate").css("left", $("#sb-left").width()+"px");
+                    $("#tutorialtemplate").css("width", leftw+"px");
 
                 }
 
@@ -38,7 +41,7 @@
                     $('#lock-right-sidebar').trigger('click');
                     _this.openRightSidebar();
                 }
-              
+
             });
 
             $('#lock-left-sidebar')
@@ -125,6 +128,7 @@
                             .trigger('h-resize-init');
                         localStorage.setItem('codiad.sidebars.sb-left-width', $('#sb-left').width());
                         var leftw=$(window).width()-$("#sb-left").width();
+                        $("#tutorialtemplate").css("left", $("#sb-left").width()+"px");
                         $("#tutorialtemplate").css("width", leftw+"px");
                     }
                 });
@@ -149,6 +153,7 @@
                         .animate({
                         'left': (-sbarWidthL + 10) + "px"
                     }, 300, 'easeOutQuart');
+
                     $('#editor-region')
                         .animate({
                             'margin-left': '10px'
