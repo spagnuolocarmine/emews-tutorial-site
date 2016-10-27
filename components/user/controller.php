@@ -9,10 +9,13 @@
     require_once('../../common.php');
     require_once('class.user.php');
 
+
+
+
     if(!isset($_GET['action'])){
-    	die(formatJSEND("error","Missing parameter"));
+        die(formatJSEND("error","Missing parameter"));
     }
-    
+
     //////////////////////////////////////////////////////////////////
     // Verify Session or Key
     //////////////////////////////////////////////////////////////////
@@ -29,7 +32,7 @@
     	if(!isset($_POST['username']) || !isset($_POST['password'])){
     		die(formatJSEND("error","Missing username or password"));
     	}
-    	
+
         $User->username = $_POST['username'];
         $User->password = $_POST['password'];
 
@@ -63,7 +66,7 @@
         	if(!isset($_POST['username']) || !isset($_POST['password'])){
         		die(formatJSEND("error","Missing username or password"));
         	}
-        	
+
             $User->username = User::CleanUsername( $_POST['username'] );
             $User->password = $_POST['password'];
             $User->Create();
@@ -79,7 +82,7 @@
         	if(!isset($_GET['username'])){
         		die(formatJSEND("error","Missing username"));
         	}
-        	
+
             $User->username = $_GET['username'];
             $User->Delete();
         }
@@ -95,7 +98,7 @@
         		die(formatJSEND("error","Missing username"));
         	}
             $User->username = $_GET['username'];
-            
+
             //No project selected
             if(isset($_POST['projects'])){
             	$User->projects = $_POST['projects'];
@@ -114,7 +117,7 @@
     	if(!isset($_POST['username']) || !isset($_POST['password'])){
     		die(formatJSEND("error","Missing username or password"));
     	}
-    	
+
         if(checkAccess() || $_POST['username'] == $_SESSION['user']) {
             $User->username = $_POST['username'];
             $User->password = $_POST['password'];
@@ -130,7 +133,7 @@
     	if(!isset($_GET['project'])){
     		die(formatJSEND("error","Missing project"));
     	}
-    	
+
         $User->username = $_SESSION['user'];
         $User->project  = $_GET['project'];
         $User->Project();
@@ -142,7 +145,7 @@
 
     if($_GET['action']=='verify'){
         $User->username = $_SESSION['user'];
-        $User->Verify();
+        //$User->Verify();
     }
 
 ?>

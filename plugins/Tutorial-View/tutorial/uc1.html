@@ -1,324 +1,181 @@
-<h1>H1</h1>
- <open-code code="uc1/R/example.r">click to open example.r</open-code>
- <open-code code="uc1/R/testdir/test.sh">click to open test.sh</open-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
- <open-code code="uc1/swift/swiftrun_R.swift">click to open swiftrun_R.swift</open-code>
-<hr><hr><hr>
+<h1 style="margin-top: 0px;"> Simple Workflows with ABM </h1>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+<p>
+  For a first demonstration ABM use case, we begin with an example of a Swift/T parallel parameter sweep to explore the parameter space of a model.
+  Tutorial goals:
+</p>
+<p>
+  <ul>
+    <li> Run ABM simulation using Repast in Swift/T</li>
+    <li> Execute parallel Parameters Sweeping of ABM simulation model </li>
+    <li> Parallel evaluation of the simulation results using Swift/T and R</li>
+  </uL>
+</p>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+<h2>JZombie: Repast simulation </h2>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+<p>The example model used here is an adaptation of the JZombies demonstration model distributed with Repast Simphony
+  (Nick Collier and Michael North 2015).</p>
+  <p>The fictional Zombies versus Humans model is intended to illustrate that Swift/T and Repast Simphony are domain agnostic.</p>
+  <h3> Model details </h3>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+  <p>
+    The model has two kinds of agents, Zombies and Humans. Zombies chase the Humans, seeking to infect them, while Humans attempt to evade Zombies. When a Zombie is close enough to a Human, that Human is infected and becomes a Zombie. During a typical run all the Humans will eventually become Zombies.
+    These agents are located in a two dimensional continuous
+    space where each agent has a x and y coordinate expressed as a floating point number
+    (and in a corresponding discrete grid with integer coordinates).  </p>
+    <p>  Movement is performed in the continuous space and translated into discrete grid coordinates.
+      The grid is used for neighborhood queries (e.g. given a Zombie’s location, where are the nearest Humans).
+      The model records the grid coordinate of each agent as well as a count of each agent type (Zombie or Human)
+      at each time step and writes this data to two files.</p>
+      <p>The initial number of Zombies and Humans is specified
+        by model input parameters zombie count and human count, and the distance a Zombie or Human can move at each
+        time step is specified by the parameters zombie step size and human step size.</p>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+        <h2> Call Repast simulation from Swift/T</h2>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+        <p>
+          In order for Swift/T to call an external application such as the Zombies model, the application must be wrapped in a leaf function (§3.2).
+        </p><p>
+          The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
+          choice for integrating the model into a Swift script. Repast Simphony provides command line compatible functionality,
+          via an InstanceRunner (§2.1) class, for passing a set of parameters to a model and performing a single headless
+          run of the model using those parameters. We have wrapped that command line invocation of Repast Simphony in a bash script
+          <open-code code="uc1/scripts/repast.sh">repast.sh</open-code> that eases command line usage.
+        </p><p>
+          The Swift app function that calls Repast Simphony is shown in <open-code code="uc1/swift/swiftrun.swift">swifteun.swift</open-code>.
+          Prior to the actual function definition, the environment variable PROJECT_ROOT is accessed.
+          This variable is used to define the project's top level directory, relative to which other directories
+          (e.g., the directory that contains the Zombies model) are defined.
+        </p><p>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+          On line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="6" to="10">7</highlight-code>,
+          the app function definition begins. The function returns two files, one for standard output and one for standard error.
+          The arguments are those required to run <open-code code="uc1/scripts/repast.sh">repast.sh</open-code>:
+          the name of the script, the current run number, the directory where the model run output should be written,
+          and the model's input scenario directory.
+        </p><p>
+          The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
+          arguments as well as the project root directory.
+          @stdout=out and @stderr=err redirect stdout and stderr to the files out and err.
+          It should be easy to see how any model or application that can be run from the command line and wrapped in a bash script can be called from Swift in this way.
+        </p>
+        <h2> Parameter Sweeping</h2>
+        <p>Our full script performs a simple parameter sweep using the app function to run the model.
+          The parameters to sweep are defined in a file where each row of the file contains a parameter set for an individual run.
+          The script will read these parameter sets and launch as many parallel runs as possible for a given process configuration,
+          passing each run a parameter set.
+        </p><p>
+          The Swift script is shown in <open-code code="uc1/swift/swiftrun.swift">swiftrun.swift</open-code>.
+          The script uses two additional functions that have been elided to save space.
+          The first, cp_message_center, calls the unix cp command to copy a Repast Simphony logging configuration file into
+          the current working directory.
+        </p><p>
+          The second, make_dir, calls the Unix mkdir command to create a specified directory.
+          Script execution begins in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="19" to="30">20</highlight-code>,
+          calling the cp_message_center app function.
+          In the absence of any data flow dependency, Swift statements will execute in parallel whenever possible.
+        </p><p>
+          However, in our case, the logging file must be in place before a Zombie model run begins.
+          The => symbol enforces the required sequential execution:
+          the code on its left-hand side must complete execution before the code on the right-hand side begins execution.
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="20" to="20">21</highlight-code>
+          and  <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="21" to="21">22</highlight-code>
+          parse command line arguments to the Swift script itself.
+        </p><p>
+          The first of these is the name of the unrolled-parameter-file that contains
+          the parameter sets that will be passed as input to the Zombies model.
+          Each line of the file contains a parameter set, that is,
+          the random_seed, zombie_count, human_count, zombie_step_size and human_step_size
+          for a single model run. The parameter set is passed as a single string
+          (e.g. random_seed = 14344, zombie_count = 10 ...)
+          to the Zombies model where it is parsed into the individual parameters.
+        </p><p>
+          The scenario argument specifies the name of the Repast Simphony scenario file for the Zombies model.
+          This defaults to ``scenario.rs'' if the argument is not given.
+          In line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="22" to="22">23</highlight-code>
+          the built-in Swift file_lines function is used to read the upf
+          file into an array of strings where each line of the file is an element in the array.
+        </p><p>
+          The foreach loop that begins on line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="23" to="23">24</highlight-code>
+          executes its loop iterations in parallel.
+          In this way, the number of model runs that can be performed in parallel is limited only by hardware resources.
+        </p><p>
+          The variable s is set to an array element (that is, a single parameter set represented as a string)
+          while the variable i is the index of that array element.
+          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="24" to="24">25</highlight-code>
+          and <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,255,0.3)" from="25" to="25">26</highlight-code>
+          create an instance directory into which each model run can write its output.
+        </p><p> The => symbol is again used to ensure that the directory is created before the actual model
+          run that uses that directory is performed in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="28" to="25">26</highlight-code>.
+          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,0,0.3)" from="26" to="26">27</highlight-code>
+          and
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,0,0.3)" from="27" to="27">28</highlight-code>
+          create file objects into which the standard out and standard error streams are
+          redirected by the repast function (<open-code code="uc1/swift/swiftrun.swift">swiftrun.swift</open-code>).
+          The Repast Simphony command line runs allows for the parameter input to be passed in as a
+          file and so in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="28" to="28">29</highlight-code>
+          the parameter string s is written to a upf.txt file in the instance directory.
 
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
-
-<h1>H1</h1>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 repast.sh</highlight-code>
- <highlight-code code="uc1/R/example.r" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 example.r</highlight-code>
-<hr>
- <h2>H2</h2>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 repast.sh</highlight-code>
- <highlight-code code="uc1/scripts/repast.sh" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 repast.sh</highlight-code>
-<hr><hr>
- <h3>H3</h3>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,255,0,0.3)" from="2" to="4">click to highlight green 2, 4 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="8" to="12">click to highlight red 8, 12 swiftrun.swift</highlight-code>
- <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(0,0,255,0.3)" from="16" to="18">click to highlight blue 16, 18 swiftrun.swift</highlight-code>
-<hr><hr><hr>
+          Lastly, in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,0,0,0.3)" from="29" to="29">30</highlight-code>
+          , the app function, repast, that performs the Zombie model run is called with the required arguments.
+        </p>
+        <h1> Results Analysis </h2>
+          <p>
+            In this script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
+            Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
+            number of humans. This analysis will be performed in R and executed within the Swift workflow.
+          </p><p>
+            We present this in two parts. The first describes the changes to the foreach loop to gather the output and the
+            second briefly describes how that output is analyzed to determine the ``best'' parameter combination.
+          </p>
+          <h2> Gather the results </h2>
+          <p>
+            This example assumes an unrolled-parameter-file where we vary zombie_step_size and human_step_size.
+            For each run of the model, that is, for each combination of parameters, the model records a count of
+            each agent type at each time step in an output file. As before the script will iterate through the ``upf''
+            file performing as many runs as possible in parallel. However an additional step that reads each output file and
+            determines the parameter combination or combinations that resulted in the most humans surviving at time step 150
+            has been added.
+          </p><p>
+            The code is in <open-code code="uc1/swift/swiftrun_R.swift">swiftrun_R.swift</open-code>.
+            Here the repast call is now followed by the execution of an R script (lines
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(0,255,0,0.3)" from="7" to="8">8-9</highlight-code>
+            , a Swift multiple-line string literal)
+            that retrieves the final number of humans from the output file.
+          </p><p>
+            The R script reads the CSV file produced by a model run into a data frame,
+            accesses the last row of that data frame, and then the value of the human_count column in that row.
+            The count_humans string variable holds a template of the R script where the instance directory
+            (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,0,0,0.3)" from="7" to="7">8</highlight-code>)
+            in which the output file (counts.csv) is written can be replaced with an actual instance directory.
+            Line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(0,255,0,0.3)" from="54" to="54">55</highlight-code>
+            performs this substitution with the directory for the current run.
+            The resulting R code string is evaluated in line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,0,255,0.3)" from="55" to="55">56</highlight-code>
+            using the Swift R() function.
+            In this case, the res variable in the R script (line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(0,255,255,0.3)" from="8" to="8">9</highlight-code>
+            ) contains the number of surviving humans.
+            This string is then placed in the results array at the ith index.
+          </p><p>
+            <h2> Finding best parameters configuration </h2>
+            <p>
+              An additional workflow step in which R is used to determine the indices of the maximum values
+              in the results array can be seen in the <open-code code="uc1/swift/swiftrun_R.swift">swiftrun_R.swift</open-code>.
+            </p><p>
+              Given that the value in results[i] is produced from the parameter combination in upf\_lines[i],
+              the index of the maximum value or values in the array is the index of the ``best'' parameter combination or combinations.
+              Swift code is used to iterate through the array of best indices as determined by R and write the corresponding
+              best parameters to a file (in lines
+              <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(0,255,0,0.3)" from="63" to="73">64-74</highlight-code>
+              ).
+            </p><p>

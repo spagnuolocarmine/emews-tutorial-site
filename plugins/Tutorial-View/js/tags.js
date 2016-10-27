@@ -1,88 +1,108 @@
+var parent;
+var tobreak = false;
 
+function findElement(source_element, element)
+{
+  $(source_element).children().each(function(i, value){
+
+    if($(this).is($(element))) {
+
+      tobreak=true;
+    }
+    if(!tobreak)
+    switch (this.tagName) {
+      case "h3":
+      case "H3":
+      parent=this;
+      break;
+      case "h2":
+      case "H2":
+      parent=this;
+      break;
+      case "h1":
+      case "H1":
+      parent=this;
+      break;
+      default:
+      findElement(this, element, parent, tobreak);
+    }
+
+
+  });
+}
 
 // Create a new object based of the HTMLElement prototype
 var highlightcodeProto = Object.create(HTMLElement.prototype);
 
 // Set up the element.
 highlightcodeProto.createdCallback = function() {
-    // Create a Shadow Root
-    var shadow = this.createShadowRoot();
+  // Create a Shadow Root
+  var shadow = this.createShadowRoot();
+  var _this =this;
+  // Create a standard img element and set it's attributes.
+  var span = document.createElement('span');
+  span.innerHTML=this.innerHTML;
+  span.style.textDecoration = "underline";
 
-    // Create a standard img element and set it's attributes.
-    var span = document.createElement('span');
-    span.innerHTML=this.innerHTML;
+  // Add the image to the Shadow Root.
+  shadow.appendChild(span);
+  var code=this.getAttribute('code');
+  var colorvalue=this.getAttribute('color');
+  var fromline=this.getAttribute('from');
+  var toline=this.getAttribute('to');
+  // Add an event listener to the image.
+  span.addEventListener('click', function(e) {
 
-    // Add the image to the Shadow Root.
-    shadow.appendChild(span);
-    var code=this.getAttribute('code');
-    var colorvalue=this.getAttribute('color');
-    var fromline=this.getAttribute('from');
-    var toline=this.getAttribute('to');
+    codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
+
+    setTimeout(function(){
+      parent="";
+      tobreak=false;
+      findElement($(".tutorial"), _this, parent, tobreak);
 
 
+      //MOVE TOC
+      var container = $('#toc'),
+      scrollTo = $("#"+parent.getAttribute('tocid'));
 
-    // Add an event listener to the image.
-    span.addEventListener('click', function(e) {
+      $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+      $("#"+parent.getAttribute('tocid')).addClass("toc-active");
+      $("#toc").animate({
+        scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
-      codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
+      }, 200);
+      //MOVE FILE manager search li with code
+      var lielementcode;
+      var container = $('#file-manager');
+      container.find("li").each(function(i, value){
 
-        setTimeout(function(){
-          var parent;
-          $(e.target).prevAll().each(function(i, value){
+        if($(this).find("a").attr("data-path") == code) lielementcode=this;
 
-              switch (this.tagName) {
-                    case "H3":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                    case "H2":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                    case "H1":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                  }
-            });
-          //MOVE TOC
-          var container = $('#toc'),
-          scrollTo = $("#"+parent.getAttribute('tocid'));
-          $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
-          $("#"+parent.getAttribute('tocid')).addClass("toc-active");
-          $("#toc").animate({
-              scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+      });
 
-          }, 200);
-          //MOVE FILE manager search li with code
-          var lielementcode;
-          var container = $('#file-manager');
-          container.find("li").each(function(i, value){
+      var scrollTo = $(lielementcode);
+      if(scrollTo != null)
+      $("#file-manager").animate({
+        scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
-              if($(this).find("a").attr("data-path") == code) lielementcode=this;
+      }, 200);
 
-            });
+    }, 100);
 
-          var scrollTo = $(lielementcode);
-          if(scrollTo != null)
-          $("#file-manager").animate({
-              scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+  });
+  span.style.color = "blue";
+  span.addEventListener('mouseenter', function(e) {
+    span.style.color = "red";
+  });
+  span.addEventListener('mouseleave', function(e) {
 
-          }, 200);
-
-        }, 100);
-
-    });
-    span.addEventListener('mouseenter', function(e) {
-
-        span.style.textDecoration = "underline";
-    });
-    span.addEventListener('mouseleave', function(e) {
-
-        span.style.textDecoration = "none";
-    });
+    span.style.color = "blue";
+  });
 
 };
 try {
   var highlightcode = document.registerElement('highlight-code', {
-      prototype: highlightcodeProto
+    prototype: highlightcodeProto
   });
 
 } catch(e) {
@@ -93,81 +113,75 @@ try {
 // Create a new object based of the HTMLElement prototype
 var opencodeProto = Object.create(HTMLElement.prototype);
 
+
 // Set up the element.
 opencodeProto.createdCallback = function() {
-    // Create a Shadow Root
-    var shadow = this.createShadowRoot();
+  // Create a Shadow Root
+  var shadow = this.createShadowRoot();
+  var _this=this;
 
-    // Create a standard img element and set it's attributes.
-    var span = document.createElement('span');
-    span.innerHTML=this.innerHTML;
+  // Create a standard img element and set it's attributes.
+  var span = document.createElement('span');
+  span.innerHTML=this.innerHTML;
+  span.style.textDecoration = "underline";
 
-    // Add the image to the Shadow Root.
-    shadow.appendChild(span);
-    var code=this.getAttribute('code');
-    // Add an event listener to the image.
-    span.addEventListener('click', function(e) {
-        codiad.filemanager.openFile(code,true);
-        codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+  // Add the image to the Shadow Root.
+  shadow.appendChild(span);
+  var code=this.getAttribute('code');
+  // Add an event listener to the image.
+  span.addEventListener('click', function(e) {
+    codiad.filemanager.openFile(code,true);
+    codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
 
-        setTimeout(function(){
+    setTimeout(function(){
 
-          var parent;
-          $(e.target).prevAll().each(function(i, value){
+      parent="";
+      tobreak=false;
+      findElement($(".tutorial"), _this, parent, tobreak);
 
-              switch (this.tagName) {
-                    case "H3":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                    case "H2":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                    case "H1":
-                      if(typeof parent === "undefined")  parent=this;
-                      break;
-                  }
-            });
-          //MOVE TOC
-          var container = $('#toc'),
-          scrollTo = $("#"+parent.getAttribute('tocid'));
-          $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
-          $("#"+parent.getAttribute('tocid')).addClass("toc-active");
-          $("#toc").animate({
-              scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+      console.log(parent);
+      //MOVE TOC
+      var container = $('#toc'),
+      scrollTo = $("#"+parent.getAttribute('tocid'));
+      $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+      $("#"+parent.getAttribute('tocid')).addClass("toc-active");
+      $("#toc").animate({
+        scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
-          }, 200);
-          //MOVE FILE manager search li with code
-          var lielementcode;
-          var container = $('#file-manager');
-          container.find("li").each(function(i, value){
+      }, 200);
+      //MOVE FILE manager search li with code
+      var lielementcode;
+      var container = $('#file-manager');
+      container.find("li").each(function(i, value){
 
-              if($(this).find("a").attr("data-path") == code) lielementcode=this;
+        if($(this).find("a").attr("data-path") == code) lielementcode=this;
 
-            });
+      });
 
-          var scrollTo = $(lielementcode);
-          if(scrollTo != null)
-          $("#file-manager").animate({
-              scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+      var scrollTo = $(lielementcode);
+      if(scrollTo != null)
+      $("#file-manager").animate({
+        scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
-          }, 200);
+      }, 200);
 
-        }, 100);
+    }, 100);
 
-    });
-    span.addEventListener('mouseenter', function(e) {
+  });
+  span.style.color = "green";
+  span.addEventListener('mouseenter', function(e) {
 
-        span.style.textDecoration = "underline";
-    });
-    span.addEventListener('mouseleave', function(e) {
+    span.style.color = "red";
+  });
+  span.addEventListener('mouseleave', function(e) {
 
-        span.style.textDecoration = "none";
-    });
+    span.style.color = "green";
+  });
 
 };
 try {
   var opencode = document.registerElement('open-code', {
-      prototype: opencodeProto
+    prototype: opencodeProto
   });
 
 } catch(e) {

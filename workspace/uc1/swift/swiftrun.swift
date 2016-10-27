@@ -26,6 +26,7 @@ cp_message_center() => {
     make_dir(instance) => {
       file out <instance+"out.txt">;
       file err <instance+"err.txt">;
+      file ups <instance+"upf.txt"> = write(s);
       (out,err) = repast(repast_sh, s, instance);
     }
   }

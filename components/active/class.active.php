@@ -72,11 +72,11 @@ class Active extends Common {
 
     public function Check(){
         $cur_users = array();
-        foreach($this->actives as $active=>$data){
-            if(is_array($data) && isset($data['username']) && $data['username']!=$this->username && $data['path']==$this->path){
-                $cur_users[] = $data['username'];
-            }
-        }
+        // foreach($this->actives as $active=>$data){
+        //     if(is_array($data) && isset($data['username']) && $data['username']!=$this->username && $data['path']==$this->path){
+        //         $cur_users[] = $data['username'];
+        //     }
+        // }
         if(count($cur_users)!=0){
             echo formatJSEND("error","Warning: File ".substr($this->path,strrpos($this->path,"/")+1)." Currently Opened By: " . implode(", ",$cur_users));
         }else{

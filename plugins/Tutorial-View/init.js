@@ -100,12 +100,13 @@
                         var container = $('#file-manager');
 
                           codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-                          if(codiad.active)
-                             codiad.active.gotoLine(fromline);
-                          var newmarker=codiad.editor.highlightCode(code,classcolorname,fromline,toline);;
-                          if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
-                            codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
-                          codiad.tutorial.setHighlightMarker(code,newmarker);
+                          setTimeout(function(){
+                            codiad.active.gotoLine(fromline);
+                            var newmarker=codiad.editor.highlightCode(code,classcolorname,fromline,toline);;
+                            if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
+                              codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
+                            codiad.tutorial.setHighlightMarker(code,newmarker);
+                          },300);
 
                      clearInterval(checkExist2);
                   }, 20);
@@ -152,7 +153,7 @@
                     $("#tutorialtemplate").css("width", leftw+"px");
                     var checkExist=setInterval(function() {
                       if ($('#toc').length) {
-                          setTimeout(function () {codiad.console.loadTOC();},200);
+                          setTimeout(function () {codiad.console.loadTOC();},400);
 
                           clearInterval(checkExist);
                         }

@@ -1,6 +1,7 @@
 <script src="plugins/Tutorial-Status/js/js.storage.js"></script>
 <script>
 
+
 </script>
 
 <?php
@@ -12,7 +13,7 @@ if (isset($_GET) && !empty($_GET))
   switch ($action) {
       case 'tutorial-view':
 ?>
-    
+
 <?php
       break;
       case 'restart':
@@ -37,6 +38,7 @@ if (isset($_GET) && !empty($_GET))
       </script>
   <?php
       break;
+
 
   }
 

@@ -1362,7 +1362,13 @@ var availableTextModes = new Array(
                     var editor = this.getActive();
                     var Range = ace.require('ace/range').Range;
                     editor.getSession().setUseWorker(false);
-                    mid=editor.getSession().addMarker(new Range(from, 0, to, 0),colorclass, "fullLine");
+                    if(from == to)
+                    {
+                      mid=editor.getSession().addMarker(new Range(from, 0, to, 10000000000),colorclass, "fullLine");
+                    
+                    }
+                    else
+                      mid=editor.getSession().addMarker(new Range(from, 0, to, 0),colorclass, "fullLine");
                     return mid;
             },
           clearHighlightCode: function(path, id){

@@ -1,1 +1,1 @@
-<?php/*|[{"name":"uc1","path":"uc1"},{"name":"uc2","path":"uc2"},{"name":"uc3","path":"uc3"}]|*/?>
+<?php/*|[{"name":"Simple Workflows with ABM","path":"uc1"},{"name":"Workflow control with Python","path":"uc2"},{"name":"Workflow with MPI-based simulation","path":"uc3"},{"name":"EMEWS Template","path":"templating"},{"name":"Swift/T","path":"swiftt"}]|*/?>

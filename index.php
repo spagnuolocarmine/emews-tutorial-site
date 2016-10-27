@@ -74,10 +74,12 @@ if(isset($_SESSION['theme'])) {
 
   ?>
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
 </head>
 <body>
-
+<div class="modal"></div>
     <script>
+
     var i18n = (function(lang) {
         return function(word,args) {
             var x;
@@ -88,6 +90,7 @@ if(isset($_SESSION['theme'])) {
             return returnw;
         }
     })(<?php echo json_encode($lang); ?>)
+
 
 
     </script>
@@ -106,6 +109,7 @@ if(isset($_SESSION['theme'])) {
     <script src="js/message.js"></script>
     <script src="js/jsend.js"></script>
     <script src="js/instance.js?v=<?php echo time(); ?>"></script>
+
 <?php
   include('plugins/Tutorial-Status/checktutorial.php');
   include('plugins/Tutorial-Status/tutorial.php');
