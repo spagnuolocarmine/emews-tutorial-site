@@ -150,7 +150,7 @@
 
         </div>
         <div class="collapse-dropdown">
-            <a alt="controls" id="controls" class="icon icon-down-dir" title="Controls the tutorial!" ></a>
+            <a alt="controls" id="downeditor" class="icon icon-down-dir" title="close editor" ></a>
       </div>
         <div id="root-editor-wrapper" >
           <div id="editor-bottom-bar">
