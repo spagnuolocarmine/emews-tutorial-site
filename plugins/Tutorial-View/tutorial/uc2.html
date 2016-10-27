@@ -1,3 +1,30 @@
-fwgrwqsasd
-rgqsgsdsdg
-sdsdgsdgsdh
+\subsubsection{Workflow control with Python-based external algorithms}
+\label{sec:so:sec2:workflow_python}
+
+Due to the highly non-linear relationship between ABM input parameters and model outputs, as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs cannot generally be explored via brute force methods, such as full-factorial experiments, space-filling sampling techniques, or any other \I{a priori} determined sampling schemes. This is where adaptive, heuristics-based approaches are useful and this is the focus of the next two use cases.
+
+\begin{wrapfigure}{r}{3.0in}
+  \input papers/03/WinterSim/code/deap.swift
+  \caption{Setting up a DEAP call from Swift.
+   \label{sec:so:sec2:code:deap}}
+\end{wrapfigure}
+
+
+In \cite{ozik_many_2015} we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple queue-based interfaces for passing parameters and simulation results, where a metaheuristic method (GA) developed with DEAP~\cite{fortin_deap:_2012} is used to control a large workflow. Our second use case shows how this is done with the EQ/Py extension. The benefit of using external libraries directly is threefold. First, there is no need to port the logic of a model exploration method into Swift/T, thereby removing the (possibly prohibitive) effort overhead and the possibility for translation errors. Second, the latest methods from the many available model exploration toolkits~(e.g., those in \SL{related:modelExp}) can be easily compared with each other for utility and performance. Third, the external libraries are not aware of their existence within the EMEWS framework, so methods developed without massively parallel computing resources in mind can be nonetheless utilized in such settings.
+
+
+
+In this use case we continue with the Repast Simphony JZombies demonstration model. For resident tasks, which retain state, the location of a worker is used so that the algorithm state can be repeatedly accessed. The \href{https://goo.gl/V6JTb2}{EQ/Py extension}~\cite{emews_site} provides an interface for interacting with Python-based resident tasks at specific locations. \CODE{deap} shows how EQ/Py is used in the current example. We import the extension in line 1. The \T{deap} function is defined to take the arguments \T{py\_rank} (a unique rank), \T{iters} (the number of GA iterations), \T{trials} (the number of stochastic variations per parameter combination, or individual), \T{pop} (the number of individuals in the GA population), and \T{seed} (the random seed to use for the GA). A location \T{ME} is generated from \T{ME\_rank} in line 4. This location is passed to the \T{EQPy\_init\_package} call, along with a package name (\T{deap\_ga}), which loads the Python file named \T{deap\_ga.py} (found by setting the appropriate \T{PYTHONPATH} environment variable), initializes input and output queues, and starts the \T{run} function in the \T{deap\_ga.py} file, before returning.
+
+At this point the resident task is available to interact with through the \T{EQPy\_get()} and \T{EQPy\_put()} calls, which get string values from and put string values into the resident task \T{OUT} and \T{IN} queues, respectively. The first call to \T{EQPy\_get()} (line 8) is made in order to push initialization parameters to the resident task via \T{EQPy\_put(ME, algo\_params)} (line 9). Then the \T{doDEAP()} function, to be discussed next, is called and, when it finishes executing, \T{EQPy\_stop()} is called to shut down the resident task.
+
+\CODE{doDEAP} shows the main DEAP workflow loop, a general pattern for interacting with resident tasks. Unlike the \T{foreach} loop, which parallelizes the contents of its loop, the Swift \T{for} loop iterates in a sequential fashion, only guided by dataflow considerations. The \T{for} loop continues until the \T{EQPy\_get()} call receives a message ``FINAL'', at which point \T{EQPy\_get()} is called again to retrieve the final results and \T{doDEAP()} exits the loop and returns (lines 12-15). Otherwise, the next set of parameters is obtained by splitting (line 17) the string variable retrieved on line 10. The contents of the \T{pop} array are individual parameter combinations, also referred to as individuals of a GA population. Each individual is then sent to a summary objective function \T{obj} which creates \T{trials} stochastic variations of the individual, evaluates their objective function (the number of Humans remaining, the \T{count\_humans} R code from \CODE{zombies_max_1}) and returns the average value, (not shown here, \href{https://goo.gl/x9V23n}{full script}~[\cite{emews_site}] on tutorial website). Lines 25-29 transform the summary objective results for each individual into a string representation that can be evaluated within the Python resident task, and this value is sent to it via \T{EQPy\_put()} (line 30).
+\newpage
+\begin{wrapfigure}{r}{2.7in}
+  \input papers/03/WinterSim/code/doDEAP.swift
+  \caption{The main DEAP workflow loop.
+   \label{sec:so:sec2:code:doDEAP}}
+\end{wrapfigure}
+
+The EQ/Py extension makes two functions, \T{IN\_get} and \T{OUT\_put}, available for the Python resident task and these can be used to pass candidate parameters to and get results from any Swift/T workflow. These functions are the complements to the \T{EQPy\_get()} and \T{EQPy\_put()} functions on the Swift/T side. The DEAP framework provides flexibility in defining custom components for its GA algorithms and we take advantage of this by overriding the \T{map()} function used to pass candidate parameters for evaluation to our custom  evaluator
+with \T{toolbox.register("map", queue\_map)}. The \T{queue\_map} function executes calls to \T{OUT\_put} and \T{IN\_get}. In this way the Python resident task is unaware of being a component in an EMEWS workflow. The full Python resident task code (deap\_ga.py) along with the full DEAP use case can be found in the \href{https://goo.gl/rl6bwo}{Use Case Two  (UC2) project}~\cite{emews_site}.
