@@ -139,7 +139,7 @@
           <!--<a alt="Collapse" class="icon icon-down-dir" id="tutorial-collapse"></a>-->
           <ul id="tab-list-active-files"> </ul>
           <div id="tab-dropdown">
-            <a id="tab-dropdown-button" class="icon-down-open"></a>
+            <a id="tab-dropdown-button" class="icon icon-down-open"></a>
           </div>
           <div id="tab-close">
             <a id="tab-close-button" class="icon-cancel-circled" title="<?php i18n("Close All") ?>"></a>
@@ -147,7 +147,11 @@
           <ul id="dropdown-list-active-files"></ul>
           <div class="bar"></div>
 
+
         </div>
+        <div class="collapse-dropdown">
+            <a alt="controls" id="controls" class="icon icon-down-dir" title="Controls the tutorial!" ></a>
+      </div>
         <div id="root-editor-wrapper" >
           <div id="editor-bottom-bar">
             <!--  <a id="settings" class="ico-wrapper"><span class="icon-doc-text"></span><?php i18n("Settings"); ?></a>-->

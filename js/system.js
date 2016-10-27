@@ -92,8 +92,12 @@
             });*/
 
             // Run resize command to fix render issues
-            codiad.editor.resize();
-            codiad.active.updateTabDropdownVisibility();
+            if(codiad.editor != null && codiad.editor != "undefined")
+            {
+              codiad.editor.resize();
+              codiad.active.updateTabDropdownVisibility();
+            }
+
         });
 
         $('#settings').click(function(){

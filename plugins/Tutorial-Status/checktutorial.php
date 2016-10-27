@@ -1,4 +1,4 @@
-<script src="plugins/Tutorial-Status/js/js.storage.js"></script>
+
 <script>
 
 
@@ -26,6 +26,7 @@ if (isset($_GET) && !empty($_GET))
 ?>
       <script>
         storage=Storages.localStorage;
+        localStorage.clear();
         if( storage.get("tutorial") == "" || storage.get("tutorial") == null)
         {
           storage.set('tutorial','tutorialwelcome');

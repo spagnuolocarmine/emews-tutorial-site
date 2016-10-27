@@ -60,6 +60,11 @@
               top: $('#tutorialtemplate').height() + 'px',
 
           });
+
+
+          $('#tab-dropdown').css("top",  ($("#editor-top-bar").offset().top)+'px');
+          $(".collapse-dropdown").css("top",$("#editor-top-bar").offset().top+'px');
+
           var _this = this;
 
             if ($('.editor-region').size() > 1) {
@@ -142,6 +147,7 @@
 
         },
          open: function(tutorial) {
+           console.log(tutorial);
              var _this = this;
              var tutorial_path=_this.path+"/tutorial/"+tutorial+".html";
             // console.log(tutorial_path);

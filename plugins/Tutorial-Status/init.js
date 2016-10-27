@@ -31,8 +31,8 @@
 
             var _this = this;
                 $.get(this.path+"template.php", function(data){
-                $('#side-projects').before(data);
 
+                $('#side-projects').before(data);
                 _this.resize();
 
                 //Set hidelistener
@@ -120,8 +120,10 @@
                     setTimeout(function(){
                       codiad.tutorial.open("tutorialwelcome");
                       storage=Storages.localStorage;
+                      localStorage.clear();
                       storage.set('tutorial','tutorialwelcome');
                     }, 100);
+
                 clearInterval(checkExist);
               }
             }, 20);
@@ -248,7 +250,7 @@
         highlightFiles: function(files)
         {
 
-          if(files.size == 0) return;
+          if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
                     Object.keys(files).forEach(function(key) {
@@ -265,7 +267,7 @@
         },
         openFiles: function(files)
         {
-          if(files.length == 0) return;
+          if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
                     var file;

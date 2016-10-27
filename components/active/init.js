@@ -49,7 +49,7 @@
         },
 
         open: function(path, content, mtime, inBackground, focus) {
-        
+
             if (focus === undefined) {
                 focus = true;
             }
@@ -103,6 +103,7 @@
 
             _this.initTabDropdownMenu();
             _this.updateTabDropdownVisibility();
+
 
             // Focus from list.
             $('#list-active-files a')
@@ -262,6 +263,7 @@
                     });
                 }
             });
+
 
             // Prompt if a user tries to close window without saving all filess
             window.onbeforeunload = function(e) {
@@ -814,7 +816,10 @@
             var button = $('#tab-dropdown-button');
             var closebutton = $('#tab-close-button');
 
+
+
             menu.appendTo($('body'));
+
 
             button.click(function(e) {
                 e.stopPropagation();
@@ -846,6 +851,7 @@
                 right: '20px',
                 width: '200px'
             });
+            menu.css('top',$("#editor-top-bar").offset().top+20+'px');
 
             menu.slideToggle('fast');
 
@@ -960,6 +966,7 @@
 
             if ($('#dropdown-list-active-files li').length > 0) {
                 $('#tab-dropdown').show();
+
             } else {
                 $('#tab-dropdown').hide();
                 // Be sure to hide the menu if it is opened.
