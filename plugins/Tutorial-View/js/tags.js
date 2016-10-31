@@ -54,7 +54,7 @@ highlightcodeProto.createdCallback = function() {
   span.addEventListener('click', function(e) {
 
     codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
-
+    codiad.tutorial.openEditor();
     setTimeout(function(){
       parent="";
       tobreak=false;
@@ -132,14 +132,14 @@ opencodeProto.createdCallback = function() {
   span.addEventListener('click', function(e) {
     codiad.filemanager.openFile(code,true);
     codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-
+  codiad.tutorial.openEditor();
     setTimeout(function(){
 
       parent="";
       tobreak=false;
       findElement($(".tutorial"), _this, parent, tobreak);
 
-      console.log(parent);
+    //  console.log(parent);
       //MOVE TOC
       var container = $('#toc'),
       scrollTo = $("#"+parent.getAttribute('tocid'));

@@ -388,6 +388,7 @@
                     codiad.message.error(i18n('Unable to open file in Browser'));
                  }
             }
+            codiad.tutorial.openEditor();
         },
 
         //////////////////////////////////////////////////////////////////
