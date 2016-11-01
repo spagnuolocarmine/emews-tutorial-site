@@ -231,6 +231,7 @@
 
         createObject: function(parent, path, type) {
             // NODE FORMAT: <li><a class="{type} {ext-file_extension}" data-type="{type}" data-path="{path}">{short_name}</a></li>
+
             var parentNode = $('#file-manager a[data-path="' + parent + '"]');
             if (!$('#file-manager a[data-path="' + path + '"]')
                 .length) { // Doesn't already exist
@@ -299,19 +300,26 @@
                             }
                             var appendage = '<ul style="' + display + '">';
                             $.each(files, function(index) {
-                                var ext = '';
-                                var name = files[index].name.replace(path, '');
-                                var nodeClass = 'none';
-                                name = name.split('/')
-                                    .join(' ');
-                                if (files[index].type == 'file') {
-                                    var ext = ' ext-' + name.split('.')
-                                        .pop();
+                                var str = files[index].name;
+                                var pieces = str.split('/');
+                                var filename = pieces[pieces.length-1];
+                                if (filename.substring(0, 1) != ".")
+                                {
+                                  //  console.log(filename);
+                                    var ext = '';
+                                    var name = files[index].name.replace(path, '');
+                                    var nodeClass = 'none';
+                                    name = name.split('/')
+                                        .join(' ');
+                                    if (files[index].type == 'file') {
+                                        var ext = ' ext-' + name.split('.')
+                                            .pop();
+                                    }
+                                    if(files[index].type == 'directory' && files[index].size > 0) {
+                                        nodeClass = 'plus';
+                                    }
+                                    appendage += '<li><span class="' + nodeClass + '"></span><a class="' + files[index].type + ext + '" data-type="' + files[index].type + '" data-path="' + files[index].name + '">' + name + '</a></li>';
                                 }
-                                if(files[index].type == 'directory' && files[index].size > 0) {
-                                    nodeClass = 'plus';
-                                }
-                                appendage += '<li><span class="' + nodeClass + '"></span><a class="' + files[index].type + ext + '" data-type="' + files[index].type + '" data-path="' + files[index].name + '">' + name + '</a></li>';
                             });
                             appendage += '</ul>';
                             if (rescan) {

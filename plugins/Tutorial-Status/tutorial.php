@@ -35,13 +35,16 @@
             }
             ?>
           <script>
-            var checkExist=setInterval(function() {
-              if ($('#file-manager').length) {
+            // var checkExist=setInterval(function() {
+            //   if ($('#file-manager').length) {
                   codiad.console.loadDefaultTutorial();
+                //  window.location.href = "?action=tutorial-view"
                 //  codiad.console.saveDefaultTutorial();
-                  clearInterval(checkExist);
-                }
-              }, 20);
+              //     clearInterval(checkExist);
+              //   }
+              // }, 20);
+
+              //window.location.href = "?action=tutorial-view";
 
 
               </script>

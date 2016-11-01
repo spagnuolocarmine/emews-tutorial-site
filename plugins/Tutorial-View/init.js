@@ -122,6 +122,38 @@
 
           }
         ,
+        openEditor:  function()
+        {
+          if(!editor_open)
+          {
+            $('#editor-top-bar').css("top",$(window).height()/2 - 34);
+            $('#tutorialcontent').css("height",$(window).height()/2 - 34);
+            $('.collapse-dropdown').css("top",$(window).height()/2 -34 );
+            $('#tab-dropdown').css("top",$(window).height()/2);
+            $('#editor-region').css("top",$(window).height()/2 - 25);
+            $('#root-editor-wrapper').show();
+            $('#cursor-position').show();
+            $('#downeditor').addClass("icon-down-dir");
+            $('#downeditor').removeClass("icon-up-dir");
+            editor_open = true;
+          }
+        },
+        closeEditor:  function()
+        {
+          if(editor_open)
+          {
+            editor_open = false;
+            $('#editor-top-bar').css("top",$(window).height()- 34);
+            $('#tutorialcontent').css("height",$(window).height()- 34);
+            $('.collapse-dropdown').css("top",$(window).height()- 34);
+            $('#tab-dropdown').css("top",$(window).height()- 34);
+            $('#editor-region').css("top",$(window).height()- 25);
+            $('#root-editor-wrapper').hide();
+            $('#cursor-position').hide();
+            $('#downeditor').removeClass("icon-down-dir");
+            $('#downeditor').addClass("icon-up-dir");
+          }
+        },
         highlightCode: function(code,fromline,toline,colorvalue)
         {
           if(colorvalue)
@@ -149,6 +181,7 @@
                 clearInterval(checkExist);
               }
             }, 20);
+
             amplify.publish('tutorial.onHighlight',[code,fromline,toline,colorvalue]);
         },
         openCode: function(code)
@@ -162,6 +195,7 @@
                 clearInterval(checkExist);
               }
             }, 20);
+
         },
         getHighlightMarker: function(code) {
             return markers[code];

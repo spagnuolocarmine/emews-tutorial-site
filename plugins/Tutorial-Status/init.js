@@ -82,6 +82,7 @@
             };
 
             amplify.subscribe('project.onOpen', function(){
+              
       			     _this.saveTutorial()
       			});/*
             amplify.subscribe('active.onOpen', function(){
@@ -118,36 +119,68 @@
           var checkExist=setInterval(function() {
             if ($('#file-manager').length) {
                     setTimeout(function(){
-                      codiad.tutorial.open("tutorialwelcome");
+                      console.log("load intro");
+                    //  codiad.tutorial.open("introduction");
                       storage=Storages.localStorage;
                       localStorage.clear();
-                      storage.set('tutorial','tutorialwelcome');
-                    }, 100);
+                      storage.set('tutorial','introduction');
 
+                      window.location.href = "?action=tutorial-view&tutorial=introduction";
+
+                    }, 100);
                 clearInterval(checkExist);
               }
             }, 20);
-              loading=false;
+
+            loading=false;
+        },
+        getFromQuery: function( name, url ) {
+            if (!url) url = location.href;
+            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var regexS = "[\\?&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec( url );
+            return results == null ? null : results[1];
         },
         loadTutorial: function(){
           storage=Storages.localStorage;
 
-          if(storage.get('tutorial') == "tutorialwelcome") { this.loadDefaultTutorial();return;}
-
+      //    if(storage.get('tutorial') == "introduction") { this.loadDefaultTutorial();return;}
           loading=true;
           var checkExist=setInterval(function() {
             if ($('#file-manager').length) {
                     setTimeout(function(){
+
+
+                      var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
+
+                      if(storage.get('tutorial')  != t_name)
+                      {
+                        window.location.href =  "?action=tutorial-view&tutorial="+storage.get('tutorial');
+
+                      }
+                      if(storage.get('tutorial') == null)
+                      {
+                        codiad.console.loadDefaultTutorial();
+                      }
+
                       codiad.project.open(storage.get('tutorial'));
                       codiad.console.loadParagraph(storage.get('paragraph'));
                       codiad.console.loadTocPosition(storage.get('toc'));
                       codiad.console.highlightFiles(storage.get('hightlights'));
                       codiad.console.openFiles(storage.get('files'));
+                      codiad.tutorial.closeEditor();
+                      ;
+
                     }, 100);
+
                 clearInterval(checkExist);
+
               }
             }, 20);
-              loading=false;
+
+
+          loading=false;
         },
         saveDefaultTutorial: function(){
           var checkExist=setInterval(function() {
@@ -169,7 +202,7 @@
         },
         saveTutorial: function(){
           storage=Storages.localStorage;
-          console.log("save"+codiad.project.getCurrent())
+
           storage.set('tutorial',codiad.project.getCurrent());
         /*  var paid;
           $("#toc ul").children().each(function(i, value){if($(this).hasClass("toc-active"))paid=$(this).attr("id");});

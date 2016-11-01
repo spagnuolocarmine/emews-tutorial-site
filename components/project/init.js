@@ -69,7 +69,7 @@
 
             $.get(this.controller + '?action=open&path=' + path, function(data) {
                 var projectInfo = codiad.jsend.parse(data);
-              
+
                 if (projectInfo != 'error') {
                     _this.loadCurrent();
                     codiad.modal.unload();
@@ -77,6 +77,13 @@
                     localStorage.removeItem("lastSearched");
                     /* Notify listeners. */
                     amplify.publish('project.onOpen', path);
+
+                    var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
+                    if(Storages.localStorage.get('tutorial')  != t_name)
+                    {
+                      window.location.href =  "?action=tutorial-view&tutorial="+ Storages.localStorage.get('tutorial');
+                    }
+
                 }
             });
         },

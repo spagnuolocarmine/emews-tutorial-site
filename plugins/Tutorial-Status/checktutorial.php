@@ -1,5 +1,5 @@
 
-<script>
+<script src="plugins/Tutorial-Status/js/js.storage.js">
 
 
 </script>
@@ -25,11 +25,12 @@ if (isset($_GET) && !empty($_GET))
 
 ?>
       <script>
+      //  $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
         storage=Storages.localStorage;
-        localStorage.clear();
+      
         if( storage.get("tutorial") == "" || storage.get("tutorial") == null)
         {
-          storage.set('tutorial','tutorialwelcome');
+          storage.set('tutorial','introduction');
           storage.set('paragraph','');
           storage.set('toc','');
           storage.set('files',[]);
