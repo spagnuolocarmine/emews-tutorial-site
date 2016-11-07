@@ -63,7 +63,7 @@
           });
 
 
-          $('#tab-dropdown').css("top",  ($("#editor-top-bar").offset().top)+'px');
+          $('#tab-dropdown').css("top",($("#editor-top-bar").offset().top - 40 )+'px');
           $(".collapse-dropdown").css("top",$("#editor-top-bar").offset().top+'px');
 
           var _this = this;
@@ -106,7 +106,7 @@
               }else{
                 $('#editor-top-bar').css("top",$(window).height()/2 - 34);
                 $('#tutorialcontent').css("height",$(window).height()/2 - 34);
-                $('.collapse-dropdown').css("top",$(window).height()/2 -34 );
+                $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
                 $('#tab-dropdown').css("top",$(window).height()/2);
                 $('#editor-region').css("top",$(window).height()/2 - 25);
                 $('#root-editor-wrapper').show();
