@@ -815,7 +815,7 @@
             var menu = $('#dropdown-list-active-files');
             var button = $('#tab-dropdown-button');
             var closebutton = $('#tab-close-button');
-
+            button.css('top',$("#editor-top-bar").offset().top+20+'px');
 
 
             menu.appendTo($('body'));

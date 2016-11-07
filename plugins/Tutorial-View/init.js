@@ -63,7 +63,8 @@
           });
 
 
-          $('#tab-dropdown').css("top",($("#editor-top-bar").offset().top - 40 )+'px');
+          $('#tab-dropdown').css("top",($("#editor-top-bar").offset().top)+'px');
+
           $(".collapse-dropdown").css("top",$("#editor-top-bar").offset().top+'px');
 
           var _this = this;
@@ -90,7 +91,7 @@
             });
 
             $('#downeditor').click(function(){
-              console.log("downeditor");
+
               if(editor_open)
               {
                 editor_open = false;
@@ -107,7 +108,7 @@
                 $('#editor-top-bar').css("top",$(window).height()/2 - 34);
                 $('#tutorialcontent').css("height",$(window).height()/2 - 34);
                 $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
-                $('#tab-dropdown').css("top",$(window).height()/2);
+                $('#tab-dropdown').css("top",$(window).height()/2 - 34);
                 $('#editor-region').css("top",$(window).height()/2 - 25);
                 $('#root-editor-wrapper').show();
                 $('#cursor-position').show();
@@ -126,10 +127,11 @@
         {
           if(!editor_open)
           {
+            console.log("gesocrist");
             $('#editor-top-bar').css("top",$(window).height()/2 - 34);
             $('#tutorialcontent').css("height",$(window).height()/2 - 34);
-            $('.collapse-dropdown').css("top",$(window).height()/2 -34 );
-            $('#tab-dropdown').css("top",$(window).height()/2);
+            $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
+            $('#tab-dropdown').css("top",$(window).height()/2 - 34);
             $('#editor-region').css("top",$(window).height()/2 - 25);
             $('#root-editor-wrapper').show();
             $('#cursor-position').show();
@@ -146,7 +148,7 @@
             $('#editor-top-bar').css("top",$(window).height()- 34);
             $('#tutorialcontent').css("height",$(window).height()- 34);
             $('.collapse-dropdown').css("top",$(window).height()- 34);
-            $('#tab-dropdown').css("top",$(window).height()- 34);
+            $('#tab-dropdown').css("top",$(window).height() - 34);
             $('#editor-region').css("top",$(window).height()- 25);
             $('#root-editor-wrapper').hide();
             $('#cursor-position').hide();
