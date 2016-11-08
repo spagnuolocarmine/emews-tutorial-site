@@ -127,7 +127,7 @@
         {
           if(!editor_open)
           {
-            console.log("gesocrist");
+
             $('#editor-top-bar').css("top",$(window).height()/2 - 34);
             $('#tutorialcontent').css("height",$(window).height()/2 - 34);
             $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
@@ -207,9 +207,27 @@
             return markers[code]=markerid;
 
         },
+        replaceElementTag: function(targetSelector, newTagString) {
+          var checkExist=setInterval(function() {
+            if ($("#modal-content").length) {
+                $(targetSelector).each(function(){
+                  var newElem = $(newTagString, {html: $(this).html()});
+                  $.each(this.attributes, function() {
+                    newElem.attr(this.name, this.value);
+                  });
+                  $(this).replaceWith(newElem);
+                });
+                clearInterval(checkExist);
+            }
+          }, 20);
+
+        },
         showControls: function(data_file) {
             var _this = this;
             codiad.modal.load(200, 'plugins/Tutorial-View/controls.php');
+
+
+            //
             codiad.modal.hideOverlay();
 
         },

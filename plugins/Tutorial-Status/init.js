@@ -12,6 +12,8 @@
         storage;
     var loading = false;
 
+    var currrent_tutorial = "";
+
     // Instantiates plugin
     $(function() {
 
@@ -82,24 +84,28 @@
             };
 
             amplify.subscribe('project.onOpen', function(){
-              
-      			     _this.saveTutorial()
-      			});/*
-            amplify.subscribe('active.onOpen', function(){
+      			     _this.saveTutorial(["tutorial"])
+      			});
+              /*
+            amplify.subscribe('tutorial.save', function(){
                  _this.saveTutorial()
             });
-            amplify.subscribe('active.onClose', function(){
-                 _this.saveTutorial()
-            });
+
+
             amplify.subscribe('tutorial.onParagraph', function(){
                  _this.saveTutorial()
             });
             amplify.subscribe('tutorial.onHighlight', function(){
                  _this.saveTutorial()
-            });
-            amplify.subscribe('project.onToc', function(){
-                 _this.saveTutorial()
             });*/
+            amplify.subscribe('tutorial.onToc', function(message){
+                 _this.saveTutorial(message)
+
+            });
+            amplify.subscribe('active.onOpen', function(){
+
+                _this.saveTutorial(["openfile",codiad.active.getPath()]);
+            });
 
         },
            /**
@@ -157,11 +163,11 @@
                       if(storage.get('tutorial')  != t_name)
                       {
                         window.location.href =  "?action=tutorial-view&tutorial="+storage.get('tutorial');
-
                       }
                       if(storage.get('tutorial') == null)
                       {
                         codiad.console.loadDefaultTutorial();
+
                       }
 
                       codiad.project.open(storage.get('tutorial'));
@@ -200,20 +206,45 @@
           }, 20);
 
         },
-        saveTutorial: function(){
+        saveTutorial: function(message){
           storage=Storages.localStorage;
+          switch(message[0]) {
+            case "tutorial":
 
-          storage.set('tutorial',codiad.project.getCurrent());
-        /*  var paid;
-          $("#toc ul").children().each(function(i, value){if($(this).hasClass("toc-active"))paid=$(this).attr("id");});
-          console.log("saved toc t"+paid)
-          storage.set('paragraph',paid);
+                storage.set('tutorial',codiad.project.getCurrent());
+                break;
+            case "toc":
+
+                  // storage.set('toc',message[1]);
+                break;
+            case "openfile":
+            console.log("open file "+message[1]);
+                // var files = storage.get("files");
+                // if(files == null)
+                //   storage.set("files", [message[1]]);
+                // else
+                // {
+                //   if( !(message[1] in files))
+                //     files.push(message[1]);
+                //   storage.set("files", files);
+                //  console.log("save "+ files);
+                // }
+              
+                break;
+            default:
+                console.log("no message");
+        }
+
+          /*
+          var paid;
+            $("#toc ul").children().each(function(i, value){if($(this).hasClass("toc-active"))paid=$(this).attr("id");});
+            storage.set('paragraph',paid);
           storage.set('toc',"t"+paid);*/
           // storage.set('files',files);
           // storage.set('hightlights',highlights);
         },
         loadTOC: function() {
-
+              storage=Storages.localStorage;
               this.resize();
               $('#toc').toc({
                     'selectors': 'h1,h2,h3', //elements to use as headings
@@ -221,7 +252,7 @@
                     'smoothScrolling': true, //enable or disable smooth scrolling on click
                     'prefix': 'toc', //prefix for anchor tags and class names
                     'onHighlight': function(el) {
-
+                        console.log("bha");
                 			}, //called when a new section is highlighted
                     'highlightOnScroll': false, //add class to heading that is currently in focus
                     'highlightOffset': 100, //offset to trigger the next headline
@@ -235,9 +266,12 @@
                       return $heading[0].tagName.toLowerCase();
                 }
                 });
+                if(storage.get('toc')==null)
                 $('#toc li:first-child').addClass("toc-active");
                 $('#toc ul:first-child').children().each(function (index, value) {
                   //  console.log(index);
+                    var code= 'amplify.publish("tutorial.onToc", ["toc","ttoc'+index+'"]);';
+                    $(this).attr('onclick', code);
                     $(this).attr('id', 'ttoc'+index);
 
                 });
@@ -245,7 +279,8 @@
         },
         loadParagraph: function (id)
         {
-            if(id == "") return;
+
+          if(id == "") return;
           var container = $('#tutorialcontent');
           var checkExist=setInterval(function() {
             if ($("#"+id).length) {
@@ -257,28 +292,28 @@
                 clearInterval(checkExist);
               }
             }, 20);
-            amplify.publish('tutorila.onParagraph', id);
+            amplify.publish('tutorial.onParagraph', id);
         },
         loadTocPosition: function (id)
         {
+          console.log("toc pos "+id);
           if(id == "") return;
           var container = $('#toc');
           var checkExist=setInterval(function() {
             if ($("#"+id).length) {
                      var scrollTo = $("#"+id);
-                     $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
 
+                     $("#toc ul").children().each(function(i, value){ $(this).removeClass("toc-active");});
 
                      $("#toc").animate({
                          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
-
                      }, 200);
                      setTimeout(function(){$("#"+id).addClass("toc-active");},300);
 
                 clearInterval(checkExist);
               }
             }, 20);
-              amplify.publish('tutorila.onToc', id);
+
         },
         highlightFiles: function(files)
         {
@@ -306,7 +341,7 @@
                     var file;
                     for(file in files)
                     {
-                      console.log(files[file]);
+
                         codiad.tutorial.openCode(files[file]);
                     }
 
