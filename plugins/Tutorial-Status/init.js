@@ -254,18 +254,18 @@
 
                 break;
                 case "closefile":
-                  //  console.log("close file "+message[1]);
+                    console.log("close file "+message[1]);
                     var mapfiles = storage.get("files");
-                    if(mapfiles == null) break;
+                    if(mapfiles == null || mapfiles[storage.get("tutorial")] == undefined) break;
                     var index = mapfiles[storage.get("tutorial")].indexOf(message[1]);
                   //  var found = $.inArray(message[1], mapfiles[storage.get("tutorial")]) > -1;
 
                     if(index > -1)
                     {
-                    //  console.log("removed" + index);
+                      console.log("removed" + index);
 
-                        mapfiles[storage.get("tutorial")]=mapfiles[storage.get("tutorial")].splice(index,1);
-                      //  console.log(mapfiles[storage.get("tutorial")].splice(index,1));
+                        mapfiles[storage.get("tutorial")].splice(index,1);
+                        console.log(  mapfiles[storage.get("tutorial")]);
                         storage.set('files',mapfiles);
                     }
                     break;
