@@ -265,7 +265,7 @@
                     //  console.log("removed" + index);
 
                         mapfiles[storage.get("tutorial")]=mapfiles[storage.get("tutorial")].splice(index,1);
-                        console.log(mapfiles[storage.get("tutorial")].splice(index,1));
+                      //  console.log(mapfiles[storage.get("tutorial")].splice(index,1));
                         storage.set('files',mapfiles);
                     }
                     break;
@@ -337,9 +337,9 @@
         {
           if(map == null) return;
           var id=map[tutorial];
-          console.log(id);
+        //  console.log(id);
           if(id == undefined) {console.log("exit");return;}
-          console.log("toc pos "+id);
+      //    console.log("toc pos "+id);
           if(id == "") return;
           var container = $('#toc');
           var checkExist=setInterval(function() {
@@ -389,7 +389,7 @@
         openFiles: function(mapfiles, tutorial)
         {
           var files = mapfiles[tutorial];
-          console.log(files);
+        //  console.log(files);
           if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
