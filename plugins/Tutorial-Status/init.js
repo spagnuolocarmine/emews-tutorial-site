@@ -100,14 +100,11 @@
             });*/
             amplify.subscribe('tutorial.onToc', function(message){
                  _this.saveTutorial(message)
-
             });
             amplify.subscribe('active.onOpen', function(path){
-
                 _this.saveTutorial(["openfile",path]);
             });
             amplify.subscribe('active.onClose', function(path){
-
                 _this.saveTutorial(["closefile",path]);
             });
 
@@ -259,13 +256,11 @@
                     if(mapfiles == null || mapfiles[storage.get("tutorial")] == undefined) break;
                     var index = mapfiles[storage.get("tutorial")].indexOf(message[1]);
                   //  var found = $.inArray(message[1], mapfiles[storage.get("tutorial")]) > -1;
-
                     if(index > -1)
                     {
-                      console.log("removed" + index);
-
+                      // console.log("removed" + index);
                         mapfiles[storage.get("tutorial")].splice(index,1);
-                        console.log(  mapfiles[storage.get("tutorial")]);
+                        // console.log(  mapfiles[storage.get("tutorial")]);
                         storage.set('files',mapfiles);
                     }
                     break;
@@ -388,20 +383,21 @@
         },
         openFiles: function(mapfiles, tutorial)
         {
+          if(mapfiles == null) return;
           var files = mapfiles[tutorial];
-        //  console.log(files);
+        
           if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
                     var file;
+                    var delay=0;
                     for(file in files)
                     {
-
-                        codiad.tutorial.openCode(files[file]);
+                      delay=codiad.tutorial.openCode(files[file],delay);
                     }
 
                 }
-            }, 1000);
+            }, 10);
         }
 
     };
