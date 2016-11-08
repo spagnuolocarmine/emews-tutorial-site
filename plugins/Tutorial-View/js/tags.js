@@ -71,6 +71,7 @@ highlightcodeProto.createdCallback = function() {
         scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
       }, 200);
+      amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid')]);
       //MOVE FILE manager search li with code
       var lielementcode;
       var container = $('#file-manager');
@@ -86,6 +87,8 @@ highlightcodeProto.createdCallback = function() {
         scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
       }, 200);
+
+
 
     }, 100);
 
@@ -149,6 +152,7 @@ opencodeProto.createdCallback = function() {
         scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
       }, 200);
+      amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid')]);
       //MOVE FILE manager search li with code
       var lielementcode;
       var container = $('#file-manager');

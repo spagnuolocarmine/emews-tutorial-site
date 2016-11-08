@@ -186,18 +186,23 @@
 
             amplify.publish('tutorial.onHighlight',[code,fromline,toline,colorvalue]);
         },
-        openCode: function(code)
+        openCode: function(code, delay)
         {
-
+          var totdelay=delay+500;
           var checkExist=setInterval(function() {
                 if ($('#file-manager').length) {
+
+                setTimeout(function() {
+
                   codiad.filemanager.openFile(code,true);
                   codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
 
+                }, totdelay);
                 clearInterval(checkExist);
+
               }
             }, 20);
-
+            return totdelay;
         },
         getHighlightMarker: function(code) {
             return markers[code];
@@ -225,8 +230,6 @@
         showControls: function(data_file) {
             var _this = this;
             codiad.modal.load(200, 'plugins/Tutorial-View/controls.php');
-
-
             //
             codiad.modal.hideOverlay();
 

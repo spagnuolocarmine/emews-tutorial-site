@@ -100,11 +100,12 @@
             });*/
             amplify.subscribe('tutorial.onToc', function(message){
                  _this.saveTutorial(message)
-
             });
-            amplify.subscribe('active.onOpen', function(){
-
-                _this.saveTutorial(["openfile",codiad.active.getPath()]);
+            amplify.subscribe('active.onOpen', function(path){
+                _this.saveTutorial(["openfile",path]);
+            });
+            amplify.subscribe('active.onClose', function(path){
+                _this.saveTutorial(["closefile",path]);
             });
 
         },
@@ -171,10 +172,10 @@
                       }
 
                       codiad.project.open(storage.get('tutorial'));
-                      codiad.console.loadParagraph(storage.get('paragraph'));
-                      codiad.console.loadTocPosition(storage.get('toc'));
+                    //  codiad.console.loadParagraph(storage.get('paragraph'));
+                      codiad.console.loadTocPosition(storage.get('toc'), storage.get('tutorial'));
                       codiad.console.highlightFiles(storage.get('hightlights'));
-                      codiad.console.openFiles(storage.get('files'));
+                      codiad.console.openFiles(storage.get('files'), storage.get('tutorial'));
                       codiad.tutorial.closeEditor();
                       ;
 
@@ -214,23 +215,55 @@
                 storage.set('tutorial',codiad.project.getCurrent());
                 break;
             case "toc":
-
-                  // storage.set('toc',message[1]);
+              //  console.log("save toc "+message[1]);
+                var maptoc = storage.get("toc");
+                if(maptoc == null)
+                {
+                  var tmpmap = new Map();
+                  tmpmap[storage.get("tutorial")] = "";
+                  storage.set("toc", tmpmap);
+                }
+                maptoc = storage.get("toc");
+                maptoc[storage.get("tutorial")]= message[1];
+                storage.set('toc',maptoc);
                 break;
             case "openfile":
-            console.log("open file "+message[1]);
-                // var files = storage.get("files");
-                // if(files == null)
-                //   storage.set("files", [message[1]]);
-                // else
-                // {
-                //   if( !(message[1] in files))
-                //     files.push(message[1]);
-                //   storage.set("files", files);
-                //  console.log("save "+ files);
-                // }
-              
+              //  console.log("open file "+message[1]);
+                var mapfiles = storage.get("files");
+                if(mapfiles == null)
+                {
+                  var tmpmap = new Map();
+                  storage.set("files", tmpmap);
+                }
+              //  console.log("tutorial "+storage.get("tutorial"));
+                mapfiles = storage.get("files");
+                if(mapfiles[storage.get("tutorial")] == null || mapfiles[storage.get("tutorial")] == undefined)
+                  mapfiles[storage.get("tutorial")] = [];
+
+
+                var found = $.inArray(message[1], mapfiles[storage.get("tutorial")]) > -1;
+                if(!found)
+                {
+                    mapfiles[storage.get("tutorial")].push(message[1]);
+                    storage.set('files',mapfiles);
+
+                }
+
                 break;
+                case "closefile":
+                    console.log("close file "+message[1]);
+                    var mapfiles = storage.get("files");
+                    if(mapfiles == null || mapfiles[storage.get("tutorial")] == undefined) break;
+                    var index = mapfiles[storage.get("tutorial")].indexOf(message[1]);
+                  //  var found = $.inArray(message[1], mapfiles[storage.get("tutorial")]) > -1;
+                    if(index > -1)
+                    {
+                      // console.log("removed" + index);
+                        mapfiles[storage.get("tutorial")].splice(index,1);
+                        // console.log(  mapfiles[storage.get("tutorial")]);
+                        storage.set('files',mapfiles);
+                    }
+                    break;
             default:
                 console.log("no message");
         }
@@ -266,7 +299,8 @@
                       return $heading[0].tagName.toLowerCase();
                 }
                 });
-                if(storage.get('toc')==null)
+                var map = storage.get('toc');
+                if(map==null || map[storage.get('tutorial')] == null || map[storage.get('tutorial')] == undefined)
                 $('#toc li:first-child').addClass("toc-active");
                 $('#toc ul:first-child').children().each(function (index, value) {
                   //  console.log(index);
@@ -294,9 +328,13 @@
             }, 20);
             amplify.publish('tutorial.onParagraph', id);
         },
-        loadTocPosition: function (id)
+        loadTocPosition: function (map, tutorial)
         {
-          console.log("toc pos "+id);
+          if(map == null) return;
+          var id=map[tutorial];
+        //  console.log(id);
+          if(id == undefined) {console.log("exit");return;}
+      //    console.log("toc pos "+id);
           if(id == "") return;
           var container = $('#toc');
           var checkExist=setInterval(function() {
@@ -313,6 +351,16 @@
                 clearInterval(checkExist);
               }
             }, 20);
+
+            var checkExist2=setInterval(function() {
+              if ($("#"+id.substring(1)).length) {
+                       $("#tutorialcontent").animate({
+                           scrollTop:   $("#"+id.substring(1)).offset().top - $('#tutorialcontent').offset().top + $('#tutorialcontent').scrollTop()
+
+                       }, 200);
+                  clearInterval(checkExist2);
+                }
+              }, 20);
 
         },
         highlightFiles: function(files)
@@ -333,20 +381,23 @@
                 }
             }, 1000);
         },
-        openFiles: function(files)
+        openFiles: function(mapfiles, tutorial)
         {
+          if(mapfiles == null) return;
+          var files = mapfiles[tutorial];
+        
           if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
                     var file;
+                    var delay=0;
                     for(file in files)
                     {
-
-                        codiad.tutorial.openCode(files[file]);
+                      delay=codiad.tutorial.openCode(files[file],delay);
                     }
 
                 }
-            }, 1000);
+            }, 10);
         }
 
     };
