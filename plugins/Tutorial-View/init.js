@@ -225,8 +225,6 @@
         showControls: function(data_file) {
             var _this = this;
             codiad.modal.load(200, 'plugins/Tutorial-View/controls.php');
-
-
             //
             codiad.modal.hideOverlay();
 
