@@ -55,7 +55,7 @@ Tutorial goals:
         <p>
           In order for Swift/T to call an external application such as the Zombies model,
           the application must be wrapped in a
-          <modal-data data="./swift.html" ref="external_execution">leaf</modal-data> function.
+          <modal-data data="plugins/Tutorial-View/tutorial/swift.html" ref="external_execution">leaf</modal-data> function.
           The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
           choice for integrating the model into a Swift script. Repast Simphony provides command line compatible functionality
           via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
@@ -271,7 +271,7 @@ Tutorial goals:
           Swift scripts are typically launched using a shell script. This allows
           you to export useful values as environment variables, and to properly
           configure the swift workflow to be run on HPC resources. If you use
-          the <modal-data data="./templating.html" ref="EMEWS_templates">EMEWS templates</modal-data>
+          the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="EMEWS_templates">EMEWS templates</modal-data>
           such a shell script will be created for you. The shell script for running
           our simple workflow can be see at
           <open-code code="uc1/swift/workflow.sh">workflow.sh</open-code>.
