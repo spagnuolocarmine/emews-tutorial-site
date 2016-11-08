@@ -188,3 +188,72 @@ try {
   //  console.log('already exists', e);
 }
 // Register the new element.
+
+
+//OPEN_MODAL_TUTORIAL
+// Create a new object based of the HTMLElement prototype
+var modaltutorialProto = Object.create(HTMLElement.prototype);
+
+
+// Set up the element.
+modaltutorialProto.createdCallback = function() {
+  // Create a Shadow Root
+  var shadow = this.createShadowRoot();
+  var _this=this;
+
+  // Create a standard img element and set it's attributes.
+  var span = document.createElement('span');
+  span.innerHTML=this.innerHTML;
+  span.style.textDecoration = "underline";
+
+  // Add the image to the Shadow Root.
+  shadow.appendChild(span);
+  var data=this.getAttribute('data');
+  var ref=this.getAttribute('ref');
+  // Add an event listener to the image.
+  span.addEventListener('click', function(e) {
+
+    codiad.modal.load(400, data);
+    $('#modal-content').addClass("tutorial");
+    $('#modal-content').css("width",$(window).width()/2);
+    codiad.tutorial.replaceElementTag('#modal-content open-code', '<span></span>');
+    codiad.tutorial.replaceElementTag("#modal-content highlight-code", "<span></span>");
+    codiad.tutorial.replaceElementTag("#modal-content modal-data", "<span></span>");
+    codiad.modal.hideOverlay();
+
+    var checkExist=setInterval(function() {
+      if ($("#modal")) {
+          var scrollTo = $("#"+ref);
+          if(scrollTo != null)
+          setTimeout(function(){
+            console.log("scroll");
+            $("#modal").animate({
+              scrollTop:   scrollTo.offset().top -  $("#modal").offset().top +   $("#modal").scrollTop()
+            }, 200);
+          },200);
+          clearInterval(checkExist);
+        }
+      }, 20);
+
+
+
+  });
+  span.style.color = "yellow";
+  span.addEventListener('mouseenter', function(e) {
+
+    span.style.color = "red";
+  });
+  span.addEventListener('mouseleave', function(e) {
+
+    span.style.color = "yellow";
+  });
+
+};
+try {
+  var modaltutorial = document.registerElement('modal-data', {
+    prototype: modaltutorialProto
+  });
+
+} catch(e) {
+  //  console.log('already exists', e);
+}

@@ -8,18 +8,6 @@
     {
         "title": "Break",
         "icon": null,
-        "applies-to" : "directory-only",
-        "onclick": null
-    },
-    {
-        "title": "Preview",
-        "icon": "icon-eye",
-        "applies-to" : "both no-external",
-        "onclick": "codiad.filemanager.openInBrowser($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Break",
-        "icon": null,
         "applies-to" : "file-only no-external",
         "onclick": null
     },
