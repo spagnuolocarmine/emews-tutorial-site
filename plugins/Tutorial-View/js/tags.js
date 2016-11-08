@@ -221,6 +221,21 @@ modaltutorialProto.createdCallback = function() {
     codiad.tutorial.replaceElementTag("#modal-content modal-data", "<span></span>");
     codiad.modal.hideOverlay();
 
+    var checkExist=setInterval(function() {
+      if ($("#modal")) {
+          var scrollTo = $("#"+ref);
+          if(scrollTo != null)
+          setTimeout(function(){
+            console.log("scroll");
+            $("#modal").animate({
+              scrollTop:   scrollTo.offset().top -  $("#modal").offset().top +   $("#modal").scrollTop()
+            }, 200);
+          },200);
+          clearInterval(checkExist);
+        }
+      }, 20);
+
+
 
   });
   span.style.color = "yellow";
