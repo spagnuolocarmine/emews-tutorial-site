@@ -15,7 +15,11 @@
     // Instantiates plugin
     $(function() {
         codiad.tutorial.init();
-        $.loadScript('plugins/Tutorial-View/js/tags.js');
+        $.loadScript('plugins/Tutorial-View/custom-tags/bower_components/webcomponentsjs/webcomponents-lite.min.js');
+        $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/highlight-code.html">');
+        $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-code.html">');
+        $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/modal-data.html">');
+      //  $.loadScript('plugins/Tutorial-View/js/tags.js');
     });
 
     codiad.tutorial = {

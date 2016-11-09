@@ -1,0 +1,80 @@
+<!-- Imports polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+<script src="../js/tags.js"></script>
+<!-- Defines element markup -->
+<dom-module id="open-code">
+    <style>
+      :host {
+        color:blue;
+        text-decoration: underline;
+      }
+      :host:hover {
+        color: red;
+      }
+
+    </style>
+    <template>
+        <content id="content"></content>
+    </template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+Polymer({
+    is: 'open-code',
+    properties: {
+        code: {
+            type: String,
+            value: ''
+        }
+    },
+    listeners: {
+      'click': 'action'
+    },
+    action: function(e){
+      e.stopPropagation();
+      var code=this.code;
+      var colorvalue=this.hcolor;
+
+      codiad.filemanager.openFile(code,true);
+      codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+      codiad.tutorial.openEditor();
+      setTimeout(function(){
+
+        parent="";
+        tobreak=false;
+        findElement($(".tutorial"), this, parent, tobreak);
+
+      //  console.log(parent);
+        //MOVE TOC
+        var container = $('#toc'),
+        scrollTo = $("#"+parent.getAttribute('tocid'));
+        $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+        $("#"+parent.getAttribute('tocid')).addClass("toc-active");
+        $("#toc").animate({
+          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+
+        }, 200);
+        amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid')]);
+        //MOVE FILE manager search li with code
+        var lielementcode;
+        var container = $('#file-manager');
+        container.find("li").each(function(i, value){
+
+          if($(this).find("a").attr("data-path") == code) lielementcode=this;
+
+        });
+
+        var scrollTo = $(lielementcode);
+        if(scrollTo != null)
+        $("#file-manager").animate({
+          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+
+        }, 200);
+
+      }, 100);
+    }
+});
+
+
+</script>

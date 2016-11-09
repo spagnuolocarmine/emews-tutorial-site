@@ -1,0 +1,69 @@
+<!-- Imports polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="modal-data">
+    <style>
+      :host {
+        color:blue;
+        text-decoration: underline;
+      }
+      :host:hover {
+        color: red;
+      }
+
+    </style>
+    <template>
+        <content id="content"></content>
+    </template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+Polymer({
+    is: 'modal-data',
+    properties: {
+        data: {
+            type: String,
+            value: ''
+        },
+        ref: {
+            type: String,
+            value: ''
+        }
+    },
+    listeners: {
+      'click': 'action'
+    },
+    action: function(e){
+      e.stopPropagation();
+      var data=this.data;
+      var ref=this.ref;
+
+      codiad.modal.load(400, data);
+      $('#modal-content').addClass("tutorial");
+      $('#modal-content').css("width",$(window).width()/2);
+      codiad.tutorial.replaceElementTag('#modal-content open-code', '<span></span>');
+      codiad.tutorial.replaceElementTag("#modal-content highlight-code", "<span></span>");
+      codiad.tutorial.replaceElementTag("#modal-content modal-data", "<span></span>");
+      codiad.modal.hideOverlay();
+
+      var checkExist=setInterval(function() {
+        if ($("#modal")) {
+            var scrollTo = $("#"+ref);
+            if(scrollTo != null)
+            setTimeout(function(){
+              console.log("scroll");
+              $("#modal").animate({
+                scrollTop:   scrollTo.offset().top -  $("#modal").offset().top +   $("#modal").scrollTop()
+              }, 200);
+            },200);
+            clearInterval(checkExist);
+          }
+        }, 20);
+
+    }
+});
+
+
+</script>

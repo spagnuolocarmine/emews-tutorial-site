@@ -1,0 +1,91 @@
+<!-- Imports polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="highlight-code">
+    <style>
+      :host {
+        color:blue;
+        text-decoration: underline;
+      }
+      :host:hover {
+        color: red;
+      }
+
+    </style>
+    <template>
+        <content id="content"></content>
+    </template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+Polymer({
+    is: 'highlight-code',
+    properties: {
+        code: {
+            type: String,
+            value: ''
+        },
+        color: {
+            type: String,
+            value: ''
+        },
+        text: {
+            type: String,
+            value: ''
+        },
+        from: {
+            type: String,
+            value: ''
+        },
+        to: {
+            type: String,
+            value: ''
+        },
+    },
+    listeners: {
+      'click': 'action'
+    },
+    action: function(e){
+      e.stopPropagation();
+      var code=this.code;
+      var colorvalue=this.color;
+      var fromline=this.from;
+      var toline=this.to;
+      codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
+      codiad.tutorial.openEditor();
+      setTimeout(function(){
+        parent="";
+        tobreak=false;
+        findElement($(".tutorial"), this, parent, tobreak);
+        //MOVE TOC
+        var container = $('#toc'),
+        scrollTo = $("#"+parent.getAttribute('tocid'));
+
+        $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+        $("#"+parent.getAttribute('tocid')).addClass("toc-active");
+        $("#toc").animate({
+          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+
+        }, 200);
+        amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid')]);
+        //MOVE FILE manager search li with code
+        var lielementcode;
+        var container = $('#file-manager');
+        container.find("li").each(function(i, value){
+          if($(this).find("a").attr("data-path") == code) lielementcode=this;
+        });
+
+        var scrollTo = $(lielementcode);
+        if(scrollTo != null)
+        $("#file-manager").animate({
+          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+
+        }, 200);
+      }, 100);
+    }
+});
+
+
+</script>

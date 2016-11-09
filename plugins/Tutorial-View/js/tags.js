@@ -26,11 +26,9 @@ function findElement(source_element, element)
       default:
       findElement(this, element, parent, tobreak);
     }
-
-
   });
 }
-
+/*
 // Create a new object based of the HTMLElement prototype
 var highlightcodeProto = Object.create(HTMLElement.prototype);
 
@@ -59,8 +57,6 @@ highlightcodeProto.createdCallback = function() {
       parent="";
       tobreak=false;
       findElement($(".tutorial"), _this, parent, tobreak);
-
-
       //MOVE TOC
       var container = $('#toc'),
       scrollTo = $("#"+parent.getAttribute('tocid'));
@@ -87,9 +83,6 @@ highlightcodeProto.createdCallback = function() {
         scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
       }, 200);
-
-
-
     }, 100);
 
   });
@@ -135,7 +128,7 @@ opencodeProto.createdCallback = function() {
   span.addEventListener('click', function(e) {
     codiad.filemanager.openFile(code,true);
     codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-  codiad.tutorial.openEditor();
+    codiad.tutorial.openEditor();
     setTimeout(function(){
 
       parent="";
@@ -254,10 +247,12 @@ modaltutorialProto.createdCallback = function() {
 
 };
 try {
+  console.log("trye register element");
   var modaltutorial = document.registerElement('modal-data', {
     prototype: modaltutorialProto
   });
 
 } catch(e) {
-  //  console.log('already exists', e);
+   console.log('already exists', e);
 }
+*/
