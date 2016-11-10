@@ -202,7 +202,7 @@
             $("#finder-wrapper").hide('fast');
             $("#sb-left-title h2").show('fast');
             clearInterval(this._poller);
-            this.finderMenu.hide();
+        //    this.finderMenu.hide();
             this._clearFilters();
             $("#finder-quick").show();
             $("#sb-left-title").removeClass('active');
@@ -255,7 +255,7 @@
                 }
                 $finderOptionsMenu.hide();
             });
-            
+
             // Setup the menu for selection of finding strategy
             $('#finder-quick').click(function(e){
                 codiad.filemanager['search'](codiad.project.getCurrent());

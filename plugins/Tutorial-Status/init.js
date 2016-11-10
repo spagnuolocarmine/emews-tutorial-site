@@ -151,43 +151,28 @@
         },
         loadTutorial: function(){
           storage=Storages.localStorage;
+          if(storage.get('tutorial') == null)
+          {
+            codiad.console.loadDefaultTutorial();
+            console.log("New Tutorial Instance");
+            return;
 
-      //    if(storage.get('tutorial') == "introduction") { this.loadDefaultTutorial();return;}
-          loading=true;
-          var checkExist=setInterval(function() {
-            if ($('#file-manager').length) {
-                    setTimeout(function(){
+          }
+          var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
 
+          if(storage.get('tutorial')  != t_name)
+          {
+            console.log("New Tutorial Page");
+            window.location.href =  "?action=tutorial-view&tutorial="+storage.get('tutorial');
+          }
 
-                      var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
+          codiad.project.open(storage.get('tutorial'));
+          console.log("Load normal tutorial");
+          codiad.console.loadTocPosition(storage.get('toc'), storage.get('tutorial'));
+          codiad.console.highlightFiles(storage.get('hightlights'));
+          codiad.console.openFiles(storage.get('files'), storage.get('tutorial'));
+          codiad.tutorial.closeEditor();
 
-                      if(storage.get('tutorial')  != t_name)
-                      {
-                        window.location.href =  "?action=tutorial-view&tutorial="+storage.get('tutorial');
-                      }
-                      if(storage.get('tutorial') == null)
-                      {
-                        codiad.console.loadDefaultTutorial();
-
-                      }
-
-                      codiad.project.open(storage.get('tutorial'));
-                    //  codiad.console.loadParagraph(storage.get('paragraph'));
-                      codiad.console.loadTocPosition(storage.get('toc'), storage.get('tutorial'));
-                      codiad.console.highlightFiles(storage.get('hightlights'));
-                      codiad.console.openFiles(storage.get('files'), storage.get('tutorial'));
-                      codiad.tutorial.closeEditor();
-                      ;
-
-                    }, 100);
-
-                clearInterval(checkExist);
-
-              }
-            }, 20);
-
-
-          loading=false;
         },
         saveDefaultTutorial: function(){
           var checkExist=setInterval(function() {
@@ -385,7 +370,7 @@
         {
           if(mapfiles == null) return;
           var files = mapfiles[tutorial];
-        
+
           if(files == null || files == "undefined" || files.size == 0) return;
           setTimeout(function() {
               if ($("#root-editor-wrapper")) {
@@ -394,6 +379,7 @@
                     for(file in files)
                     {
                       delay=codiad.tutorial.openCode(files[file],delay);
+                      console.log(delay);
                     }
 
                 }

@@ -192,7 +192,7 @@
         },
         openCode: function(code, delay)
         {
-          var totdelay=delay+500;
+          var totdelay=delay+100;
           var checkExist=setInterval(function() {
                 if ($('#file-manager').length) {
 

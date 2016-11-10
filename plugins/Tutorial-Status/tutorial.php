@@ -31,8 +31,8 @@ if($action != "tutorial-view" || $action != "restart")
             ?>
           <script>
             var checkExist=setInterval(function() {
-              if ($('#file-manager').length) {
-                setTimeout(function(){ codiad.console.loadTutorial();},200);
+              if ($('#workspace').length) {
+                  codiad.console.loadTutorial();
 
                   clearInterval(checkExist);
                 }
