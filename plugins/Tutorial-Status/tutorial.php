@@ -1,4 +1,22 @@
+<script src="plugins/Tutorial-Status/js/js.storage.js"></script>
 <?php
+$_SESSION['user']="emews-admin";
+$action="";
+if (isset($_GET) && !empty($_GET)) $action=$_GET['action'];
+if($action != "tutorial-view" || $action != "restart")
+{
+?>
+  <script>
+  //  $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
+    storage=Storages.localStorage;
+    if( storage.get("tutorial") == "" || storage.get("tutorial") == null)
+    {
+       storage.set('tutorial','introduction');
+     }
+  </script>
+
+<?php
+}
     switch ($action) {
         case "tutorial-view" :
 
@@ -35,23 +53,12 @@
             }
             ?>
           <script>
-            // var checkExist=setInterval(function() {
-            //   if ($('#file-manager').length) {
                   codiad.console.loadDefaultTutorial();
-                //  window.location.href = "?action=tutorial-view"
-                //  codiad.console.saveDefaultTutorial();
-              //     clearInterval(checkExist);
-              //   }
-              // }, 20);
-
-              //window.location.href = "?action=tutorial-view";
-
-
-              </script>
+          </script>
       <?php
 
         break;
-        case "init" || "home":
+        default:
             include('plugins/Welcome-Page/welcomepage.php');
         break;
     }

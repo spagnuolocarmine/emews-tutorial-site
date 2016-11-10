@@ -77,8 +77,9 @@
 
     <div class="col-1-1">
         <div class="content">
+            <span style="font-size:10px; float:left; font-weight:normal >">This site is based on <a href="http://codiad.com/">Codiad</a> a web-based IDE framework.</span>
            <hr style="width:100%;">
-            <span style="font-size:10px; float:left; font-weight:normal >">Copyright © 2016 Argonne National Laboratory. All rights reserved. </span>
+           <span style="font-size:10px; float:left; font-weight:normal >">Copyright © 2016 Argonne National Laboratory. All rights reserved. </span>
            <span style="font-size:10px; float:right; font-weight:normal >">Powered by Carmine Spagnuolo</span>
         </div>
     </div>

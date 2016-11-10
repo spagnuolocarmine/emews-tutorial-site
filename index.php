@@ -111,7 +111,7 @@ if(isset($_SESSION['theme'])) {
     <script src="js/instance.js?v=<?php echo time(); ?>"></script>
 
 <?php
-  include('plugins/Tutorial-Status/checktutorial.php');
+//  include('plugins/Tutorial-Status/checktutorial.php');
   include('plugins/Tutorial-Status/tutorial.php');
 ?>
 
