@@ -12,7 +12,7 @@
       parallel scripting
      language to run scientific workflows on a variety of computing resources,
       from desktop to academic clusters to <a href="https://www.top500.org/">Top 500</a> level supercomputers.
-      
+
        We will present a number of use-cases, starting with a simple
        agent-based model parameter sweep, and ending with a complex
         adaptive parameter space exploration workflow coordinating
@@ -22,11 +22,19 @@
 
 <div>
 
-<form style="width:100%;" >
-  <button class="button" style="float:right;" type="submit" id="start" name="action" value="tutorial-view">
+<div style="width:100%;" >
+
+  <button class="button" style="float:right;" id="bstart" name="action" value="tutorial-view">
     Go to Tutorial!
   </button>
+
+  <script>
+      $(document).on('click','#bstart', function(){
+      
+        $(window).attr('location',"?action=tutorial-view");
+    });
+  </script>
 <!--  <input style="width:40%;  float:left;" type="submit" id="start" name="action" value="Continue Tutorial"/>-->
-</form>
+</div>
 
 </div>

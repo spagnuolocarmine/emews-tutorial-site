@@ -73,7 +73,23 @@ if(isset($_SESSION['theme'])) {
 
 
   ?>
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png?v=2">
+  <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png?v=2">
+  <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png?v=2">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png?v=2">
+  <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png?v=2">
+  <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png?v=2">
+  <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png?v=2">
+  <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png?v=2">
+  <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png?v=2">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png?v=2">
+  <meta name="theme-color" content="#ffffff">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.2.min.js"%3E%3C/script%3E'));</script>
 <script src="js/jquery-ui-1.8.23.custom.min.js"></script>
@@ -110,11 +126,10 @@ if(isset($_SESSION['theme'])) {
         transition-duration: 0.6s;
         text-decoration: none;
         overflow: hidden;
-        cursor: pointer;
     }
 
     .button:after {
-        content: "";
+        
         background: #f1f1f1;
         display: block;
         position: absolute;
@@ -123,7 +138,7 @@ if(isset($_SESSION['theme'])) {
         margin-left: -20px !important;
         margin-top: -120%;
         opacity: 0;
-      
+
     }
 
     .button:active:after {
