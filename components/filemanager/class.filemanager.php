@@ -96,6 +96,10 @@ class Filemanager extends Common {
     //////////////////////////////////////////////////////////////////
 
     public function index(){
+      if(substr( $this->path, 0, 1 ) === "."){
+        $this->status = "success";
+        $this->data = '"index":' . json_encode($output);
+      }else
         if(file_exists($this->path)){
             $index = array();
             if(is_dir($this->path) && $handle = opendir($this->path)){
