@@ -123,7 +123,7 @@ if(isset($_SESSION['theme'])) {
         margin-left: -20px !important;
         margin-top: -120%;
         opacity: 0;
-        transition: all 0.8s
+      
     }
 
     .button:active:after {
