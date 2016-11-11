@@ -74,11 +74,43 @@ if(isset($_SESSION['theme'])) {
 
   ?>
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.2.min.js"%3E%3C/script%3E'));</script>
+<script src="js/jquery-ui-1.8.23.custom.min.js"></script>
+<script src="js/jquery.css3.min.js"></script>
+<script src="js/jquery.easing.js"></script>
+<script src="js/jquery.toastmessage.js"></script>
+<script src="js/amplify.min.js"></script>
+<script src="js/localstorage.js"></script>
+<script src="js/jquery.hoverIntent.min.js"></script>
+<script src="js/system.js"></script>
+<script src="js/sidebars.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/message.js"></script>
+<script src="js/jsend.js"></script>
+<script src="js/instance.js?v=<?php echo time(); ?>"></script>
 
 </head>
 <body>
-<div class="modal"></div>
+
+<style>
+    #loading {
+       width: 100%;
+       height: 100%;
+       top: 0;
+       left: 0;
+       position: fixed;
+       display: block;
+       opacity: 0.7;
+       background-color: #fff;
+       z-index: 99999999999;
+       text-align: center;
+
+    }</style>
+    <div id="loading"></div>
+
     <script>
+    $("#loading").hide();
 
     var i18n = (function(lang) {
         return function(word,args) {
@@ -94,21 +126,6 @@ if(isset($_SESSION['theme'])) {
 
 
     </script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.2.min.js"%3E%3C/script%3E'));</script>
-    <script src="js/jquery-ui-1.8.23.custom.min.js"></script>
-    <script src="js/jquery.css3.min.js"></script>
-    <script src="js/jquery.easing.js"></script>
-    <script src="js/jquery.toastmessage.js"></script>
-    <script src="js/amplify.min.js"></script>
-    <script src="js/localstorage.js"></script>
-    <script src="js/jquery.hoverIntent.min.js"></script>
-    <script src="js/system.js"></script>
-    <script src="js/sidebars.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/message.js"></script>
-    <script src="js/jsend.js"></script>
-    <script src="js/instance.js?v=<?php echo time(); ?>"></script>
 
 <?php
 //  include('plugins/Tutorial-Status/checktutorial.php');

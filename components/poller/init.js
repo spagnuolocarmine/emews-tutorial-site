@@ -20,7 +20,7 @@
             var _this = this;
             setInterval(function() {
 
-                _this.checkAuth();
+              //  _this.checkAuth();
                 _this.saveDrafts();
 
             }, _this.interval);
@@ -34,11 +34,11 @@
         checkAuth: function() {
 
             // Run controller to check session (also acts as keep-alive) & Check user
-            $.get(codiad.user.controller + '?action=verify', function(data) {
-                if (data == 'false') {
-                    codiad.user.logout();
-                }
-            });
+            // $.get(codiad.user.controller + '?action=verify', function(data) {
+            //     if (data == 'false') {
+            //         codiad.user.logout();
+            //     }
+            // });
 
         },
 

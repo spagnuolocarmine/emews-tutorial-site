@@ -93,8 +93,7 @@
             };
 
             // Assuming the mode file has no dependencies
-            $.loadScript('components/editor/ace-editor/mode-' + mode + '.js',
-            fn);
+            $.loadScript('components/editor/ace-editor/mode-' + mode + '.js',fn);
         },
 
         init: function() {
@@ -319,11 +318,11 @@
         //////////////////////////////////////////////////////////////////
 
         check: function(path) {
-            $.get(this.controller + '?action=check&path=' + path,
-
-            function(data) {
-                var checkResponse = codiad.jsend.parse(data);
-            });
+            // $.get(this.controller + '?action=check&path=' + path,
+            //
+            // function(data) {
+            //     var checkResponse = codiad.jsend.parse(data);
+            // });
         },
 
         //////////////////////////////////////////////////////////////////
@@ -531,6 +530,7 @@
         },
 
         removeAll: function(discard) {
+
             discard = discard || false;
             /* Notify listeners. */
             amplify.publish('active.onRemoveAll');
@@ -574,8 +574,10 @@
         },
 
         close: function(path) {
+          console.log("closing");
             /* Notify listeners. */
             amplify.publish('active.onClose', path);
+            amplify.publish('active.onCloseButton', path);
 
             var _this = this;
             var session = this.sessions[path];
@@ -625,6 +627,67 @@
             $.get(this.controller + '?action=remove&path=' + path);
             this.removeDraft(path);
         },
+
+        closeWithoutNotify: function(path) {
+
+          //if(session == null || session.tabThumb == undefined || !this.isOpen(path)) return;
+            /* Notify listeners. */
+           amplify.publish('active.onClose', path);
+
+            var _this = this;
+            var session = this.sessions[path];
+            /* Animate only if the tabThumb if a tab, not a dropdown item. */
+            if(session.tabThumb.hasClass('tab-item')) {
+                session.tabThumb.css({'z-index': 1});
+                session.tabThumb.animate({
+                    top: $('#editor-top-bar').height() + 'px'
+                }, 300, function() {
+                    session.tabThumb.remove();
+                    _this.updateTabDropdownVisibility();
+                });
+            } else {
+                session.tabThumb.remove();
+                _this.updateTabDropdownVisibility();
+            }
+
+            session.listThumb.remove();
+
+            /* Remove closed path from history */
+            var history = [];
+            $.each(this.history, function(index) {
+                if(this != path) history.push(this);
+            })
+            this.history = history
+
+            /* Select all the tab tumbs except the one which is to be removed. */
+            var tabThumbs = $('#tab-list-active-files li[data-path!="' + path + '"]');
+
+            if (tabThumbs.length == 0) {
+
+                codiad.editor.exterminate();
+            } else {
+
+                var nextPath = '';
+                if(this.history.length > 0) {
+                    nextPath = this.history[this.history.length - 1];
+                      console.log("next pat "+nextPath);
+                } else {
+                    nextPath = $(tabThumbs[0]).attr('data-path');
+
+                }
+
+                  var nextSession = this.sessions[nextPath];
+                  codiad.editor.removeSession(session, nextSession);
+                  this.focus(nextPath);
+
+
+            }
+            delete this.sessions[path];
+            $.get(this.controller + '?action=remove&path=' + path);
+            this.removeDraft(path);
+
+        }
+        ,
 
         //////////////////////////////////////////////////////////////////
         // Process rename

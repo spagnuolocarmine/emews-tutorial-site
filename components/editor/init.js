@@ -728,6 +728,7 @@ var availableTextModes = new Array(
         },
 
         setModeDisplay: function(session){
+                if(session == undefined) return;
                 var currMode = session.getMode().$id;
                 if(currMode){
                     currMode = currMode.substring(currMode.lastIndexOf('/') + 1);
@@ -1365,7 +1366,7 @@ var availableTextModes = new Array(
                     if(from == to)
                     {
                       mid=editor.getSession().addMarker(new Range(from, 0, to, 10000000000),colorclass, "fullLine");
-                    
+
                     }
                     else
                       mid=editor.getSession().addMarker(new Range(from, 0, to, 0),colorclass, "fullLine");

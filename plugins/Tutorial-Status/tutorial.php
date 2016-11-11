@@ -30,12 +30,13 @@ if($action != "tutorial-view" || $action != "restart")
             }
             ?>
           <script>
+          //  console.log("Open tutorial");
             var checkExist=setInterval(function() {
-              if ($('#workspace').length) {
+              if ($('#workspace').length > 0) {
+              //  console.log("Open tutorial");
                   codiad.console.loadTutorial();
-
                   clearInterval(checkExist);
-                }
+                }//else console.log($('#workspace').length);
               }, 20);
           </script>
       <?php

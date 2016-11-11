@@ -67,6 +67,7 @@
                           .hasClass('directory')) {
                           _this.index($(this)
                               .attr('data-path'));
+                            
                       } else {
                           _this.openFile($(this)
                               .attr('data-path'));
@@ -88,6 +89,7 @@
                           .hasClass('directory')) {
                           _this.index($(this)
                               .attr('data-path'));
+
                       } else {
                           _this.openFile($(this)
                               .attr('data-path'));

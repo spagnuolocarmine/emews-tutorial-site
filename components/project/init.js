@@ -64,6 +64,7 @@
         //////////////////////////////////////////////////////////////////
 
         open: function(path) {
+        
             var _this = this;
             codiad.finder.contractFinder();
 
@@ -77,12 +78,12 @@
                     localStorage.removeItem("lastSearched");
                     /* Notify listeners. */
                     amplify.publish('project.onOpen', path);
-
-                    var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
-                    if(Storages.localStorage.get('tutorial')  != t_name)
-                    {
-                      window.location.href =  "?action=tutorial-view&tutorial="+ Storages.localStorage.get('tutorial');
-                    }
+                    //
+                    // var t_name =   codiad.console.getFromQuery("tutorial",  window.location.href);
+                    // if(Storages.localStorage.get('tutorial')  != t_name)
+                    // {
+                    //   window.location.href =  "?action=tutorial-view&tutorial="+ Storages.localStorage.get('tutorial');
+                    // }
 
                 }
             });

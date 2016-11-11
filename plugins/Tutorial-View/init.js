@@ -78,13 +78,13 @@
                 return false;
             }
 
-           amplify.subscribe('project.onOpen', function(tutorial){
-                _this.open(tutorial);
-                setTimeout(function(){
-              	    codiad.console.loadTOC();
-              	}, 300);
-
-            });
+          //  amplify.subscribe('project.onOpen', function(tutorial){
+          //       _this.open(tutorial);
+          //       setTimeout(function(){
+          //     	    codiad.console.loadTOC();
+          //     	}, 300);
+           //
+          //   });
             /*_this.open("tutorialwelcome");
             setTimeout(function(){
                 codiad.Console.loadTOC();
@@ -125,8 +125,7 @@
 
 
 
-          }
-        ,
+        },
         openEditor:  function()
         {
           if(!editor_open)
@@ -190,24 +189,6 @@
 
             amplify.publish('tutorial.onHighlight',[code,fromline,toline,colorvalue]);
         },
-        openCode: function(code, delay)
-        {
-          var totdelay=delay+100;
-          var checkExist=setInterval(function() {
-                if ($('#file-manager').length) {
-
-                setTimeout(function() {
-
-                  codiad.filemanager.openFile(code,true);
-                  codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-
-                }, totdelay);
-                clearInterval(checkExist);
-
-              }
-            }, 20);
-            return totdelay;
-        },
         getHighlightMarker: function(code) {
             return markers[code];
 
@@ -239,7 +220,7 @@
 
         },
          open: function(tutorial) {
-           console.log(tutorial);
+          // console.log(tutorial);
              var _this = this;
              var tutorial_path=_this.path+"/tutorial/"+tutorial+".html";
             // console.log(tutorial_path);
@@ -249,14 +230,7 @@
                     $('#tutorialname').html("Tutorial: "+tutorial);
                     var leftw=$(window).width()-$("#sb-left").width();
                     $("#tutorialtemplate").css("width", leftw+"px");
-                    var checkExist=setInterval(function() {
-                      if ($('#toc').length) {
-                          setTimeout(function () {codiad.console.loadTOC();},400);
-
-                          clearInterval(checkExist);
-                        }
-                      }, 20);
-
+                  
                 })
 
          }
