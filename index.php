@@ -94,20 +94,40 @@ if(isset($_SESSION['theme'])) {
 <body>
 
 <style>
-    #loading {
+    .loaderdiv {
        width: 100%;
        height: 100%;
        top: 0;
        left: 0;
        position: fixed;
        display: block;
-       opacity: 0.7;
-       background-color: #fff;
-       z-index: 99999999999;
+       opacity: 0.5;
+       background-color: white;
+       z-index: 999999;
        text-align: center;
 
-    }</style>
-    <div id="loading"></div>
+    }
+    .loader {
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        position: absolute;
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid black; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        z-index: 9999999999;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+    <div id="loading" class="loaderdiv"> <div class="loader"></div></div>
 
     <script>
     $("#loading").hide();
