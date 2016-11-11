@@ -94,6 +94,44 @@ if(isset($_SESSION['theme'])) {
 <body>
 
 <style>
+    a:hover {
+        color: gray;
+    }
+    .button {
+        position: relative;
+        background-color: gray;
+        border: none;
+        font-size: 20px;
+        color: #FFFFFF;
+        padding: 5px;
+        width: 200px;
+        text-align: center;
+        -webkit-transition-duration: 0.6s; /* Safari */
+        transition-duration: 0.6s;
+        text-decoration: none;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .button:after {
+        content: "";
+        background: #f1f1f1;
+        display: block;
+        position: absolute;
+        padding-top: 300%;
+        padding-left: 350%;
+        margin-left: -20px !important;
+        margin-top: -120%;
+        opacity: 0;
+        transition: all 0.8s
+    }
+
+    .button:active:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+    }
     .loaderdiv {
        width: 100%;
        height: 100%;
