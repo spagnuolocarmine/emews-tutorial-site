@@ -6,6 +6,7 @@
 - possibly remove the split functionality for the code tabs (doesn't seem to be working)
 - (for future, after full working version) investigate more than 2 possibilities for the tutorial/code split, e.g., 50/50, 60/40 and 100/0.
 - favico
+- request emews domain name account on mcs
 
 #####Known bugs:
 
