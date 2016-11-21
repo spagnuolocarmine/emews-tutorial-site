@@ -182,8 +182,8 @@
 
             ?>
             <!--  <div class="divider"></div>-->
-            <a id="split" class="ico-wrapper"><span class="icon-layout"></span><?php i18n("Split"); ?></a>
-            <div class="divider"></div>
+            <!--<a id="split" class="ico-wrapper"><span class="icon-layout"></span><?php i18n("Split"); ?></a>
+            <div class="divider"></div>-->
             <a id="current-mode"><span class="icon-layout"></span></a>
             <div class="divider"></div>
             <div id="current-file"></div>
