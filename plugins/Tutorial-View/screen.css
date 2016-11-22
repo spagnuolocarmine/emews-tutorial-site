@@ -1,3 +1,29 @@
+#sizetutorial {
+    position: absolute;
+    right: 100px;
+    bottom: 0px;
+    font-size: 20px;
+    z-index: 9999999;
+
+}
+#progress {
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+
+    font-size: 20px;
+    z-index: 9999999;
+}
+#application-progress {
+  position: absolute;
+  right: 120px;
+  bottom: 8px;
+  width: 150px;
+  height: 5px;
+  font-size: 10px;
+  background: lightgray;
+  z-index: 9999999999999;
+}
 .collapse-dropdown {
     /* Adjust this size depending on the final editor-top-bar height. */
     position: fixed;

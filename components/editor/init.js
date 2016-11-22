@@ -425,6 +425,8 @@ var availableTextModes = new Array(
             this.createSplitMenu();
             this.createModeMenu();
 
+
+
             var er = $('#editor-region');
 
             er.on('h-resize-init', function(){
@@ -433,8 +435,13 @@ var availableTextModes = new Array(
                     .trigger('h-resize');
 
             }).on('v-resize-init', function(){
+                var h=codiad.tutorial.getHeightTutorial() ;
+                var panelh = $(window).height()- h;//$('#editor-region').height() / 2;
+
+                var heditor = panelh - 40;
+              console.log(heditor);
                 $('#editor-region > .editor-wrapper')
-                    .height($(this).height())
+                    .height(heditor+"px")
                     .trigger('v-resize');
             });
 
@@ -523,9 +530,9 @@ var availableTextModes = new Array(
             var el = $('<div class="editor">');
             var chType, chArr = [], sc = null, chIdx = null;
             var _this = this;
-
-            var panelh = $('#editor-region').height() / 2;
-            var heditor =panelh-40;
+            var h=codiad.tutorial.getHeightTutorial() ;
+            var panelh = $(window).height()- h;//$('#editor-region').height() / 2;
+            var heditor = panelh - 40;
             el.css({
 
                 height: heditor + 'px'
@@ -548,7 +555,7 @@ var availableTextModes = new Array(
                 chArr[1 - chIdx] = ch;
 
                 root = $('<div class="editor-wrapper">')
-                    .height(ch.height())
+                    .height(heditor)
                     .width(ch.width())
                     .addClass('editor-wrapper-' + chType)
                     .appendTo(ch.parent());

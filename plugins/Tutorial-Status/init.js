@@ -98,13 +98,16 @@
                                     codiad.console.highlightFiles(storage.get('hightlights'));
                                     codiad.console.openFiles(storage.get('files'), storage.get('tutorial'));
                                       var checkExist2=setInterval(function() {
-                                         if(  $(".editor").length > 0)
+                                         if($(".editor").length > 0)
                                          {
-                                           $(".editor").css("height",$(window).height()/2 - 34);
-
+                                            var h=codiad.tutorial.getHeightTutorial();
+                                            $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+                                            -  $("#editor-top-bar").height() - 12+"px");
+                                          
                                             $("#loading").hide();
+
+                                            clearInterval(checkExist2);
                                             return;
-                                           clearInterval(checkExist2);
                                          }
                                     }, 20);
                                     $("#loading").hide();

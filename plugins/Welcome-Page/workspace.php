@@ -151,8 +151,11 @@
 
         </div>
         <div class="collapse-dropdown">
-            <a alt="controls" id="downeditor" class="icon icon-down-dir" title="close editor" ></a>
+
+              <a alt="controls" id="downeditor" class="icon icon-down-dir" title="close editor" ></a>
+
       </div>
+
         <div id="root-editor-wrapper" >
           <div id="editor-bottom-bar">
             <!--  <a id="settings" class="ico-wrapper"><span class="icon-doc-text"></span><?php i18n("Settings"); ?></a>-->
@@ -199,8 +202,16 @@
 
 
       </div>
+    <!--  <div id="sizetutorial">
+        <select>
+        <option value="volvo">10%</option>
+        <option value="saab">20%</option>
+        <option value="mercedes">30%</option>
+        <option value="audi">40%</option>
+      </select>
+    </div>  <div id="progress"></div>-->
 
-
+    <div id="application-progress"></div>
       <div id="modal-overlay" ></div>
       <div id="modal"><div id="close-handle" class="icon-cancel" onclick="codiad.modal.unload();"></div><div id="drag-handle" class="icon-location"></div><div id="modal-content"></div></div>
 
@@ -231,4 +242,5 @@
         }
       }
       ?>
+
     </div>

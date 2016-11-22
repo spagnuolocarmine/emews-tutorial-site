@@ -11,6 +11,7 @@
         curpath = path.split('/').slice(0, -1).join('/')+'/';
     var markers = new Map();
     var editor_open=true;
+    var _perc_tutorial_size = undefined;
 
     // Instantiates plugin
     $(function() {
@@ -19,27 +20,79 @@
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/highlight-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/modal-data.html">');
+        $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
       //  $.loadScript('plugins/Tutorial-View/js/tags.js');
     });
 
     codiad.tutorial = {
 
         // Allows relative `this.path` linkage
+        perc_tutorial_size: _perc_tutorial_size,
         path: curpath,
 
         init: function() {
+          storage=Storages.localStorage;
+
+          var ts= storage.get("tutorial-size")==undefined?80:storage.get("tutorial-size");
+          codiad.tutorial.perc_tutorial_size=ts;
+
+           var checkExist=setInterval(function() {
+             if ($('#application-progress').length > 0) {
+
+                   $('#application-progress').slider({
+                           range: "min",
+                           min: 3,
+                           max: 100,
+                           animate: true,
+                           slide: function(event, ui) {
+                             //  $("#progress").html(ui.value + "%");
+                             codiad.tutorial.moveTutorial(ui.value);
+                           }
+                     });
+                     $('#application-progress').slider('value', codiad.tutorial.perc_tutorial_size);
+
+                 clearInterval(checkExist);
+               }else console.log("try")
+             }, 20);
+          var h=codiad.tutorial.getHeightTutorial();
 
           $( window ).bind("resize", function(){
             var leftw=$(window).width()-$("#sb-left").width();
             $("#tutorialtemplate").css("width", leftw+"px");
             $("#tutorialcontent").css("width", leftw+"px");
+            var h=codiad.tutorial.getHeightTutorial();
+
+            if(!editor_open)
+            {
+              $('#editor-top-bar').css("top",$(window).height()- 34);
+              $('#tutorialcontent').css("height",$(window).height()- 34);
+              $('.collapse-dropdown').css("top",$(window).height()- 34);
+              $('#tab-dropdown').css("top",$(window).height()- 34);
+              $('#editor-region').css("top",$(window).height()- 25);
+              $('#root-editor-wrapper').hide();
+              $('#cursor-position').hide();
+              $('#downeditor').removeClass("icon-down-dir");
+              $('#downeditor').addClass("icon-up-dir");
+            }else{
+              $('#tutorialcontent').css("height", h);
+              $('#editor-top-bar').css("top", h);
+              $('.collapse-dropdown').css("top",h);
+              $('#tab-dropdown').css("top",h);
+              $('#editor-region').css("top", h);
+              $('#root-editor-wrapper').show();
+              $('#cursor-position').show();
+              $('#downeditor').addClass("icon-down-dir");
+              $('#downeditor').removeClass("icon-up-dir");
+              $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+              -  $("#editor-top-bar").height() - 12+"px");
+            }
 
           });
 
           $('#tutorialtemplate')
           .css({
               width: ($(window).width()-$('#sb-left').width())+'px' ,
-              height: ($(window).height()/2 - 20 )+ 'px',
+              height: h+ 'px',
               left: $('#sb-left').width(),
               right: '10px',
               top: 0,
@@ -48,7 +101,7 @@
           $('#tutorialcontent')
           .css({
               width: ($(window).width()-$('#sb-left').width())+'px' ,
-              height: ($(window).height()/2 - 20 )+ 'px',
+              height: h+ 'px',
               left: $('#sb-left').width(),
               right: '10px',
               top: 0,
@@ -78,23 +131,12 @@
                 return false;
             }
 
-          //  amplify.subscribe('project.onOpen', function(tutorial){
-          //       _this.open(tutorial);
-          //       setTimeout(function(){
-          //     	    codiad.console.loadTOC();
-          //     	}, 300);
-           //
-          //   });
-            /*_this.open("tutorialwelcome");
-            setTimeout(function(){
-                codiad.Console.loadTOC();
-            }, 300);*/
-
             $('#controls').click(function(){
               codiad.tutorial.showControls();
             });
 
             $('#downeditor').click(function(){
+              var h=codiad.tutorial.getHeightTutorial();
 
               if(editor_open)
               {
@@ -107,39 +149,70 @@
                 $('#root-editor-wrapper').hide();
                 $('#cursor-position').hide();
                 $('#downeditor').removeClass("icon-down-dir");
-                  $('#downeditor').addClass("icon-up-dir");
+                $('#downeditor').addClass("icon-up-dir");
+                $('#application-progress').hide();
+
+
               }else{
-                $('#editor-top-bar').css("top",$(window).height()/2 - 34);
-                $('#tutorialcontent').css("height",$(window).height()/2 - 34);
-                $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
-                $('#tab-dropdown').css("top",$(window).height()/2 - 34);
-                $('#editor-region').css("top",$(window).height()/2 - 25);
+
+                $('#tutorialcontent').css("height", h);
+                $('#editor-top-bar').css("top", h);
+                $('.collapse-dropdown').css("top",h);
+                $('#tab-dropdown').css("top",h);
+                $('#editor-region').css("top", h);
                 $('#root-editor-wrapper').show();
                 $('#cursor-position').show();
                 $('#downeditor').addClass("icon-down-dir");
-                  $('#downeditor').removeClass("icon-up-dir");
+                $('#downeditor').removeClass("icon-up-dir");
+                $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+                -  $("#editor-top-bar").height() - 12+"px");
+                $('#application-progress').show();
                 editor_open = true;
               }
 
             });
-
-
-
         },
-        openEditor:  function()
-        {
-          if(!editor_open)
-          {
+        moveTutorial: function(perc){
+          codiad.tutorial.perc_tutorial_size = perc;
+          storage.set("tutorial-size",perc);
 
-            $('#editor-top-bar').css("top",$(window).height()/2 - 34);
-            $('#tutorialcontent').css("height",$(window).height()/2 - 34);
-            $('.collapse-dropdown').css("top",$(window).height()/2 - 34 );
-            $('#tab-dropdown').css("top",$(window).height()/2 - 34);
-            $('#editor-region').css("top",$(window).height()/2 - 25);
+          var h=codiad.tutorial.getHeightTutorial();
+          if(editor_open)
+          {
+            $('#tutorialcontent').css("height", h);
+            $('#editor-top-bar').css("top", h);
+            $('.collapse-dropdown').css("top",h);
+            $('#tab-dropdown').css("top",h);
+            $('#editor-region').css("top", h);
             $('#root-editor-wrapper').show();
             $('#cursor-position').show();
             $('#downeditor').addClass("icon-down-dir");
             $('#downeditor').removeClass("icon-up-dir");
+            $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+            -  $("#editor-top-bar").height() - 12+"px");
+            codiad.editor.resize();
+          }
+        },
+        getHeightTutorial: function(){
+          var h = (($(window).height()*codiad.tutorial.perc_tutorial_size)/100)-20;
+          return h;
+        },
+        openEditor:  function()
+        {
+          var h=codiad.tutorial.getHeightTutorial() ;
+          if(!editor_open)
+          {
+            $('#tutorialcontent').css("height", h);
+            $('#editor-top-bar').css("top", h);
+            $('.collapse-dropdown').css("top", h );
+            $('#tab-dropdown').css("top", h);
+            $('#editor-region').css("top",h);
+            $('#root-editor-wrapper').show();
+            $('#cursor-position').show();
+            $('#downeditor').addClass("icon-down-dir");
+            $('#downeditor').removeClass("icon-up-dir");
+            $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+            -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
           }
         },
@@ -230,7 +303,7 @@
                     $('#tutorialname').html("Tutorial: "+tutorial);
                     var leftw=$(window).width()-$("#sb-left").width();
                     $("#tutorialtemplate").css("width", leftw+"px");
-                  
+
                 })
 
          }
