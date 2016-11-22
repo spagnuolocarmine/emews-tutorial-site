@@ -104,13 +104,13 @@
 
         </div>
 
-        <div id="file-manager"></div>
+        <div id="file-manager" title="EMEWS Project File Explorer Area"></div>
 
         <ul id="list-active-files"></ul>
 
       </div>
 
-      <div id="side-projects" class="sb-left-projects">
+      <div id="side-projects" title="Tutorials Selection Area" class="sb-left-projects">
         <div id="project-list" class="sb-project-list">
 
           <div class="project-list-title">
@@ -128,10 +128,10 @@
 
     </div>
 
-    <div id="tutorialtemplate" style="height:50%; top:0px; left:auto; position:fixed;" >
+    <div id="tutorialtemplate"  title="EMEWS Tutorial Content" style="height:50%; top:0px; left:auto; position:fixed;" >
       <div  class="console-list-title">
         <h2 id="tutorialname"> Welcome in EMEWS Tutorial </h2>
-        <a alt="controls" id="controls" class="icon icon-network" title="Controls the tutorial!" ></a> </div>
+        <a alt="controls" id="controls" class="icon icon-network" title="Click here to control the turorial. Restart or go to home." ></a> </div>
         <div id="tutorialcontent" class="tutorial"></div>
       </div>
       <div id="cursor-position"><?php i18n("Ln"); ?>: 0 &middot; <?php i18n("Col"); ?>: 0</div>
@@ -152,7 +152,7 @@
         </div>
         <div class="collapse-dropdown">
 
-              <a alt="controls" id="downeditor" class="icon icon-down-dir" title="close editor" ></a>
+              <a alt="controls" id="downeditor" class="icon icon-down-dir" title="Close the files viewer." ></a>
 
       </div>
 
@@ -184,8 +184,8 @@
             }
 
             ?>
-            <!--  <div class="divider"></div>-->
-            <!--<a id="split" class="ico-wrapper"><span class="icon-layout"></span><?php i18n("Split"); ?></a>
+            <!--<div class="divider"></div>
+            <a id="split" class="ico-wrapper"><span class="icon-layout"></span><?php i18n("Split"); ?></a>
             <div class="divider"></div>-->
             <a id="current-mode"><span class="icon-layout"></span></a>
             <div class="divider"></div>
@@ -211,7 +211,7 @@
       </select>
     </div>  <div id="progress"></div>-->
 
-    <div id="application-progress"></div>
+    <div id="application-progress" title="Slide to change the dimension of the files viewer."></div>
       <div id="modal-overlay" ></div>
       <div id="modal"><div id="close-handle" class="icon-cancel" onclick="codiad.modal.unload();"></div><div id="drag-handle" class="icon-location"></div><div id="modal-content"></div></div>
 
@@ -242,5 +242,6 @@
         }
       }
       ?>
+
 
     </div>

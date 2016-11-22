@@ -90,9 +90,16 @@ if(isset($_SESSION['theme'])) {
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png?v=2">
   <meta name="theme-color" content="#ffffff">
+  <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.2.min.js"%3E%3C/script%3E'));</script>
-  <!--<script src="js/jquery-ui-1.8.23.custom.min.js"></script>-->
+<!--  <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.2.min.js"%3E%3C/script%3E'));</script>
+  <script src="js/jquery-ui-1.8.23.custom.min.js"></script>-->
+  <script src="plugins/Tutorial-View/js/jquery.tooltip.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="plugins/Tutorial-View/js/tooltipster/css/tooltipster.bundle.min.css" />
+  <script src="plugins/Tutorial-View/js/tooltipster/js/tooltipster.bundle.min.js"></script>
+
   <script src="js/jquery-ui.js"></script>
   <script src="js/jquery.css3.min.js"></script>
   <script src="js/jquery.easing.js"></script>
@@ -106,7 +113,7 @@ if(isset($_SESSION['theme'])) {
   <script src="js/message.js"></script>
   <script src="js/jsend.js"></script>
   <script src="js/instance.js?v=<?php echo time(); ?>"></script>
-  <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 

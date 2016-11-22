@@ -21,6 +21,8 @@
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/modal-data.html">');
         $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
+
+
       //  $.loadScript('plugins/Tutorial-View/js/tags.js');
     });
 
@@ -31,6 +33,19 @@
         path: curpath,
 
         init: function() {
+
+        //  $('#side-projects').tooltipster();
+        //  $('#file-manager').tooltipster();
+        //  $('#divtoc').tooltipster();
+        //  $('#tutorialtemplate').tooltipster();
+          $('#controls').tooltipster();
+          $('#application-progress').tooltipster();
+          $('#downeditor').tooltipster();
+          $('#lock-left-sidebar').hide();
+          console.log($.ui.version);
+          console.log(jQuery.fn.jquery);
+
+
           storage=Storages.localStorage;
 
           var ts= storage.get("tutorial-size")==undefined?80:storage.get("tutorial-size");
@@ -57,35 +72,7 @@
           var h=codiad.tutorial.getHeightTutorial();
 
           $( window ).bind("resize", function(){
-            var leftw=$(window).width()-$("#sb-left").width();
-            $("#tutorialtemplate").css("width", leftw+"px");
-            $("#tutorialcontent").css("width", leftw+"px");
-            var h=codiad.tutorial.getHeightTutorial();
-
-            if(!editor_open)
-            {
-              $('#editor-top-bar').css("top",$(window).height()- 34);
-              $('#tutorialcontent').css("height",$(window).height()- 34);
-              $('.collapse-dropdown').css("top",$(window).height()- 34);
-              $('#tab-dropdown').css("top",$(window).height()- 34);
-              $('#editor-region').css("top",$(window).height()- 25);
-              $('#root-editor-wrapper').hide();
-              $('#cursor-position').hide();
-              $('#downeditor').removeClass("icon-down-dir");
-              $('#downeditor').addClass("icon-up-dir");
-            }else{
-              $('#tutorialcontent').css("height", h);
-              $('#editor-top-bar').css("top", h);
-              $('.collapse-dropdown').css("top",h);
-              $('#tab-dropdown').css("top",h);
-              $('#editor-region').css("top", h);
-              $('#root-editor-wrapper').show();
-              $('#cursor-position').show();
-              $('#downeditor').addClass("icon-down-dir");
-              $('#downeditor').removeClass("icon-up-dir");
-              $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
-              -  $("#editor-top-bar").height() - 12+"px");
-            }
+            codiad.tutorial.resize();
 
           });
 
@@ -172,6 +159,38 @@
 
             });
         },
+        resize: function(){
+
+              var leftw=$(window).width()-$("#sb-left").width();
+              $("#tutorialtemplate").css("width", leftw+"px");
+              $("#tutorialcontent").css("width", leftw+"px");
+              var h=codiad.tutorial.getHeightTutorial();
+
+              if(!editor_open)
+              {
+                $('#editor-top-bar').css("top",$(window).height()- 34);
+                $('#tutorialcontent').css("height",$(window).height()- 34);
+                $('.collapse-dropdown').css("top",$(window).height()- 34);
+                $('#tab-dropdown').css("top",$(window).height()- 34);
+                $('#editor-region').css("top",$(window).height()- 25);
+                $('#root-editor-wrapper').hide();
+                $('#cursor-position').hide();
+                $('#downeditor').removeClass("icon-down-dir");
+                $('#downeditor').addClass("icon-up-dir");
+              }else{
+                $('#tutorialcontent').css("height", h);
+                $('#editor-top-bar').css("top", h);
+                $('.collapse-dropdown').css("top",h);
+                $('#tab-dropdown').css("top",h);
+                $('#editor-region').css("top", h);
+                $('#root-editor-wrapper').show();
+                $('#cursor-position').show();
+                $('#downeditor').addClass("icon-down-dir");
+                $('#downeditor').removeClass("icon-up-dir");
+                $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
+                -  $("#editor-top-bar").height() - 12+"px");
+              }
+            },
         moveTutorial: function(perc){
           codiad.tutorial.perc_tutorial_size = perc;
           storage.set("tutorial-size",perc);
