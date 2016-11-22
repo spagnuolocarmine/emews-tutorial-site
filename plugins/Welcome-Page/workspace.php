@@ -152,7 +152,7 @@
         </div>
         <div class="collapse-dropdown">
 
-              <a alt="controls" id="downeditor" class="icon icon-down-dir" title="Close the files viewer." ></a>
+              <a alt="controls" id="downeditor" class="icon icon-down-dir" title="Toggle file viewer." ></a>
 
       </div>
 

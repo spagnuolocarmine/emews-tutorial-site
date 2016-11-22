@@ -48,7 +48,7 @@
 
           storage=Storages.localStorage;
 
-          var ts= storage.get("tutorial-size")==undefined?80:storage.get("tutorial-size");
+          var ts= storage.get("tutorial-size")==undefined?60:storage.get("tutorial-size");
           codiad.tutorial.perc_tutorial_size=ts;
 
            var checkExist=setInterval(function() {
@@ -65,7 +65,7 @@
                            }
                      });
                      $('#application-progress').slider('value', codiad.tutorial.perc_tutorial_size);
-
+                     $('#application-progress').hide();
                  clearInterval(checkExist);
                }else console.log("try")
              }, 20);
@@ -233,6 +233,7 @@
             $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
             -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
+             $('#application-progress').show();
           }
         },
         closeEditor:  function()
@@ -249,6 +250,7 @@
             $('#cursor-position').hide();
             $('#downeditor').removeClass("icon-down-dir");
             $('#downeditor').addClass("icon-up-dir");
+               $('#application-progress').hide();
           }
         },
         highlightCode: function(code,fromline,toline,colorvalue)
