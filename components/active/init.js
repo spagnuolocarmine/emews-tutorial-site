@@ -574,7 +574,7 @@
         },
 
         close: function(path) {
-          console.log("closing");
+      
             /* Notify listeners. */
             amplify.publish('active.onClose', path);
             amplify.publish('active.onCloseButton', path);

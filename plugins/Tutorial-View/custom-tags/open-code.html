@@ -34,21 +34,21 @@ Polymer({
     },
     action: function(e){
       e.stopPropagation();
-
       var code=this.code;
-      var colorvalue=this.hcolor;
       var _this = this;
       codiad.filemanager.openFile(code,true);
       codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-      codiad.tutorial.openEditor();
+
       setTimeout(function(){
+      
+        codiad.tutorial.openEditor(_this);
         parent="";
         tobreak=false;
         parent=findElement($(".tutorial"), _this, parent, tobreak);
         //MOVE TOC
         var container = $('#toc'),
         scrollTo = $("#"+parent.getAttribute('tocid'));
-        console.log("scroll to toc "+parent.getAttribute('tocid'));
+
         $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
         scrollTo.addClass("toc-active");
 

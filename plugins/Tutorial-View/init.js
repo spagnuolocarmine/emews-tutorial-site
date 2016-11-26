@@ -42,9 +42,6 @@
           $('#application-progress').tooltipster();
           $('#downeditor').tooltipster();
           $('#lock-left-sidebar').hide();
-          console.log($.ui.version);
-          console.log(jQuery.fn.jquery);
-
 
           storage=Storages.localStorage;
 
@@ -216,7 +213,7 @@
           var h = (($(window).height()*codiad.tutorial.perc_tutorial_size)/100)-20;
           return h;
         },
-        openEditor:  function()
+        openEditor:  function(element)
         {
           var h=codiad.tutorial.getHeightTutorial() ;
           if(!editor_open)
@@ -233,8 +230,19 @@
             $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
             -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
-             $('#application-progress').show();
+            $('#application-progress').show();
+
           }
+          if(element !=null && element != undefined)
+          {
+            var container = $('#tutorialcontent'),
+            scrollTo = $(element);
+
+            container.animate({
+              scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+            }, 200);
+          }
+
         },
         closeEditor:  function()
         {

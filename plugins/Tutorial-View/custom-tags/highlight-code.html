@@ -55,7 +55,7 @@ Polymer({
       var toline=this.to;
       var _this = this;
       codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
-      codiad.tutorial.openEditor();
+      codiad.tutorial.openEditor(_this);
       setTimeout(function(){
         parent="";
         tobreak=false;
@@ -63,7 +63,7 @@ Polymer({
         //MOVE TOC
         var container = $('#toc'),
         scrollTo = $("#"+parent.getAttribute('tocid'));
-        console.log("scroll to toc "+parent.getAttribute('tocid'));
+
         $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
         scrollTo.addClass("toc-active");
 

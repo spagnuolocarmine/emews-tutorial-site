@@ -103,7 +103,7 @@
                                             var h=codiad.tutorial.getHeightTutorial();
                                             $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
                                             -  $("#editor-top-bar").height() - 12+"px");
-                                          
+
                                             $("#loading").hide();
 
                                             clearInterval(checkExist2);
@@ -227,7 +227,7 @@
                 }
                 break;
                 case "closefile":
-                    console.log("close file "+message[1]);
+                  
                     var mapfiles = storage.get("files");
                     if(mapfiles == null || mapfiles[storage.get("tutorial")] == undefined) break;
                     var index = mapfiles[storage.get("tutorial")].indexOf(message[1]);

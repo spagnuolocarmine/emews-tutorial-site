@@ -67,7 +67,7 @@
                           .hasClass('directory')) {
                           _this.index($(this)
                               .attr('data-path'));
-                            
+
                       } else {
                           _this.openFile($(this)
                               .attr('data-path'));
@@ -398,7 +398,7 @@
                     codiad.message.error(i18n('Unable to open file in Browser'));
                  }
             }
-            codiad.tutorial.openEditor();
+            codiad.tutorial.openEditor(null);
         },
 
         //////////////////////////////////////////////////////////////////
