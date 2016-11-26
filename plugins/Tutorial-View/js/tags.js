@@ -1,32 +1,27 @@
-var parent;
-var tobreak = false;
-
-function findElement(source_element, element)
+var tobreak=false;
+function findElement(source_element, element, parent)
 {
+  switch (source_element.tagName) {
+    case "h3":
+    case "H3":
+    case "h2":
+    case "H2":
+    case "h1":
+    case "H1":
+    parent=source_element;
+
+    break;
+  }
   $(source_element).children().each(function(i, value){
-
+  //  console.log(this.tagName);
     if($(this).is($(element))) {
-
       tobreak=true;
+      return parent;
     }
-    if(!tobreak)
-    switch (this.tagName) {
-      case "h3":
-      case "H3":
-      parent=this;
-      break;
-      case "h2":
-      case "H2":
-      parent=this;
-      break;
-      case "h1":
-      case "H1":
-      parent=this;
-      break;
-      default:
-      findElement(this, element, parent, tobreak);
-    }
+    if(!tobreak) parent=findElement(this, element, parent);
   });
+  return parent;
+
 }
 /*
 // Create a new object based of the HTMLElement prototype
