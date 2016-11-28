@@ -13,9 +13,7 @@
       }
 
     </style>
-    <template>
-        <content id="content"></content>
-    </template>
+    <template><content id="content"></content></template>
 </dom-module>
 
 <!-- Registers custom element -->
@@ -40,7 +38,7 @@ Polymer({
       codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
 
       setTimeout(function(){
-      
+
         codiad.tutorial.openEditor(_this);
         parent="";
         tobreak=false;
