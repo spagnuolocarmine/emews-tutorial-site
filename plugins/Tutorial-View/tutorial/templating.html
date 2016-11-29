@@ -448,14 +448,10 @@ command to run the model on line
     by the user. For example, if your model was written in Java with a main
     class of <tt id="mytt">model.FluModel</tt>, and the jar containing that code was
     in a model directory beneath the emews project root, then the <tt id="mytt">MODEL_CMD</tt>
-    would look like:<
-    <pre>
-      MODEL_CMD="java -cp $emews_root/model/flu_model.jar model.FluModel $param_line"
-    </pre>
+    would look like:
+    <pre>MODEL_CMD="java -cp $emews_root/model/flu_model.jar model.FluModel $param_line"</pre>
     If the model was a native executable then it might look like:
-    <pre>
-      MODEL_CMD="FluModel $param_line"
-    </pre>
+    <pre>MODEL_CMD="FluModel $param_line"</pre>
     In both cases, the model takes the parameters for that run as an argument.
   </li>
 
