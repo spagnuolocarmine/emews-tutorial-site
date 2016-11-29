@@ -374,7 +374,7 @@ The <tt id="mytt">foreach</tt> loop that begins on line
 <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="27" to="27">28</highlight-code>
 executes its loop iterations in parallel. In the <tt id="mytt">foreach</tt> loop, the variable s is set to an
-array element (that is, a single parameter set represented as a string) while the variable i is the index of that array element.
+array element (that is, a single parameter line represented as a string) while the variable i is the index of that array element.
 Lines <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="28" to="29">29-30</highlight-code>
 create an instance directory into which each model run will write its output. The make_dir app function
@@ -388,7 +388,7 @@ Lines <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="30" to="31">31-32</highlight-code>
 create file objects into which the standard out and standard error streams are
 redirected by the <highlight-code code="templating/swift/swift_run_sweep.swift"
-color="rgba(255,255,255,0.3)" from="7" to="9">run_model</highlight-code> function.
+color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> function.
 Lastly, in line
 <highlight-code code="templating/swift/swift_run_sweep.swift"
 color="rgba(255,255,255,0.3)" from="32" to="32">33</highlight-code>
@@ -399,9 +399,9 @@ required arguments.
 <p>
 The final file created (optionally) by the <tt id="mytt">sweep</tt> template is
 <open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
-where X is the actual name of this file derived from user
+where "X" is some file name  derived from user
 input during the subtemplate generation. You do have the option to skip
-the step that creates the file, using use your own script file as an
+the step that creates this file, using your own script file as an
 alternative. Assuming you do chose to create the file, the file itself is a
 bash script that is intended to run the model from the command line
 for a specified set of parameters passed in as arguments to that model.
@@ -417,12 +417,12 @@ command to run the model on line
    <li>Lines
      <highlight-code code="templating/scripts/X.sh"
       color="rgba(255,255,255,0.3)" from="15" to="25">16-26</highlight-code>
-  define a "timeout" command that can be used to timeout the model run if it
-  its run duration exceedings some threshold. By default the timeout command
+  define a "timeout" command that can be used to timeout the model run if
+  its run duration exceeds a specified threshold. By default the timeout command
   is an empty string and thus there is no timeout. However if this script is passed an
   additional argument then that argument is used as the timeout duration value
-  in seconds andthe model run will terminate after running for that amount of time.
-  By default, the script expects 3 arguments so if there is a 4th then the 4th
+  (in seconds), and the model run will be killed after running for that amount of time.
+  By default, the script expects 3 arguments, so if there is a 4th then the 4th
   argument is used as the timeout duration. The argument number of the timeout
   duration can be set in line
   <highlight-code code="templating/scripts/X.sh"
@@ -433,13 +433,14 @@ command to run the model on line
   <highlight-code code="templating/scripts/X.sh"
    color="rgba(255,255,255,0.3)" from="29" to="38">30-39</highlight-code>
    define the <tt id="mytt">param_line</tt>, <tt id="mytt">emews_root</tt>, and <tt id="mytt">instance_directory</tt>
-   from the 1st, 2nd, and 3rd to the script respectively. We saw previously
+   variables from the 1st, 2nd, and 3rd arguments to the script respectively. We saw previously
    in the <highlight-code code="templating/swift/swift_run_sweep.swift"
-   color="rgba(255,255,255,0.3)" from="7" to="9">run_model</highlight-code> function
-   that <tt id="mytt">swift_run_sweep.swift</tt> passes the current parameter line,
-   the <tt id="mytt">EMEWS_PROJECT_ROOT</tt> directory and the instance directory in
-   that order. The final changes directories to the instance directory,
- so that the model is run from within that directory.</li>
+   color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> function
+   where the current parameter line,
+   the <tt id="mytt">EMEWS_PROJECT_ROOT</tt> directory and the instance directory
+   are passed model execution script in that order. The final line in this
+   section changes directories to the instance directory, so that the model
+   is run from within that directory.</li>
 
  <li>Line <highlight-code code="templating/scripts/X.sh"
     color="rgba(255,255,255,0.3)" from="41" to="41">42</highlight-code>
@@ -447,25 +448,23 @@ command to run the model on line
     by the user. For example, if your model was written in Java with a main
     class of <tt id="mytt">model.FluModel</tt>, and the jar containing that code was
     in a model directory beneath the emews project root, then the <tt id="mytt">MODEL_CMD</tt>
-    would look like:<br>
+    would look like:<
     <pre>
       MODEL_CMD="java -cp $emews_root/model/flu_model.jar model.FluModel $param_line"
     </pre>
-    If the model was a native executable then it might look like:<br>
+    If the model was a native executable then it might look like:
     <pre>
       MODEL_CMD="FluModel $param_line"
     </pre>
-    In both cases, the model takes the parameters to for that run as an argument.
+    In both cases, the model takes the parameters for that run as an argument.
   </li>
 
   <li>Lines
     <highlight-code code="templating/scripts/X.sh"
-     color="rgba(255,255,255,0.3)" from="49" to="59">49-59</highlight-code>
+     color="rgba(255,255,255,0.3)" from="48" to="58">49-59</highlight-code>
      run the model, optionally using the timeout, and handle the cases where
      the model run timesout or executes abnormally.</li>
 </ul>
- <p>
-</p>
 
 
 <h4><tt id="mytt">eqpy</tt></h4>
