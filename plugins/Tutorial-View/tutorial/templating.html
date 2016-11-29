@@ -2,6 +2,12 @@
 <h1 style="margin-top: 0px;" id="EMEWS_templates">Templates for EMEWS</h1>
 
 <style>
+  #mytt {
+    font-family:'Lucida Console', monospace;
+  }
+</style>
+
+<style>
   #myol {
     margin-left: 5%;
     list-style: none outside none;
@@ -48,24 +54,24 @@ subtemplates can be generated from within that project, adding further
 code and structure to the existing project. EMEWS templates consist of:
 
 <ul>
-  <li>An </i>emews</tt> template that creates the default EMEWS project structure.</li>
-  <li>A </i>sweep</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt>emews</tt> template that creates the default EMEWS project structure.</li>
+  <li>A <tt>sweep</tt> subtemplate that when run from within an EMEWS project
     creates additional files for running a parameter sweep workflow.</li>
-  <li>An </i>eqpy</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt>eqpy</tt> subtemplate that when run from within an EMEWS project
     creates additional files for an EMEWS queues for Python (EQ/Py) based
     workflow.</li>
-  <li>An </i>eqr</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt>eqr</tt> subtemplate that when run from within an EMEWS project
     creates additional files for an EMEWS queues for R (EQ/R) based
     workflow.</li>
 </ul>
 
 The templates are run from the command line.
-<h3>The <tt>emews</tt> Template</h3>
+<h3>The <tt id="mytt">emews</tt> Template</h3>
 
 The emews template is run with
 <p>
-<pre>
 <!-- TODO: Fix version number if incorrect -->
+<pre>
 lazybones create emews 1.0 MyEMEWSProject
 </pre>
 </p>
