@@ -13,9 +13,7 @@
       }
 
     </style>
-    <template>
-        <content id="content"></content>
-    </template>
+    <template><content id="content"></content></template>
 </dom-module>
 
 <!-- Registers custom element -->
@@ -53,36 +51,33 @@ Polymer({
       var colorvalue=this.color;
       var fromline=this.from;
       var toline=this.to;
+      var _this = this;
       codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
-      codiad.tutorial.openEditor();
+      codiad.tutorial.openEditor(_this);
       setTimeout(function(){
         parent="";
         tobreak=false;
-        findElement($(".tutorial"), this, parent, tobreak);
+        parent=findElement($(".tutorial"), _this, parent, tobreak);
         //MOVE TOC
         var container = $('#toc'),
         scrollTo = $("#"+parent.getAttribute('tocid'));
 
         $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
-        $("#"+parent.getAttribute('tocid')).addClass("toc-active");
-        $("#toc").animate({
-          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+        scrollTo.addClass("toc-active");
 
+        $("#toc").animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
         }, 200);
         amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid'),"h"]);
         //MOVE FILE manager search li with code
         var lielementcode;
-        var container = $('#file-manager');
+        container = $('#file-manager');
         container.find("li").each(function(i, value){
-          if($(this).find("a").attr("data-path") == code) lielementcode=this;
+
+          if($(this).find("a").attr("data-path") == code)
+            lielementcode=this;
+
         });
-
-        var scrollTo = $(lielementcode);
-        if(scrollTo != null)
-        $("#file-manager").animate({
-          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
-
-        }, 200);
       }, 100);
     }
 });

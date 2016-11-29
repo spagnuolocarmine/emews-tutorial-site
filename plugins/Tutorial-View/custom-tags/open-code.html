@@ -13,13 +13,12 @@
       }
 
     </style>
-    <template>
-        <content id="content"></content>
-    </template>
+    <template><content id="content"></content></template>
 </dom-module>
 
 <!-- Registers custom element -->
 <script>
+
 Polymer({
     is: 'open-code',
     properties: {
@@ -34,34 +33,34 @@ Polymer({
     action: function(e){
       e.stopPropagation();
       var code=this.code;
-      var colorvalue=this.hcolor;
-
+      var _this = this;
       codiad.filemanager.openFile(code,true);
       codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-      codiad.tutorial.openEditor();
+
       setTimeout(function(){
 
+        codiad.tutorial.openEditor(_this);
         parent="";
         tobreak=false;
-        findElement($(".tutorial"), this, parent, tobreak);
-
-      //  console.log(parent);
+        parent=findElement($(".tutorial"), _this, parent, tobreak);
         //MOVE TOC
         var container = $('#toc'),
         scrollTo = $("#"+parent.getAttribute('tocid'));
-        $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
-        $("#"+parent.getAttribute('tocid')).addClass("toc-active");
-        $("#toc").animate({
-          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
+        $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+        scrollTo.addClass("toc-active");
+
+        $("#toc").animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
         }, 200);
         amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid'),"o"]);
         //MOVE FILE manager search li with code
         var lielementcode;
-        var container = $('#file-manager');
+        container = $('#file-manager');
         container.find("li").each(function(i, value){
 
-          if($(this).find("a").attr("data-path") == code) lielementcode=this;
+          if($(this).find("a").attr("data-path") == code)
+            lielementcode=this;
 
         });
 
