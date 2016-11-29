@@ -81,11 +81,10 @@ using version 1.0 of the template. Note that the directory name can be whatever
 you want. For example,
 
 <p>
-<code>
+<pre>
 lazybones create emews 1.0 fluModelRuns
-</code>
+</pre>
 </p>
-
 will create the default EMEWS project structure in a <tt id="mytt">fluModelRuns</tt>
 directory.
 
@@ -131,9 +130,9 @@ the type of workflow associated with that subtemplate. The subtemplates are
 executed from within the project directory with the command:
 
 <p>
-<code>
+<pre>
 lazybones generate X
-</code>
+</pre>
 </p>
 
 where X is the subtemplate name: <tt id="mytt">sweep</tt>, <tt id="mytt">eqpy</tt>, or <tt id="mytt">eqr</tt>.
@@ -143,52 +142,59 @@ customization. The subtemplates must be generated from within the directory
 created by the top-level <tt id="mytt">emews</tt> template. Subtemplate generation will query
 you for additional information (e.g. the model name) required to
 generate the template.
+<br>
 
-<h4><tt id="mytt">sweep</tt></h4>
+<h4>The<tt id="mytt">sweep</tt> subtemplate</h4>
 
+<p>
 The <tt id="mytt">sweep</tt> subtemplate generates files appropriate for a sweep through
 a collection of parameters, running the model for each set of parameters. By
 default, the parameters are expected to be defined by the user in an input file
 where each line is a set of parameters to run. Each line of the file is passed
-to the model. Consequently, the schema of each line is dependent on how the
+to the model. Consequently, the schema of each line is dependent on the
 model. For example, the model may expect the parameters to be comma separated,
 and parameter X to be the first of these, parameter Y to be the second, and
 so on. A different model might expect the parameter line to contain key / value
 pairs that explicitly name each parameter and its value.
+</p>
 
+<p>
 Generating the <tt id="mytt">sweep</tt> template creates the following files:
-
+</p>
 <ul>
   <li><open-code code="templating/swift/swift_run_sweep.sh"><tt id="mytt">swift/swift_run_sweep.sh</tt></open-code>
-    - bash script used to launch the workflow</li>
+    - a bash script used to launch the workflow</li>
   <li><open-code code="templating/swift/swift_run_sweep.swift">
     <tt id="mytt">swift/swift_run_sweep.swift</tt></open-code>
-    - swift script that will iterate through an
+    - a swift script that will iterate through an
   input file, passing each line of that input to a model. The model is called
   from an app function.</li>
   <li>(optional)<open-code code="templating/scripts/X.sh">
     <tt id="mytt">scripts/X.sh</tt></open-code>
-    - the actual name of this file is derived from user
-  input during the subtemplate generation. The file is a bash script that
-  should be edited to execute your model. The app function in
-  <li><open-code code="templating/swift/swift_run_sweep.swift">
+    -  a bash script for executing your model. The actual name of this file is derived from user
+  input during the subtemplate generation. The app function in
+  <open-code code="templating/swift/swift_run_sweep.swift">
     <tt id="mytt">swift/swift_run_sweep.swift</tt></open-code> calls this file.</li>
 </ul>
 
+<p>
 These files contain lines or sections marked with "TODO" where that line or
 section needs to be edited to customize the file for your model and workflow.
 See the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="top_title">
 Use Case 1 Tutorial "Simple Workflows with ABM"</modal-data> for a fully
 fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
+</p>
 
 <p>
 <open-code code="templating/swift/swift_run_sweep.sh">
-<tt id="mytt">swift/swift_run_sweep.sh</tt></open-code> is a bash script used to launch
+</p>
+<p>
+This is a bash script used to launch
 the workflow. The script ultimately calls <tt id="mytt">swift-t</tt> to execute the
-workflow, but prior to that it setups the <tt id="mytt">swift-t</tt> call by defining
-various environment variables used either by Swift itself, by your swift
+workflow, but prior to that it sets up the <tt id="mytt">swift-t</tt> call by defining
+various environment variables used either by Swift/T itself, by your Swift/T
 script or by both. The script contains additional information and TODOs
-in its comments as well various bit of code that can be uncommented as necessary.
+in its comments as well lines of code that can be uncommented as necessary.
 The following describes the file line-by-line.
 </p>
 
@@ -197,38 +203,40 @@ The following describes the file line-by-line.
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="4" to="8">5-9</highlight-code> check that the number of arguments passed to
   the script is equal to 1. This can of couse be changed, but by
-default the script expects a single argument that is the name of the current
+default the script expects a single argument that is the id of the current
 experiment. This name is used in subsequent sections of the script.</li>
 
 <li>Line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="13" to="13">14</highlight-code> exports some environment variables
-that swift uses to control its logging. It can be uncommented to turn logging on.</li>
+  from="12" to="12">13</highlight-code> exports some environment variables
+that swift uses to control its logging. It can be uncommented to turn logging on
+and edited to turn logging off, if uncommented.</li>
 
 <li>Line
   <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
     from="14" to="14">15</highlight-code> defines an <tt id="mytt">EMEWS_PROJECT_ROOT</tt>
 environment variable that specifies the root directory of the project. This
-directory is the project parent directory created by running the <tt id="mytt">emews</tt>
+is the project parent directory created by running the <tt id="mytt">emews</tt>
 template.</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="16" to="16">17</highlight-code> sources some utiliity functions that
-  are used later in the script. These are: <tt id="mytt">check_directory_exists</tt> checks if
+  are used later in the script. These are: <tt id="mytt">check_directory_exists</tt>
+  which checks if
 the <tt id="mytt">TURBINE_OUTPUT</tt> directory exists and prompts the user to
-continue; and <tt id="mytt">log_script</tt> logs the relevant environment variables and
-a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.<li>
+continue; and <tt id="mytt">log_script</tt> which logs the relevant environment variables and
+a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
 
 <li>Lines
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="18" to="19">19-20</highlight-code> create and export an <tt id="mytt">EXPID</tt>
   (an experiment id) environment variable from the experiment id passed into
-  the script and then define the <tt id="mytt">TURBINE_OUTPUT</tt> directory using this
+  the script and then defines the <tt id="mytt">TURBINE_OUTPUT</tt> directory using this
   <tt id="mytt">EXPID</tt>.</li>
 
 <li>Line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="23" to="23">24</highlight-code> defines a <tt id="mytt">PROCS</tt> environment
-  variable the specifies the number of processes to use when running the
+  variable that specifies the number of processes to use when running the
   workflow.</li>
 
 <li>Lines
@@ -236,7 +244,8 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.<li>
   from="28" to="31">29-32</highlight-code> define environment variables that are
   used when running the workflow on a cluster or HPC machine where jobs are
   scheduled for execution. These should be customized for your model runs
-  (i.e. more or less walltime) and cluster / HPC machine.</li>
+  (i.e. more or less walltime) and cluster / HPC machine, but are ignored when
+ running without a scheduler.</li>
 
 <li>Lines
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
@@ -253,41 +262,44 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.<li>
 
 <li>Lines
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="49" to="43">49-53</highlight-code> define the type of scheduler
+  from="48" to="52">49-53</highlight-code> define the type of scheduler
   used when running the workflow on a cluster or HPC machine. This needs
-  to be set when running the workflow on a cluster or HPC machine.</li>
+  to be set when running the workflow on a cluster or HPC machine. Set it
+to your scheduler type (e.g. slurm, pbs, etc.)</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="57" to="57">58</highlight-code> defines an array into which any user defined
   variables that you want to log as part of the experiment meta data can be added.
-  By all the variables described above are logged, but if you add your own,
+  By default all the variables described here are logged, but if you add your own,
   these can be added to this <tt id="mytt">USER_VARS</tt> array for logging.</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="59" to="59">60</highlight-code> calls an EMEWS script function that
-  actually logs the relevant variables and script into the <tt id="mytt">TURBINE_OUTPUT</tt>
-  directory.<li>
+  logs the relevant variables and script into the <tt id="mytt">TURBINE_OUTPUT</tt>
+  directory.</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="64" to="64">65</highlight-code> calls swift-t passing it the
-  relevant variables and the path to the swift script to be executed.<li>
+  relevant variables and the path of the swift script to be executed.</li>
 </ul>
 
 <p>
 <open-code code="templating/swift/swift_run_sweep.swift">
-  <tt id="mytt">swift/swift_run_sweep.swift</tt></open-code> is the swift script that
+</p>
+<p>
+This is the swift script that
 performs that actual sweep. The script consists of two calls that retrieve
 the <tt id="mytt">EMEWS_PROJECT_ROOT</tt> and <tt id="mytt">TURBINE_OUTPUT</tt>
 environment variables (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
-color="rgba(255,255,255,0.3)" from="4" to="5">5-6</highlight-code>))
+color="rgba(255,255,255,0.3)" from="4" to="5">5-6</highlight-code>),
 three functions, one that calls the model itself
   (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
-  color="rgba(255,255,255,0.3)" from="7" to="9">8-10</highlight-code>)
+  color="rgba(255,255,255,0.3)" from="7" to="10">8-11</highlight-code>)
   and two utility functions (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
-  color="rgba(255,255,255,0.3)" from="12" to="15">14-16</highlight-code> and
+  color="rgba(255,255,255,0.3)" from="13" to="15">14-16</highlight-code> and
   <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="19" to="21">20-22</highlight-code> respectively), followed
  by the code that performs the sweep (lines
@@ -297,16 +309,16 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
 
 <p>
   The <highlight-code code="templating/swift/swift_run_sweep.swift"
-  color="rgba(255,255,255,0.3)" from="7" to="9">run_model</highlight-code> function
+  color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> function
   executes a single model run via a bash script. It calls bash, passing it
   the name of the bash script to run, the parameter line to use, the
   <tt id="mytt">EMEWS_PROJECT_ROOT</tt> directory, and the
   path of an <tt id="mytt">instance</tt> directory. The expectation is that each model run
-  will execute in its own directory and <tt id="mytt">instance</tt> is that path of that
+  will execute in its own directory and <tt id="mytt">instance</tt> is the path of that
   directory. Standard out and standard error are redirected to an <tt id="mytt">out</tt>
   and <tt id="mytt">err</tt> file respectively.
-  The first utility <highlight-code code="templating/swift/swift_run_sweep.swift"
-  color="rgba(255,255,255,0.3)" from="12" to="15">make_dir</highlight-code> simply
+  The first utility function,<highlight-code code="templating/swift/swift_run_sweep.swift"
+  color="rgba(255,255,255,0.3)" from="13" to="15">make_dir</highlight-code>, simply
   calls the Unix mkdir command to create a specified directory. The second,
   <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="19" to="21">run_prerequisites</highlight-code>
@@ -314,10 +326,9 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
  needs to be done prior to starting the sweep.
 </p>
 
-<p>
-  <p>The remained of the script performs a simple parameter sweep using the
+  <p>The remainder of the script performs a simple parameter sweep using the
     <highlight-code code="templating/swift/swift_run_sweep.swift"
-   color="rgba(255,255,255,0.3)" from="7" to="9">run_model</highlight-code>
+   color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code>
     app function to run the model. The parameters over which we want to sweep
     are defined in an external file where each row of the file contains a
     parameter set for an individual run. The script will read these parameter
@@ -329,7 +340,7 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
       <li>Read the bash script that runs the model as a <tt id="mytt">file</tt> file
         object.</li>
         <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
-      <li>Read the the list of a parameters into a <tt id="mytt">file</> object.</li>
+      <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
       <li>Split the contents of the file into an array where each line of
         file is an array element.</li>
       <li>Iterate over the array in parallel, launching a model run
