@@ -186,7 +186,7 @@ fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
 </p>
 
 <p>
-<open-code code="templating/swift/swift_run_sweep.sh">
+<open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</open-code>
 </p>
 <p>
 This is a bash script used to launch
@@ -287,7 +287,7 @@ to your scheduler type (e.g. slurm, pbs, etc.)</li>
 </ul>
 
 <p>
-<open-code code="templating/swift/swift_run_sweep.swift">
+<open-code code="templating/swift/swift_run_sweep.swift">swift_run_sweep.swift</open-code>
 </p>
 <p>
 This is the swift script that
@@ -337,29 +337,35 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
     is as follows:
 
     <ol id="myol">
-      <li>Read the bash script that runs the model as a <tt id="mytt">file</tt> file
+      <li>Read the bash script that runs the model as a <tt id="mytt">file</tt>
         object.</li>
         <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
       <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
       <li>Split the contents of the file into an array where each line of
-        file is an array element.</li>
+        the file is an array element.</li>
       <li>Iterate over the array in parallel, launching a model run
         for each parameter set (i.e. array element) in the array, using
-        the repast app function.</li>
+        <highlight-code code="templating/swift/swift_run_sweep.swift"
+       color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code>
+       function.</li>
     </ol>
 </p>
-Line <highlight-code code="templating/swift/swift_run_sweep.swift"
+
+<p>
+More specifically, line <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="24" to="24">25</highlight-code>
-initializes a Swift/T <tt id="mytt">file</tt> variable with the location of the X.sh script file.
-where X will be whatever was input as model during template generation.
+initializes a Swift/T <tt id="mytt">file</tt> variable with the location of the X.sh script file
+(where "X" will de derived from user input template generation).
 Then in line  <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="25" to="25">26</highlight-code> the path of the parameter file that contains
 the parameter sets that will be passed as input to the model is defined, also as a <tt id="mytt">file</tt> variable. This line uses
 the swift built-in function <tt id="mytt">argv</tt> to parse command line arguments to the Swift script.
-The <tt id="mytt">swift_run_sweep.sh</tt> bash script files that runs this swift script
+Recall that the <tt id="mytt">swift_run_sweep.sh</tt> bash script that runs this swift script
 passed the file as a command line argument (line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="64" to="64">65</highlight-code>). Each line of this <tt id="mytt">upf</tt> file contains a parameter set
+  from="64" to="64">65</highlight-code>). Each line of this <tt id="mytt">upf</tt> file contains a parameter set.
+</p>
 
+<p>
 Line <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="26" to="26">27</highlight-code>
 reads the <tt id="mytt">upf</tt> file into an array of strings where each line of the file is an element in the array.
@@ -375,7 +381,9 @@ create an instance directory into which each model run will write its output. Th
 is used to create the directory. The <tt id="mytt">=></tt> keyword is used to ensure
 that the directory is created before the actual model
 run that uses that directory is performed.
+</p>
 
+<p>
 Lines <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="30" to="31">31-32</highlight-code>
 create file objects into which the standard out and standard error streams are
@@ -388,6 +396,7 @@ the <tt id="mytt">run_model</tt> function that performs the run is called with t
 required arguments.
 </p>
 
+<p>
 The final file created (optionally) by the <tt id="mytt">sweep</tt> template is
 <open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
 where X is the actual name of this file derived from user
@@ -402,6 +411,7 @@ command to run the model on line
  color="rgba(255,255,255,0.3)" from="41" to="41">42</highlight-code> for
  the script to execute properly. The script is fully explained in its
  own comments, but the various sections are described below.
+ </p>
 
  <ul>
    <li>Lines
