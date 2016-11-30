@@ -27,7 +27,7 @@
 </style>
 
 EMEWS templates allow a user to easily create an EMEWS project from the
-command line. The project consists of the canoncial EMEWS directory
+command line. The project consists of the canonical EMEWS directory
 layout and various files that can be customized by the user for his or her
 particular model.
 
@@ -76,7 +76,7 @@ lazybones create emews 1.0 MyEMEWSProject
 </pre>
 </p>
 
-This will creawte the EMEWS project structure in directory <tt id="mytt">MyEMEWSProject</tt>
+This will create the EMEWS project structure in directory <tt id="mytt">MyEMEWSProject</tt>
 using version 1.0 of the template. Note that the directory name can be whatever
 you want. For example,
 
@@ -114,11 +114,11 @@ The directories are intended to contain the following:
  <li> <tt id="mytt">data</tt> - data used by the model, input data, for example</li>
  <li> <tt id="mytt">etc</tt> - additional code used by EMEWS</li>
  <li> <tt id="mytt">ext</tt> - swift-t extensions such as eqpy, and eqr</li>
- <li> <tt id="mytt">python</tt> - python code (e.g. model exploration algorithms written in python)</li>
+ <li> <tt id="mytt">python</tt> - python code (e.g., model exploration algorithms written in python)</li>
  <li> <tt id="mytt">python\test</tt> - tests of the python code</li>
- <li> <tt id="mytt">R</tt> - R code (e.g. model exploration algorithms written in R)</li>
+ <li> <tt id="mytt">R</tt> - R code (e.g., model exploration algorithms written in R)</li>
  <li> <tt id="mytt">R\test</tt> - tests of the R code</li>
- <li> <tt id="mytt">scripts</tt> - any necessary scripts (e.g. scripts to launch a model),
+ <li> <tt id="mytt">scripts</tt> - any necessary scripts (e.g., scripts to launch a model),
    excluding scripts used to run the workflow itself</li>
  <li> <tt id="mytt">swift</tt> - swift code, including scripts used to launch the workflow</li>
 </ul>
@@ -137,10 +137,10 @@ lazybones generate X
 
 where X is the subtemplate name: <tt id="mytt">sweep</tt>, <tt id="mytt">eqpy</tt>, or <tt id="mytt">eqr</tt>.
 Once the subtemplate has been generated, the files can be edited to suit the
-current purpose. The files themselves contain comments to guide the
+particular project purpose. The files themselves contain comments to guide the
 customization. The subtemplates must be generated from within the directory
 created by the top-level <tt id="mytt">emews</tt> template. Subtemplate generation will query
-you for additional information (e.g. the model name) required to
+you for additional information (e.g., the model name) required to
 generate the template.
 <br>
 
@@ -148,9 +148,9 @@ generate the template.
 
 <p>
 The <tt id="mytt">sweep</tt> subtemplate generates files appropriate for a sweep through
-a collection of parameters, running the model for each set of parameters. By
+a collection of parameters, running the model for each individual set of parameters. By
 default, the parameters are expected to be defined by the user in an input file
-where each line is a set of parameters to run. Each line of the file is passed
+where each line is an individual parameters setting to run. Each line of the file is passed
 to the model. Consequently, the schema of each line is dependent on the
 model. For example, the model may expect the parameters to be comma separated,
 and parameter X to be the first of these, parameter Y to be the second, and
@@ -180,6 +180,7 @@ Generating the <tt id="mytt">sweep</tt> template creates the following files:
 <p>
 These files contain lines or sections marked with "TODO" where that line or
 section needs to be edited to customize the file for your model and workflow.
+<modal-data data="plugins/Tutorial-View/tutorial/refs.html" ref="Swift_MPI_2013">hello</modal-data>
 See the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="top_title">
 Use Case 1 Tutorial "Simple Workflows with ABM"</modal-data> for a fully
 fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
@@ -245,7 +246,7 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
   from="28" to="31">29-32</highlight-code> define environment variables that are
   used when running the workflow on a cluster or HPC machine where jobs are
   scheduled for execution. These should be customized for your model runs
-  (i.e. more or less walltime) and cluster / HPC machine, but are ignored when
+  (i.e., more or less walltime) and cluster / HPC machine, but are ignored when
  running without a scheduler.</li>
 
 <li>Lines
@@ -266,7 +267,7 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
   from="48" to="52">49-53</highlight-code> define the type of scheduler
   used when running the workflow on a cluster or HPC machine. This needs
   to be set when running the workflow on a cluster or HPC machine. Set it
-to your scheduler type (e.g. slurm, pbs, etc.)</li>
+to your scheduler type (e.g., slurm, pbs, etc.)</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
@@ -347,7 +348,7 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
       <li>Split the contents of the file into an array where each line of
         the file is an array element.</li>
       <li>Iterate over the array in parallel, launching a model run
-        for each parameter set (i.e. array element) in the array, using
+        for each parameter set (i.e., array element) in the array, using
         <highlight-code code="templating/swift/swift_run_sweep.swift"
        color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code>
        function.</li>
