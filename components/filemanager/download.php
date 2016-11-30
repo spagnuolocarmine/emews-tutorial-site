@@ -2,7 +2,7 @@
 
     /*
     *  Copyright (c) Codiad & Kent Safranski (codiad.com), distributed
-    *  as-is and without warranty under the MIT License. See 
+    *  as-is and without warranty under the MIT License. See
     *  [root]/license.txt for more. This information must remain intact.
     */
 
@@ -18,7 +18,7 @@
     // Check $_GET for invalid path
     //////////////////////////////////////////////////////////////////
     //TODO check if the User is allowed to access the project
-    if(!isset($_GET['path']) 
+    if(!isset($_GET['path'])
     		|| preg_match('#^[\\\/]?$#i', trim($_GET['path'])) // download all Projects
     		|| preg_match('#[\:*?\"<>\|]#i', $_GET['path']) //illegal chars in filenames
     		|| substr_count($_GET['path'], './') > 0) { // change directory up to escape Workspace
@@ -64,7 +64,7 @@
         $filename = array_pop($filename);
         $download_file = WORKSPACE . '/' . $_GET['path'];
     }
-
+    //exit('<script>parent.codiad.message.error("'.$download_file.'")</script>');
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="'.basename($filename).'"');
