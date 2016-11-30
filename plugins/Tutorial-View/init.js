@@ -20,6 +20,7 @@
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/highlight-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/modal-data.html">');
+          $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/move-withintutorial.html">');
         $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
 
 

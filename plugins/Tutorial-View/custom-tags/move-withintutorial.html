@@ -1,0 +1,65 @@
+<!-- Imports polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="move-withintutorial">
+    <style>
+      :host {
+        color: blue;
+        text-decoration: underline;
+      }
+      :host:hover {
+        color: red;
+      }
+
+    </style>
+    <template><content id="content"></content></template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+Polymer({
+    is: 'move-withintutorial',
+    properties: {
+        ref: {
+            type: String,
+            value: ''
+        }
+    },
+    listeners: {
+      'click': 'action'
+    },
+    action: function(e){
+      e.stopPropagation();
+      var ref=this.ref;
+
+      setTimeout(function(){
+        parent="";
+        tobreak=false;
+        parent=findElement($(".tutorial"), $("#"+ref), parent, tobreak);
+        //MOVE TOC
+        var container = $('#toc'),
+        scrollTo = $("#"+parent.getAttribute('tocid'));
+
+        $("#toc ul").children().each(function(i, value){$(this).removeClass("toc-active");});
+        scrollTo.addClass("toc-active");
+
+        $("#toc").animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        }, 200);
+        amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid'),"h"]);
+
+        var container = $('#tutorialcontent'),
+        scrollTo = $("#"+ref);
+        var size_to_scroll = 100;//(container.scrollTop() * 20)/100;
+
+        container.animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - size_to_scroll
+        }, 200);
+
+      }, 100);
+    }
+});
+
+
+</script>
