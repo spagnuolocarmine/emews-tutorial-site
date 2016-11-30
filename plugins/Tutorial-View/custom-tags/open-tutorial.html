@@ -1,0 +1,41 @@
+<!-- Imports polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="open-tutorial">
+    <style>
+      :host {
+        color: pink;
+        text-decoration: underline;
+      }
+      :host:hover {
+        color: red;
+      }
+
+    </style>
+    <template><content id="content"></content></template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+Polymer({
+    is: 'open-tutorial',
+    properties: {
+        tutorial: {
+            type: String,
+            value: ''
+        }
+    },
+    listeners: {
+      'click': 'action'
+    },
+    action: function(e){
+      e.stopPropagation();
+      var tut=this.tutorial;
+      console.log("open "+tut);
+      codiad.project.open(tut);
+    }
+});
+
+
+</script>
