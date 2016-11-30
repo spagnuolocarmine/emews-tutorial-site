@@ -56,15 +56,17 @@
             });
 
             // Find [CTRL+F] /////////////////////////////////////////////
-            $.ctrl('70', function() {
+          /*  $.ctrl('70', function() {
                 codiad.editor.openSearch('find');
-            });
+            });*/
 
             // Replace [CTRL+R] //////////////////////////////////////////
           /*  $.ctrl('82', function() {
                 codiad.editor.openSearch('replace');
             });*/
-
+            $.ctrl('27', function() {
+                codiad.modal.unload();
+            });
             // Active List Previous [CTRL+UP] ////////////////////////////
             $.ctrl('38', function() {
                 codiad.active.move('up');

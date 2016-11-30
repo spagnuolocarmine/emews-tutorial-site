@@ -283,7 +283,7 @@
                             if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
                               codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
                             codiad.tutorial.setHighlightMarker(code,newmarker);
-                          },300);
+                          },400);
 
                      clearInterval(checkExist2);
                   }, 20);

@@ -21,6 +21,10 @@
                 .draggable({
                     handle: '#drag-handle'
                 });
+            $('.modal-overlay').click(function(){
+                codiad.modal.unload();
+              }
+            );
             $('#modal-content')
                 .html('<div id="modal-loading"></div>');
             this.load_process = $.get(url, data, function(data) {
@@ -30,7 +34,7 @@
                     .focus();
             });
             var event = {animationPerformed: false};
-            amplify.publish('modal.onLoad', event);            
+            amplify.publish('modal.onLoad', event);
             // If no plugin has provided a custom load animation
             if(!event.animationPerformed) {
                 $('#modal, #modal-overlay')
@@ -117,4 +121,3 @@
     };
 
 })(this, jQuery);
-
