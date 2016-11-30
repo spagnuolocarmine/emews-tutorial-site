@@ -231,17 +231,19 @@
             -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
             $('#application-progress').show();
+            if(element !=null && element != undefined)
+            {
 
-          }
-          if(element !=null && element != undefined)
-          {
-            var container = $('#tutorialcontent'),
-            scrollTo = $(element);
+              var container = $('#tutorialcontent'),
+              scrollTo = $(element);
+              var size_to_scroll = 100;//(container.scrollTop() * 20)/100;
 
-            container.animate({
-              scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-            }, 200);
+              container.animate({
+                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - size_to_scroll
+              }, 200);
+            }
           }
+
 
         },
         closeEditor:  function()
