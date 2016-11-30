@@ -172,22 +172,21 @@ Generating the <tt id="mytt">sweep</tt> template creates the following files:
   <li>(optional)<open-code code="templating/scripts/X.sh">
     <tt id="mytt">scripts/X.sh</tt></open-code>
     -  a bash script for executing your model. The actual name of this file is derived from user
-  input during the subtemplate generation. The app function in
-  <open-code code="templating/swift/swift_run_sweep.swift">
-    <tt id="mytt">swift/swift_run_sweep.swift</tt></open-code> calls this file.</li>
+  input during the subtemplate generation. The <highlight-code code="templating/swift/swift_run_sweep.swift" color="rgba(255,255,255,0.3)"
+  from="7" to="10">app</highlight-code> function in
+  <tt id="mytt">swift/swift_run_sweep.swift</tt> calls this file.</li>
 </ul>
 
 <p>
 These files contain lines or sections marked with "TODO" where that line or
 section needs to be edited to customize the file for your model and workflow.
-<modal-data data="plugins/Tutorial-View/tutorial/refs.html" ref="Swift_MPI_2013">hello</modal-data>
 See the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="top_title">
 Use Case 1 Tutorial "Simple Workflows with ABM"</modal-data> for a fully
 fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
 </p>
 
 <p>
-<open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</open-code>
+The <open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</open-code> file
 </p>
 <p>
 This is a bash script used to launch
