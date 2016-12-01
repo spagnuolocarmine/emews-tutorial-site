@@ -187,7 +187,7 @@ fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
 
 <p>
 
-<div id="swift_run_sweep.sh" />
+<span id="swift_run_sweep.sh"></span>
 The <open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</open-code> file
 </p>
 <p>
@@ -208,7 +208,7 @@ The following describes the file line-by-line.
 default the script expects a single argument that is the id of the current
 experiment. This name is used in subsequent sections of the script.</li>
 
-<li>Line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
+<li>Line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.5)"
   from="12" to="12">13</highlight-code> exports some environment variables
 that swift uses to control its logging. It can be uncommented to turn logging on
 and edited to turn logging off, if uncommented.</li>
@@ -250,7 +250,7 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
  running without a scheduler.</li>
 
 <li>Lines
-<highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
+<highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.5)"
   from="33" to="38">34-39</highlight-code> are commented out, but can be
   uncommented and customized if there is a problem running R or Python code.</li>
 
@@ -305,7 +305,7 @@ three functions, one that calls the model itself
   and two utility functions (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
   color="rgba(255,255,255,0.3)" from="13" to="15">14-16</highlight-code> and
   <highlight-code code="templating/swift/swift_run_sweep.swift"
- color="rgba(255,255,255,0.3)" from="19" to="21">20-22</highlight-code> respectively), followed
+ color="rgba(255,255,255,0.5)" from="19" to="21">20-22</highlight-code> respectively), followed
  by the code that performs the sweep (lines
  <highlight-code code="templating/swift/swift_run_sweep.swift"
 color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
@@ -325,7 +325,7 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
   color="rgba(255,255,255,0.3)" from="13" to="15">make_dir</highlight-code>, simply
   calls the Unix mkdir command to create a specified directory. The second,
   <highlight-code code="templating/swift/swift_run_sweep.swift"
- color="rgba(255,255,255,0.3)" from="19" to="21">run_prerequisites</highlight-code>
+ color="rgba(255,255,255,0.5)" from="19" to="21">run_prerequisites</highlight-code>
  is commented out, but can be uncommented and edited to perform anything that
  needs to be done prior to starting the sweep.
 </p>
@@ -401,7 +401,7 @@ required arguments.
 </p>
 
 <p>
-<div id="templating:X.sh" />
+<span id="templating:X.sh"></span>
 <open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
 </p>
 <p>
@@ -413,7 +413,7 @@ the step that creates this file, using your own script file as an
 alternative. Assuming you do chose to create the file, the file itself is a
 bash script that is intended to run the model from the command line
 for a specified set of parameters passed in as arguments to that model.
-While the script is 60 or so lines long, you only need to define the
+While the script is 60 or so lines long, you need define the
 command to run the model on line
 <highlight-code code="templating/scripts/X.sh"
  color="rgba(255,255,255,0.3)" from="41" to="41">42</highlight-code> for
@@ -483,10 +483,10 @@ extension adds two blocking queues through which a Swift/T script and a
 python code algorithm can coordinate execution. The <tt id="mytt">eqpy</tt>
 subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a python code algorithm
-using the two queues. The coordinated execution of the two follows
+using the two queues. By default the coordinated execution of the two follows
 this pattern:
 
-<div id="overview" />
+<span id="overview"></span>
 <ol id="myol">
   <li>The swift script initializes the EQ/Py extension, including the
     the python code, and then waits for the
@@ -508,7 +508,13 @@ this pattern:
     (e.g. algorithm convergence or some maximum number of iterations) is
     reached.</li>
 </ol>
+
+The subtemplate installs skeleton swift code that assumes this pattern.
+However, alternate patterns of communication can be coded as long as
+the queue "get" and "put" are coordinated such that neither the swift side or the
+python side hangs in a "get" waiting for the otherside to "put".
 </p>
+
 
 <p>
 When run, the <tt id="mytt">eqpy</tt> subtemplate will ask you for the following:
@@ -517,7 +523,7 @@ When run, the <tt id="mytt">eqpy</tt> subtemplate will ask you for the following
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
   is the same script as the
-  <!-- TODO: section is model_script --> <a href="#templating:X.sh">X.sh</a>
+  <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial>
 file described in the previous section.</li>
   <li>Your python code's python package name. In the typical
     case this will be the name of your python file excluding the .py
@@ -559,7 +565,7 @@ above) and the names below are the defaults.
       <tt id="mytt">eqpy_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
       <tt id="mytt">sweep</tt> template, so see  <!-- TODO: fix if not right -->
-      <a href="#X.sh">scripts/X.sh</a> for more details.</li>
+      <move-withintutorial ref="X.sh">scripts/X.sh</move-withintutorial> for more details.</li>
     <li>
       <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
       </open-code> - a bash script used to launch the EQ/Py-based workflow.</li>
@@ -572,11 +578,12 @@ above) and the names below are the defaults.
 </p>
 
 <p>
+  <span id="swift_run_eqpy" />
   <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
   </open-code>
 </p>
 <p>
-This file is very similar to the  <a href="#swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></a>
+This file is very similar to the  <move-withintutorial ref="#swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></move-withintutorial>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -652,8 +659,9 @@ For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
  color="rgba(255,255,255,0.3)" from="39" to="40">40-41</highlight-code> in
  <tt id="mytt">swift_run_eqpy.sh</tt>), the main function starts the coordinated
  sequence of algorithmic parameter production and model runs as described
- <!-- TODO: add link above ref=overview -->
- above. By default the <highlight-code code="templating/swift/swift_run_eqpy.sh"
+
+ <move-withintutorial ref="overview">above</move-withintutorial>.
+ By default the <highlight-code code="templating/swift/swift_run_eqpy.sh"
   color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="mytt">swift_run_eqpy.sh</tt></highlight-code>
   defined only a single rank.
  </p>
@@ -671,7 +679,7 @@ those functions with the location of the task where the python code is executing
 This call is followed by a TODO concerned with creating a set of parameters
 with which to initialize the python algorithm (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="137" to="145">136-144</highlight-code>
+color="rgba(255,255,255,0.5)" from="135" to="143">136-144</highlight-code>
 ). This is then followed by the heart of the function where EQ/Py and the python
 algorithm are initialized and the loop over the coordinated
 sequence of algorithmic parameter production and model runs is begun. Line
@@ -770,7 +778,7 @@ color="rgba(255,255,255,0.3)" from="67" to="70">68-71</highlight-code>).
 Once the model runs have completed the results of those trials are
 aggregated (or not) in some user defined way and returned (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="71" to="75">72-76</highlight-code>).
+color="rgba(255,255,255,0.3)" from="75" to="75">76</highlight-code>).
 </p>
 
 <p>
@@ -810,16 +818,126 @@ should be sufficient for an EQ/Py-based workflow, but the specifics need to be
 customized for your particular use case.
 </p>
 
+<p>
+<h3>The <tt id="mytt">eqr</tt> Subtemplate</h3>
+</p>
 
+<p>
+The <tt>eqr</tt> subtemplate works much the same as the <tt>eqpy</tt> template,
+but for model exploration algorithms written in R. It generates files and code for model
+exploration using the EQ/R EMEWS extension. The EQ/R
+extension adds two blocking queues through which a Swift/T script and a
+R code algorithm can coordinate execution. The <tt id="mytt">eqr</tt>
+subtemplate installs this extension and adds user customizable code that
+allows model runs and exploration to be controlled from a R code algorithm
+using the two queues. By default the coordinated execution of the two follows
+the following pattern (identical to that of the <tt>eqpy</tt> template).
 
+<span id="eqr_overview"></span>
+<ol id="myol">
+  <li>The swift script initializes the EQ/R extension, including the
+    the R code, and then waits for the
+    R code to produce parameters for a parallelized collection of
+    model runs.</li>
+  <li>The R code produces an initial set of parameters.</li>
+  <li>The R code passes these parameters to the swift script.</li>
+  <li>The R code then waits for the swift code.</li>
+  <li>Having received the parameters for the model runs, the swift script
+  launches those runs in parallel.</li>
+  <li>When the model runs are finished, the swift script passes a result
+  derived from the output of those runs back to the R code.</li>
+  <li>The swift script then waits for the next set of parameters or a flag
+    indicating that no more runs need to be performed.</li>
+  <li>Having received the results from the swift script, the R code
+    algorithm produces a new set of parameters based on the swift result,
+  and passes those back to the waiting swift script.</li>
+  <li>Steps 5 - 8 are repeated until some stopping condition
+    (e.g. algorithm convergence or some maximum number of iterations) is
+    reached.</li>
+</ol>
 
+The subtemplate installs skeleton swift code that assumes this pattern.
+However, alternate patterns of communication can be coded as long as
+the queue "get" and "put" calls are coordinated such that neither the swift side or the
+R side hangs in a "get" waiting for the otherside to "put".
+</p>
 
+<p>
+When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
+<ul>
+  <li>Whether to build and install EQ/R swift extension as part of the
+    template generation. If you answer yes to this, there will be further queries
+    for the path to R, various R libraries and so on. The alternative is to run
+    the autotools-based (./configure etc.) installation manually where you will
+    also need to edit the path to R, and other libraries.</li>
+  <li>The model name. This isn't necessarily the literal model name,
+  but rather is used as part of script names and within the files.</li>
+  <li>Whether or not to create a script for running the model. This
+  is the same script as the
+  <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial>
+file described in the sweep section.</li>
+  <li>The file name for your R model exploration code. This defaults
+  to <tt>my_algorithm.R</tt>. This file is "sourced" as part of EQ/R
+  initialization and so it must contain code that will be run when sourced.</li>
+  <li>Whether or not your R algorithm produces parameters
+    for a single run (unlikely), or sets of parameters for multiple runs.</li>
+  <li>A name for the swift workflow script. This defaults to
+    swift_run_eqr.swift.</li>
+  <li>A name for the bash script for launching the swift script. This
+    defaults to swift_run_eqr.sh.</li>
+</ul>
+</p>
 
+<p>
+The EQ/R extension includes native code that requires compilation using a
+C++ compiler. The <tt id="mytt">eqr</tt> subtemplate will install an
+autotools-based installation in <tt>ext/EQ-R/eqr/</tt>.
+If you choose to run the build and install of the extension from within template
+generation, the template will generate a <tt>build.sh</tt> file within that directory,
+and then execute this <tt>build.sh</tt> file. <tt>build.sh</tt> automates
+the autotools-base installation, calling <tt>bootstrap</tt>, <tt>configure</tt>
+with the appropriate arguments, and then <tt>make install</tt>. If there
+are any errors during this, or you wish to compile the EQ/R extension
+manually, see <tt>ext/EQ-R/eqr/COMPILING.txt</tt>.
+</p>
 
+<p>
+A successful EQ/R build and install will install the following files:
 
-<br>
-<br>
-### EQ/R ###
+  <ul>
+    <li><tt id="mytt">ext/EQ-R/EQR.swift</tt></li>
+    <li><tt id="mytt">ext/EQ-R/libeqr.so</tt></li>
+    <li><tt id="mytt">ext/EQ-R/pkgIndex.tcl</tt></li>
+  </ul>
 
-The *eqr* subtemplate ...
+The swift file contains the swift code for initializing EQ/R with an
+R file and communicating with R environment via the queues. The native
+library <tt>libeqr.so</tt> contains the native code that implement
+the queues and expose them to swift and the R environment. <tt>pkgIndex.tcl</tt>
+is required in order for swift to be able to use the native code library.
+These should not need to be edited by you, the user.
+</p>
+
+<p>
+The subtemplate generates the following files that can be edited by the
+user. Note that  file names are determined by user input (as described
+above) and the names below are the defaults.
+
+  <ul>
+    <li>Optionally <open-code code="templating/scripts/eqr_X.sh">
+      <tt id="mytt">eqr_X.sh</tt></open-code>, where "X" is derived from the
+      model name input. This file is identical to that produced by the
+      <tt id="mytt">sweep</tt> template, so see
+      <move-withintutorial ref="X.sh">scripts/X.sh</move-withintutorial> for more details.</li>
+    <li>
+      <open-code code="templating/swift/swift_run_eqr.sh"><tt id="mytt">swift_run_eqr.sh</tt>
+      </open-code> - a bash script used to launch the EQ/R-based workflow.</li>
+    <li>
+      <open-code code="templating/swift/swift_run_eqr.swift"><tt id="mytt">swift_run_eqr.swift</tt>
+      </open-code> - a skeleton swift script for model exploration
+      runs whose parameters are generated from a R algorithm. This must be customized
+      by the user.</li>
+</ul>
+</p>
+
 </html>
