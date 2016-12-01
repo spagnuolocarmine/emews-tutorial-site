@@ -305,7 +305,7 @@ three functions, one that calls the model itself
   and two utility functions (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
   color="rgba(255,255,255,0.3)" from="13" to="15">14-16</highlight-code> and
   <highlight-code code="templating/swift/swift_run_sweep.swift"
- color="rgba(255,255,255,0.3)" from="19" to="21">20-22</highlight-code> respectively), followed
+ color="rgba(255,255,255,0.5)" from="19" to="21">20-22</highlight-code> respectively), followed
  by the code that performs the sweep (lines
  <highlight-code code="templating/swift/swift_run_sweep.swift"
 color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
@@ -325,7 +325,7 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
   color="rgba(255,255,255,0.3)" from="13" to="15">make_dir</highlight-code>, simply
   calls the Unix mkdir command to create a specified directory. The second,
   <highlight-code code="templating/swift/swift_run_sweep.swift"
- color="rgba(255,255,255,0.3)" from="19" to="21">run_prerequisites</highlight-code>
+ color="rgba(255,255,255,0.5)" from="19" to="21">run_prerequisites</highlight-code>
  is commented out, but can be uncommented and edited to perform anything that
  needs to be done prior to starting the sweep.
 </p>
@@ -413,7 +413,7 @@ the step that creates this file, using your own script file as an
 alternative. Assuming you do chose to create the file, the file itself is a
 bash script that is intended to run the model from the command line
 for a specified set of parameters passed in as arguments to that model.
-While the script is 60 or so lines long, you only need to define the
+While the script is 60 or so lines long, you need define the
 command to run the model on line
 <highlight-code code="templating/scripts/X.sh"
  color="rgba(255,255,255,0.3)" from="41" to="41">42</highlight-code> for
@@ -515,7 +515,7 @@ When run, the <tt id="mytt">eqpy</tt> subtemplate will ask you for the following
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
   is the same script as the
-  <move-withintutorial ref="templating:X.sh">X.sh</<move-withintutorial>
+  <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial>
 file described in the previous section.</li>
   <li>Your python code's python package name. In the typical
     case this will be the name of your python file excluding the .py
@@ -670,7 +670,7 @@ those functions with the location of the task where the python code is executing
 This call is followed by a TODO concerned with creating a set of parameters
 with which to initialize the python algorithm (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="137" to="145">136-144</highlight-code>
+color="rgba(255,255,255,0.5)" from="135" to="143">136-144</highlight-code>
 ). This is then followed by the heart of the function where EQ/Py and the python
 algorithm are initialized and the loop over the coordinated
 sequence of algorithmic parameter production and model runs is begun. Line
@@ -769,7 +769,7 @@ color="rgba(255,255,255,0.3)" from="67" to="70">68-71</highlight-code>).
 Once the model runs have completed the results of those trials are
 aggregated (or not) in some user defined way and returned (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="71" to="75">72-76</highlight-code>).
+color="rgba(255,255,255,0.3)" from="75" to="75">76</highlight-code>).
 </p>
 
 <p>
