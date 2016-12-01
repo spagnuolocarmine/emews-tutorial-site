@@ -45,7 +45,7 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
     make_dir(instance_dir) => {
       file out <instance_dir + "out.txt">;
       file err <instance_dir + "err.txt">;
-      string model_sh = emews_root + "/scripts/eqpy_Y.sh";
+      string model_sh = emews_root + "/scripts/eqpy_X.sh";
       (out,err) = run_model(model_sh, param_line,instance_dir) =>
       result = get_result(instance_dir) =>
       // delete the instance directory as it is no longer needed
