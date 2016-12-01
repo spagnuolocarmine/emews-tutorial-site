@@ -6,6 +6,7 @@
 - **Refer to reference**: ```<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>```
 - **Normal link opened in other tab**: ```<a target="_blank" href="http://swift-lang.org/Swift-T">Swift/T website</a>```
 - **Jump within tutorial**: ```<move-withintutorial ref="someref">move tutorial</move-withintutorial>``` and this on some part of the tutorial page ```<span id="someref"></span>```
+- **Open another tutorial**: uc2 is the name of the tutorial folder in workspace ```<open-tutorial tutorial="uc2">open tutorial</open-tutorial>```
 - (Discouraged) **Normal link**: ```<a href="http://swift-lang.org/Swift-T">Swift/T website</a>```
 
 
