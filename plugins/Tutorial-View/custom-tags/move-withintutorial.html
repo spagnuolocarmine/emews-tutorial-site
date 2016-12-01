@@ -2,10 +2,10 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 
 <!-- Defines element markup -->
-<dom-module id="highlight-code">
+<dom-module id="move-withintutorial">
     <style>
       :host {
-        color: lime;
+        color: blue;
         text-decoration: underline;
       }
       :host:hover {
@@ -19,45 +19,24 @@
 <!-- Registers custom element -->
 <script>
 Polymer({
-    is: 'highlight-code',
+    is: 'move-withintutorial',
     properties: {
-        code: {
+        ref: {
             type: String,
             value: ''
-        },
-        color: {
-            type: String,
-            value: ''
-        },
-        text: {
-            type: String,
-            value: ''
-        },
-        from: {
-            type: String,
-            value: ''
-        },
-        to: {
-            type: String,
-            value: ''
-        },
+        }
     },
     listeners: {
       'click': 'action'
     },
     action: function(e){
       e.stopPropagation();
-      var code=this.code;
-      var colorvalue=this.color;
-      var fromline=this.from;
-      var toline=this.to;
-      var _this = this;
-      codiad.tutorial.highlightCode(code,fromline,toline,colorvalue);
-      codiad.tutorial.openEditor(_this);
+      var ref=this.ref;
+
       setTimeout(function(){
         parent="";
         tobreak=false;
-        parent=findElement($(".tutorial"), _this, parent, tobreak);
+        parent=findElement($(".tutorial"), $("#"+ref), parent, tobreak);
         //MOVE TOC
         var container = $('#toc'),
         scrollTo = $("#"+parent.getAttribute('tocid'));
@@ -69,15 +48,15 @@ Polymer({
           scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
         }, 200);
         amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid'),"h"]);
-        //MOVE FILE manager search li with code
-        var lielementcode;
-        container = $('#file-manager');
-        container.find("li").each(function(i, value){
 
-          if($(this).find("a").attr("data-path") == code)
-            lielementcode=this;
+        var container = $('#tutorialcontent'),
+        scrollTo = $("#"+ref);
+        var size_to_scroll = 100;//(container.scrollTop() * 20)/100;
 
-        });
+        container.animate({
+          scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - size_to_scroll
+        }, 200);
+
       }, 100);
     }
 });

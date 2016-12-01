@@ -20,6 +20,8 @@
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/highlight-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-code.html">');
         $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/modal-data.html">');
+        $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/move-withintutorial.html">');
+        $('head').append('<link rel="import" href="plugins/Tutorial-View/custom-tags/open-tutorial.html">');
         $.loadScript('plugins/Tutorial-Status/js/js.storage.js');
 
 
@@ -231,17 +233,19 @@
             -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
             $('#application-progress').show();
+            if(element !=null && element != undefined)
+            {
 
-          }
-          if(element !=null && element != undefined)
-          {
-            var container = $('#tutorialcontent'),
-            scrollTo = $(element);
+              var container = $('#tutorialcontent'),
+              scrollTo = $(element);
+              var size_to_scroll = 100;//(container.scrollTop() * 20)/100;
 
-            container.animate({
-              scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-            }, 200);
+              container.animate({
+                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - size_to_scroll
+              }, 200);
+            }
           }
+
 
         },
         closeEditor:  function()
@@ -281,7 +285,7 @@
                             if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
                               codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
                             codiad.tutorial.setHighlightMarker(code,newmarker);
-                          },300);
+                          },400);
 
                      clearInterval(checkExist2);
                   }, 20);
