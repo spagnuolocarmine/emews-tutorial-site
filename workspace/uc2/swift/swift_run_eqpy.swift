@@ -31,13 +31,12 @@ app (file so, file se) run_model (string model_sh, string param_line, string ins
   string instance_dir = "%s/instance_%s/" % (turbine_output, id_suffix);
   make_dir(instance_dir) => {
     string model_sh = emews_root+"/scripts/eqpy_rs_single_run.sh";
-    // Imported from R_obj.swift
     run_model(model_sh,param_line,instance_dir) => 
+    // Imported from R_obj.swift
     result = calc_obj(instance_dir) =>
-    rm_dir(instance_dir);
     // delete the instance directory as it is no longer needed
     // if it is needed then delete this line
-    
+    rm_dir(instance_dir);
   }     
 }
 
