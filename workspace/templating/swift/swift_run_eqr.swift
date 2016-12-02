@@ -1,21 +1,16 @@
-import files;
-import string;
-import sys;
 import io;
-import stats;
-import python;
-import math;
+import sys;
+import files;
 import location;
-import assert;
+import string;
+import EQR;
 import R;
-
-import EQPy;
+import assert;
 
 string emews_root = getenv("EMEWS_PROJECT_ROOT");
 string turbine_output = getenv("TURBINE_OUTPUT");
 string resident_work_ranks = getenv("RESIDENT_WORK_RANKS");
 string r_ranks[] = split(resident_work_ranks,",");
-
 
 string read_last_row = ----
   # TODO
@@ -45,7 +40,7 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
     make_dir(instance_dir) => {
       file out <instance_dir + "out.txt">;
       file err <instance_dir + "err.txt">;
-      string model_sh = emews_root + "/scripts/eqpy_X.sh";
+      string model_sh = emews_root + "/scripts/eqr_X.sh";
       (out,err) = run_model(model_sh, param_line,instance_dir) =>
       result = get_result(instance_dir) =>
       // delete the instance directory as it is no longer needed
@@ -59,7 +54,7 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
   // Given the parameter string and the number of trials for that
   // those parameters, create an array of parameter combinations
   // Typically, this involves at least appending a different random
-  // seed to the parameter string for each trial
+  // seed to he parameter string for each trial
 }
 
 (float agg_result) obj(string params, int trials, string iter_indiv_id) {
@@ -76,40 +71,32 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
     agg_result = 0;
 }
 
-(void v) loop (location ME, int ME_rank, int trials) {
+(void v) loop(location ME, int ME_rank, int trials) {
+
     for (boolean b = true, int i = 1;
        b;
        b=c, i = i + 1)
   {
-    // gets the model parameters from the python algorithm
-    string params =  EQPy_get(ME);
+    string params =  EQR_get(ME);
     boolean c;
-    // TODO
-    // Edit the finished flag, if necessary.
-    // when the python algorithm is finished it should
-    // pass "DONE" into the queue, and then the
-    // final set of parameters. If your python algorithm
-    // passes something else then change "DONE" to that
     if (params == "DONE")
     {
-        string finals =  EQPy_get(ME);
-        // TODO if appropriate
-        // split finals string and join with "\n"
-
-        // e.g. finals is a ";" separated string and we want each
-        // element on its own line:
-        // multi_line_finals = join(split(finals, ";"), "\n");
-
-        string fname = "%s/final_result_%i" % (turbine_output, ME_rank);
-        file results_file <fname> = write(finals) =>
-        printf("Writing final result to %s", fname) =>
-        // printf("Results: %s", finals) =>
-        v = make_void() =>
-        c = false;
+      string finals =  EQR_get(ME);
+      // TODO if appropriate
+      // split finals string and join with "\\n"
+      // e.g. finals is a ";" separated string and we want each
+      // element on its own line:
+      // multi_line_finals = join(split(finals, ";"), "\\n");
+      string fname = "%s/final_result_%i" % (turbine_output, ME_rank);
+      file results_file <fname> = write(finals) =>
+      printf("Writing final result to %s", fname) =>
+      // printf("Results: %s", finals) =>
+      v = make_void() =>
+      c = false;
     }
     else
     {
-
+      
         string param_array[] = split(params, ";");
         float results[];
         foreach p, j in param_array
@@ -123,31 +110,29 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
             rs[k] = fromfloat(result);
         }
         string res = join(rs, ",");
-        EQPy_put(ME, res) => c = true;
+        EQR_put(ME, res) => c = true;
 
     }
   }
 }
 
-// TODO
-// Edit function arguments to include those passed from main function
-// below
-(void o) start (int ME_rank, int num_variations, int random_seed) {
+(void o) start(int ME_rank, int num_variations, int random_seed) {
     location ME = locationFromRank(ME_rank);
-    // TODO
-    // Edit algo_params to include those required by the python
+    // TODO: Edit algo_params to include those required by the R
     // algorithm.
     // algo_params are the parameters used to initialize the
-    // python algorithm. We pass these as a comma separated string.
-    //  Be default we are passing a random seed. String parameters
+    // R algorithm. We pass these as a comma separated string.
+    // By default we are passing a random seed. String parameters
     // should be passed with a \"%s\" format string.
     // e.g. algo_params = "%d,%\"%s\"" % (random_seed, "ABC");
-    algo_params = "%d" % random_seed;
-    EQPy_init_package(ME,"my_algorithm") =>
-    EQPy_get(ME) =>
-    EQPy_put(ME, algo_params) =>
-      loop(ME, ME_rank, num_variations) => {
-        EQPy_stop(ME);
+    string algo_params = "%d" % random_seed;
+    string algorithm = strcat(emews_root,"/R/my_algorithm.R");
+    EQR_init_script(ME, algorithm) =>
+    EQR_get(ME) =>
+    EQR_put(ME, algo_params) =>
+    loop(ME, ME_rank, num_variations) => {
+        EQR_stop(ME) =>
+        EQR_delete_R(ME);
         o = propagate();
     }
 }
@@ -168,19 +153,17 @@ app (void o) make_dir(string dirname) {
 //
 //}
 
-
 main() {
 
   // TODO
   // Retrieve arguments to this script here
-  // these are typically used for initializing the python algorithm
-  // He we retrieve the number of variations (i.e. trials) for each
-  // model run, and the random seed for the python algorithm.
+  // these are typically used for initializing the R algorithm
+  // Here, as an example, we retrieve the number of variations
+  // (i.e. trials) for each model run, and the random seed for the
+  // R algorithm.
   int num_variations = toint(argv("nv", "1"));
   int random_seed = toint(argv("seed", "0"));
 
-  // PYTHONPATH needs to be set for python code to be run
-  assert(strlen(getenv("PYTHONPATH")) > 0, "Set PYTHONPATH!");
   assert(strlen(emews_root) > 0, "Set EMEWS_PROJECT_ROOT!");
 
   int ME_ranks[];
@@ -194,5 +177,4 @@ main() {
       printf("End rank: %d", ME_rank);
     }
 //}
-
 }

@@ -1,4 +1,23 @@
 <h1 style="margin-top: 0px;">Workflow control with Python-based external algorithms</h1>
+<style>
+  #myol {
+    margin-left: 5%;
+    list-style: none outside none;
+  }
+  #myol li {
+    counter-increment: item;
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  #myol li:before {
+    margin-right: 10px;
+    content: counter(item)")";
+    color: white;
+    text-align: center;
+    display: inline-block;
+  }
+
+</style>
 <p>
 
   Due to the highly non-linear relationship between ABM input parameters and model outputs,
@@ -10,21 +29,27 @@
 
 <h2> Passing parameters and simulation results to resident task</h2>
 <p>
-  An inversion of control (IoC) approach enabled
-  by resident Python tasks in Swift/T and simple queue-based interfaces for passing
-  parameters and simulation results, where a metaheuristic method (GA) is used to control a large workflow.
+  In (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">Ozik, Collier, and Wozniak 2015</modal-data>)
+  we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple
+  queue-based interfaces for passing parameters and
+  simulation results, where a metaheuristic method
+  (GA) developed with DEAP (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) is
+  used to control a large workflow.
   Our second use case shows how this is done with the EQ/Py extension.
   The benefit of using external libraries directly is threefold.
 </p>
 <p>
-  First, there is no need to port the logic of a model exploration method into Swift/T,
+<ol id="myol">
+            <li>There is no need to port the logic of a model exploration method into Swift/T,
   thereby removing the (possibly prohibitive) effort overhead and the possibility
-  for translation errors. Second, the latest methods from the many available
-  model exploration toolkits~(e.g., those in related:modelExp)
-  can be easily compared with each other for utility and performance.
-  Third, the external libraries are not aware of their existence within the
+  for translation errors.</li>
+            <li>The latest methods from the many available
+  model exploration toolkits (e.g., those in Section 2.2 of the <modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_emews_2016.html">EMEWS Tutorial</modal-data>)
+  can be easily compared with each other for utility and performance.</li>
+            <li>The external libraries are not aware of their existence within the
   EMEWS framework, so methods developed without massively parallel computing
-  resources in mind can be nonetheless utilized in such settings.
+  resources in mind can be nonetheless utilized in such settings.</li>
+          </ol>
 </p>
 
 
@@ -34,8 +59,11 @@ For resident tasks, which retain state, the location of a worker is used so that
 algorithm state can be repeatedly accessed.
 </p>
 <p>
-The \href{https://goo.gl/V6JTb2}{EQ/Py extension}~\cite{emews_site}
-provides an interface for interacting with Python-based resident tasks at specific locations.
+The EQ/Py extension provides an interface for interacting with Python-based resident tasks
+at specific locations (see the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py section</modal-data>
+of the EMEWS Template tutorial for the preferred
+way of installing and using EQ/Py, and the <a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a> for the EQ/Py source code).
+
 \CODE{deap} shows how EQ/Py is used in the current example. We import the extension in line 1.
 The deap function is defined to take the arguments py_rank (a unique rank),
 iters (the number of GA iterations), trials (the number of stochastic
