@@ -31,9 +31,16 @@ if($action != "tutorial-view" || $action != "restart")
             ?>
           <script>
           //  console.log("Open tutorial");
+           var tutorial = location.search.split('tutorial=')[1];
             var checkExist=setInterval(function() {
               if ($('#workspace').length > 0) {
               //  console.log("Open tutorial");
+                  if(tutorial != undefined)
+                  {
+                    storage=Storages.localStorage;
+                    storage.set('tutorial',tutorial);
+                    window.location.href = "?action=tutorial-view"
+                  }
                   codiad.console.loadTutorial();
                   clearInterval(checkExist);
                 }//else console.log($('#workspace').length);
