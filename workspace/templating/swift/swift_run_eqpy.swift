@@ -40,18 +40,18 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
 
 (float result) run_obj(string param_line, string id_suffix)
 {
-    // make instance dir
-    string instance_dir = "%s/instance_%s/" % (turbine_output, id_suffix);
-    make_dir(instance_dir) => {
-      file out <instance_dir + "out.txt">;
-      file err <instance_dir + "err.txt">;
-      string model_sh = emews_root + "/scripts/eqpy_X.sh";
-      (out,err) = run_model(model_sh, param_line,instance_dir) =>
-      result = get_result(instance_dir) =>
-      // delete the instance directory as it is no longer needed
-      // if it is needed then delete this line
-      rm_dir(instance_dir);
-    }
+  // make instance dir
+  string instance_dir = "%s/instance_%s/" % (turbine_output, id_suffix);
+  make_dir(instance_dir) => {
+    file out <instance_dir + "out.txt">;
+    file err <instance_dir + "err.txt">;
+    string model_sh = emews_root + "/scripts/eqpy_X.sh";
+    (out,err) = run_model(model_sh, param_line,instance_dir) =>
+    result = get_result(instance_dir) =>
+    // delete the instance directory as it is no longer needed
+    // if it is needed then delete this line
+    rm_dir(instance_dir);
+  }
 }
 
 (string parameter_combos[]) create_parameter_combinations(string params, int trials) {
@@ -63,23 +63,23 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
 }
 
 (float agg_result) obj(string params, int trials, string iter_indiv_id) {
-    float fresults[];
-    string parameter_combos[] = create_parameter_combinations(params, trials);
-    foreach f,i in parameter_combos {
-        string id_suffix = "%s_%i" % (iter_indiv_id,i);
-        fresults[i] = run_obj(f, id_suffix);
-    }
-    // TODO: Return a result
-    // calculate some aggregate result from the combined trial results
-    // in fresults, e.g.  avg(fresults);
-    // ?? should this be a single float
-    agg_result = 0;
+  float fresults[];
+  string parameter_combos[] = create_parameter_combinations(params, trials);
+  foreach f,i in parameter_combos {
+    string id_suffix = "%s_%i" % (iter_indiv_id,i);
+    fresults[i] = run_obj(f, id_suffix);
+  }
+  // TODO: Return a result
+  // calculate some aggregate result from the combined trial results
+  // in fresults, e.g.  avg(fresults);
+  // ?? should this be a single float
+  agg_result = 0;
 }
 
 (void v) loop (location ME, int ME_rank, int trials) {
-    for (boolean b = true, int i = 1;
-       b;
-       b=c, i = i + 1)
+  for (boolean b = true, int i = 1;
+     b;
+     b=c, i = i + 1)
   {
     // gets the model parameters from the python algorithm
     string params =  EQPy_get(ME);
@@ -92,38 +92,38 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
     // passes something else then change "DONE" to that
     if (params == "DONE")
     {
-        string finals =  EQPy_get(ME);
-        // TODO if appropriate
-        // split finals string and join with "\n"
+      string finals =  EQPy_get(ME);
+      // TODO if appropriate
+      // split finals string and join with "\n"
 
-        // e.g. finals is a ";" separated string and we want each
-        // element on its own line:
-        // multi_line_finals = join(split(finals, ";"), "\n");
+      // e.g. finals is a ";" separated string and we want each
+      // element on its own line:
+      // multi_line_finals = join(split(finals, ";"), "\n");
 
-        string fname = "%s/final_result_%i" % (turbine_output, ME_rank);
-        file results_file <fname> = write(finals) =>
-        printf("Writing final result to %s", fname) =>
-        // printf("Results: %s", finals) =>
-        v = make_void() =>
-        c = false;
+      string fname = "%s/final_result_%i" % (turbine_output, ME_rank);
+      file results_file <fname> = write(finals) =>
+      printf("Wrote final result to %s", fname) =>
+      // printf("Results: %s", finals) =>
+      v = make_void() =>
+      c = false;
     }
     else
     {
 
-        string param_array[] = split(params, ";");
-        float results[];
-        foreach p, j in param_array
-        {
-            results[j] = obj(p, trials, "%i_%i_%i" % (ME_rank,i,j));
-        }
+      string param_array[] = split(params, ";");
+      float results[];
+      foreach p, j in param_array
+      {
+          results[j] = obj(p, trials, "%i_%i_%i" % (ME_rank,i,j));
+      }
 
-        string rs[];
-        foreach result, k in results
-        {
-            rs[k] = fromfloat(result);
-        }
-        string res = join(rs, ",");
-        EQPy_put(ME, res) => c = true;
+      string rs[];
+      foreach result, k in results
+      {
+          rs[k] = fromfloat(result);
+      }
+      string res = join(rs, ",");
+      EQPy_put(ME, res) => c = true;
 
     }
   }
@@ -133,22 +133,22 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
 // Edit function arguments to include those passed from main function
 // below
 (void o) start (int ME_rank, int num_variations, int random_seed) {
-    location ME = locationFromRank(ME_rank);
-    // TODO
-    // Edit algo_params to include those required by the python
-    // algorithm.
-    // algo_params are the parameters used to initialize the
-    // python algorithm. We pass these as a comma separated string.
-    //  Be default we are passing a random seed. String parameters
-    // should be passed with a \"%s\" format string.
-    // e.g. algo_params = "%d,%\"%s\"" % (random_seed, "ABC");
-    algo_params = "%d" % random_seed;
-    EQPy_init_package(ME,"my_algorithm") =>
-    EQPy_get(ME) =>
-    EQPy_put(ME, algo_params) =>
-      loop(ME, ME_rank, num_variations) => {
-        EQPy_stop(ME);
-        o = propagate();
+  location ME = locationFromRank(ME_rank);
+  // TODO
+  // Edit algo_params to include those required by the python
+  // algorithm.
+  // algo_params are the parameters used to initialize the
+  // python algorithm. We pass these as a comma separated string.
+  //  By default we are passing a random seed. String parameters
+  // should be passed with a \"%s\" format string.
+  // e.g. algo_params = "%d,%\"%s\"" % (random_seed, "ABC");
+  algo_params = "%d" % random_seed;
+  EQPy_init_package(ME,"my_algorithm") =>
+  EQPy_get(ME) =>
+  EQPy_put(ME, algo_params) =>
+    loop(ME, ME_rank, num_variations) => {
+      EQPy_stop(ME);
+      o = propagate();
     }
 }
 
