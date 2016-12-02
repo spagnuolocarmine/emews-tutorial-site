@@ -1,7 +1,12 @@
 # run using py.test
 import deap_ga
-import wapq
-from unittest.mock import Mock
+import eqpy
+try:
+    from unittest.mock import Mock
+except ImportError:
+    # mock in python 2
+    from mock import Mock
+
 import numpy as np
     
 def test_create_fitnesses():
@@ -18,15 +23,15 @@ def test_run(monkeypatch):
     def side_effects(*args, **kwargs):
         side_effects.counter += 1
         if side_effects.counter == 1:
-            return '5,3,0,"/project/jozik/repos/wintersim2016_adv_tut/uc2/swift_proj/data/params_for_deap.csv"'
+            return '5,3,0,"../../data/params_for_deap.csv"'
         else:
             result = ",".join(["{}".format(x) for x in np.random.randint(10,size=test_run.data_size)])
             print("Getting result: ", result)
             return result
     side_effects.counter = 0
     mockget = Mock(side_effect=side_effects)
-    monkeypatch.setattr(wapq, 'OUT_put', mockput)
-    monkeypatch.setattr(wapq, 'IN_get', mockget)
+    monkeypatch.setattr(eqpy, 'OUT_put', mockput)
+    monkeypatch.setattr(eqpy, 'IN_get', mockget)
     deap_ga.run()
 
 
