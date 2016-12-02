@@ -68,5 +68,5 @@ log_script
 
 # echo's anything following this to standard out
 set -x
-
-swift-t -n $PROCS $MACHINE -p -I $EQPY -r $EQPY $EMEWS_PROJECT_ROOT/swift/swift_run_eqpy.swift $CMD_LINE_ARGS
+SWIFT_FILE=swift_run_eqpy.swift
+swift-t -n $PROCS $MACHINE -p -I $EQPY -r $EQPY $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE $CMD_LINE_ARGS

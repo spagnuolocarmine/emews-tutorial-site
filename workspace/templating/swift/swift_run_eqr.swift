@@ -79,14 +79,21 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
   {
     string params =  EQR_get(ME);
     boolean c;
+
+    // TODO
+    // Edit the finished flag, if necessary.
+    // when the python algorithm is finished it should
+    // pass "DONE" into the queue, and then the
+    // final set of parameters. If your python algorithm
+    // passes something else then change "DONE" to that
     if (params == "DONE")
     {
       string finals =  EQR_get(ME);
       // TODO if appropriate
-      // split finals string and join with "\\n"
+      // split finals string and join with "\n"
       // e.g. finals is a ";" separated string and we want each
       // element on its own line:
-      // multi_line_finals = join(split(finals, ";"), "\\n");
+      // multi_line_finals = join(split(finals, ";"), "\n");
       string fname = "%s/final_result_%i" % (turbine_output, ME_rank);
       file results_file <fname> = write(finals) =>
       printf("Writing final result to %s", fname) =>
@@ -96,7 +103,7 @@ app (file out, file err) run_model (string model_sh, string param_line, string i
     }
     else
     {
-      
+
         string param_array[] = split(params, ";");
         float results[];
         foreach p, j in param_array
