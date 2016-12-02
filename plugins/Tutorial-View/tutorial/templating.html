@@ -832,8 +832,8 @@ extension adds two blocking queues through which a Swift/T script and a
 R code algorithm can coordinate execution. The <tt id="mytt">eqr</tt>
 subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a R code algorithm
-using the two queues. By default the coordinated execution of the two follows
-the following pattern (identical to that of the <tt id="mytt">eqr</tt> template).
+using the two queues. By default the coordinated execution of the two uses
+the following pattern (identical to that of the <tt id="mytt">eqpy</tt> template).
 
 <span id="eqr_overview"></span>
 <ol id="myol">
@@ -843,7 +843,7 @@ the following pattern (identical to that of the <tt id="mytt">eqr</tt> template)
     model runs.</li>
   <li>The R code produces an initial set of parameters.</li>
   <li>The R code passes these parameters to the swift script.</li>
-  <li>The R code then waits for the swift code.</li>
+  <li>The R code then waits for the swift script.</li>
   <li>Having received the parameters for the model runs, the swift script
   launches those runs in parallel.</li>
   <li>When the model runs are finished, the swift script passes a result
@@ -867,10 +867,10 @@ R side hangs in a "get" waiting for the otherside to "put".
 <p>
 When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
 <ul>
-  <li>Whether to build and install EQ/R swift extension as part of the
+  <li>Whether to build and install the EQ/R swift extension as part of the
     template generation. If you answer yes to this, there will be further queries
     for the path to R, various R libraries and so on. The alternative is to run
-    the autotools-based (./configure etc.) installation manually where you will
+    the autotools-based (i.e. ./configure etc.) installation manually where you will
     also need to edit the path to R, and other libraries.</li>
   <li>The model name. This isn't necessarily the literal model name,
   but rather is used as part of script names and within the files.</li>
@@ -879,14 +879,14 @@ When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
   <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial>
 file described in the sweep section.</li>
   <li>The file name for your R model exploration code. This defaults
-  to <tt id="mytt">my_algorithm.R</tt>. This file is "sourced" as part of EQ/R
+  to <tt id="mytt">my_algorithm.R</tt>. This file is sourced as part of EQ/R
   initialization and so it must contain code that will be run when sourced.</li>
   <li>Whether or not your R algorithm produces parameters
     for a single run (unlikely), or sets of parameters for multiple runs.</li>
   <li>A name for the swift workflow script. This defaults to
-    swift_run_eqr.swift.</li>
+    <tt id="mytt">swift_run_eqr.swift</tt>.</li>
   <li>A name for the bash script for launching the swift script. This
-    defaults to swift_run_eqr.sh.</li>
+    defaults to <tt id="mytt">swift_run_eqr.sh<tt>.</li>
 </ul>
 </p>
 
@@ -897,7 +897,7 @@ autotools-based installation in <tt id="mytt">ext/EQ-R/eqr/</tt>.
 If you choose to run the build and install of the extension from within template
 generation, the template will generate a <tt id="mytt">build.sh</tt> file within that directory,
 and then execute this <tt id="mytt">build.sh</tt> file. <tt id="mytt">build.sh</tt> automates
-the autotools-base installation, calling <tt id="mytt">bootstrap</tt>, <tt id="mytt">configure</tt>
+the autotools-based installation, calling <tt id="mytt">bootstrap</tt>, <tt id="mytt">configure</tt>
 with the appropriate arguments, and then <tt id="mytt">make install</tt>. If there
 are any errors during this, or you wish to compile the EQ/R extension
 manually, see <tt id="mytt">ext/EQ-R/eqr/COMPILING.txt</tt>.
@@ -913,9 +913,9 @@ A successful EQ/R build and install will install the following files:
   </ul>
 
 The swift file contains the swift code for initializing EQ/R with an
-R file and communicating with R environment via the queues. The native
-library <tt id="mytt">libeqr.so</tt> contains the native code that implement
-the queues and expose them to swift and the R environment. <tt id="mytt">pkgIndex.tcl</tt>
+R file and communicating with the R environment via the queues. The native
+library <tt id="mytt">libeqr.so</tt> contains the native code that implements
+the queues and exposes them to swift and the R environment. <tt id="mytt">pkgIndex.tcl</tt>
 is required in order for swift to be able to use the native code library.
 These should not need to be edited by you, the user.
 </p>
@@ -953,30 +953,30 @@ This file is nearly identical to
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
-variables used either by Swift/T itself, by your Swift/T script or by both.
+variables used either by Swift/T itself, by your Swift/T script, or by both.
 The script contains additional information and TODOs in its comments as well
-lines that can be uncommented as necessary. The following goes into
+as lines that can be uncommented as necessary. The following goes into
 additional detail on the EQ/R specific sections of this file.
 </p>
 <ul>
   <li>Lines
     <highlight-code code="templating/swift/swift_run_eqr.sh"
     color="rgba(255,255,255,0.5)" from="34" to="35">35-36</highlight-code> set
-    the path to the installation and then use that to set the LD_LIBRARY_PATH
-    variable so that Swift/t can find R. By default, these are commented out,
+    the path to the R installation and then use that to set the LD_LIBRARY_PATH
+    variable so that Swift/T can find R. By default, these are commented out,
     but if R cannot be found when running the workflow then these can be
     customized to the location of your R installation and uncommented.</li>
   <li>Line
     <highlight-code code="templating/swift/swift_run_eqr.sh"
-    color="rgba(255,255,255,0.5)" from="43" to="43">44</highlight-code> defines
+    color="rgba(255,255,255,0.3)" from="43" to="43">44</highlight-code> defines
     the location of the EQ/R extension.</li>
   <li>Lines
     Line
       <highlight-code code="templating/swift/swift_run_eqr.sh"
-      color="rgba(255,255,255,0.5)" from="70" to="71">71-72</highlight-code>
+      color="rgba(255,255,255,0.3)" from="70" to="71">71-72</highlight-code>
       assigns the swift file to execute to a variable and then swift-t runs
-      that file. The <tt id="mytt">-I</tt> and <tt id="mytt">-r</tt> arguments now pointing to the
-      EQ/R location.</li>
+      that file. The <tt id="mytt">-I</tt> and <tt id="mytt">-r</tt> arguments now
+      point to the EQ/R location.</li>
 </ul>
 
 <p>
@@ -994,7 +994,7 @@ to the analogous
   <tt id="mytt">swift_run_eqpy.swift</tt></open-code> file for an EQ/Py-based
   workflow. The files do differ in the queue related calls made in the
   <tt id="mytt">start</tt> and <tt id="mytt">loop</tt> functions. The following describes the
-  general structure, the flow of the code and points out some important details.
+  general structure, the flow of the code, and points out some important details.
   Additional details can found in the script's comments and TODOs.
   </p>
 
@@ -1009,9 +1009,10 @@ to the analogous
    sequence of algorithmic parameter production and model runs as described
 
    <move-withintutorial ref="eqr_overview">above</move-withintutorial>.
-   By default the <highlight-code code="templating/swift/swift_run_eqr.sh"
-    color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="mytt">swift_run_eqr.sh</tt></highlight-code>
-    defined only a single rank.
+   By default <highlight-code code="templating/swift/swift_run_eqr.sh"
+    color="rgba(255,255,255,0.3)" from="40" to="40">
+    <tt id="mytt">swift_run_eqr.sh</tt></highlight-code>
+    defines only a single rank.
    </p>
 
    <p>
@@ -1023,7 +1024,7 @@ to the analogous
   with a swift function call, <tt id="mytt">locationFromRank</tt>, that takes an integer rank and
   returns a <tt id="mytt">location</tt> structure which is then assigned to a
   <tt id="mytt">ME</tt> variable.
-  This <tt id="mytt">ME</tt> variable is passed to all the eqr related functions, providing
+  This <tt id="mytt">ME</tt> variable is passed to all the EQ/R related functions, providing
   those functions with the location of the task where the R code is executing.
   This call is followed by a TODO concerned with creating a set of parameters
   with which to initialize the R algorithm (lines
@@ -1035,12 +1036,12 @@ to the analogous
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="136" to="136">137</highlight-code> begins
   this by initailizing EQ/R: creating the blocking queues and sourcing
-  the R code file, <tt id="mytt">my_algorithm.R</tt> in the R environment.
+  the R code file, <tt id="mytt">my_algorithm.R</tt>, in the R environment.
   The <tt id="mytt">EQR_init_script</tt> call
   starts an R instance on the specified location and sources the specified R
   file in that R environment, executing the code in that file.
   <tt id="mytt">EQR_get</tt> will attempt to get
-  a string value from the EQ/Routput queue, blocking until there is something to
+  a string value from the EQ/R output queue, blocking until there is something to
   get. <tt id="mytt">EQR_put</tt> will put a string value on the EQ/R input queue.
   </p>
 
