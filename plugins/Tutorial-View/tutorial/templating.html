@@ -483,7 +483,19 @@ way of installing and using EQ/Py, however the
 <a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a> 
 can be accessed for those interested in the EQ/Py source code). The EQ/Py
 extension adds two blocking queues through which a Swift/T script and a
-python code algorithm can coordinate execution. <!-- TODO: Add EMEWS figure showing the overall structure here. -->
+python code algorithm can coordinate execution. The following is the EMEWS workflow
+structure with EQ/Py. 
+
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQPy.png" alt="EMEWS Figure EQPy" height="300">
+</p>
+
+<p>
+Note that while the model exploration code is in Python, the model
+code is not restricted to be Python-based. See the <modal-data data="plugins/Tutorial-View/tutorial/uc2.html" ref="top_title">
+Use Case 2 Tutorial "Workflow control with Python"</modal-data> for an EQ/Py workflow where the model code is written in Java.
+</p>
+<br>
 The <tt id="mytt">eqpy</tt> subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a python code algorithm
 using the two queues. By default the coordinated execution of the two follows
