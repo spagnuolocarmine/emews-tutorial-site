@@ -478,10 +478,25 @@ command to run the model on line
 
 <p>
 The <tt id="mytt">eqpy</tt> subtemplate generates files and code for model
-exploration using the EQ/Py EMEWS extension. The EQ/Py
+exploration using the EQ/Py EMEWS extension (EMEWS Templates are the preferred
+way of installing and using EQ/Py, however the 
+<a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a> 
+can be accessed for those interested in the EQ/Py source code). The EQ/Py
 extension adds two blocking queues through which a Swift/T script and a
-python code algorithm can coordinate execution. The <tt id="mytt">eqpy</tt>
-subtemplate installs this extension and adds user customizable code that
+python code algorithm can coordinate execution. The following is the EMEWS workflow
+structure with EQ/Py. 
+
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQPy.png" alt="EMEWS Figure EQPy" height="300">
+</p>
+
+<p>
+Note that while the model exploration code is in Python, the model
+code is not restricted to be Python-based. See the <modal-data data="plugins/Tutorial-View/tutorial/uc2.html" ref="top_title">
+Use Case 2 Tutorial "Workflow control with Python"</modal-data> for an EQ/Py workflow where the model code is written in Java.
+</p>
+<br>
+The <tt id="mytt">eqpy</tt> subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a python code algorithm
 using the two queues. By default the coordinated execution of the two follows
 this pattern:
@@ -655,14 +670,14 @@ Additional details can found in the script's comments and TODOs.
 <p>
 The script starts in the
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="171" to="197">main</highlight-code> function.
+color="rgba(255,255,255,0.3)" from="171" to="171">main</highlight-code> function.
 For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
 <highlight-code code="templating/swift/swift_run_eqpy.sh"
  color="rgba(255,255,255,0.3)" from="39" to="40">40-41</highlight-code> in
  <tt id="mytt">swift_run_eqpy.sh</tt>), the main function starts the coordinated
- sequence of algorithmic parameter production and model runs as described
+ sequence of algorithmic parameter production and model runs as described above.
 
- <move-withintutorial ref="overview">above</move-withintutorial>.
+<!--  <move-withintutorial ref="overview">above</move-withintutorial>. -->
  By default the <highlight-code code="templating/swift/swift_run_eqpy.sh"
   color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="mytt">swift_run_eqpy.sh</tt></highlight-code>
   defined only a single rank.
@@ -670,7 +685,7 @@ For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
 
  <p>
 The main function calls the <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="134" to="152">start</highlight-code> function
+color="rgba(255,255,255,0.3)" from="134" to="134">start</highlight-code> function
 to initialize this sequence. The start function
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="135" to="135">begins</highlight-code>
@@ -688,12 +703,15 @@ sequence of algorithmic parameter production and model runs is begun. Line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="145" to="145">146</highlight-code> begins
 this by initailizing EQ/Py: creating the blocking queues and initializing the
-python package <tt id="mytt">my_algorithm</tt>. The <tt id="mytt">eqpy_init_package</tt> call
+python package <tt id="mytt">my_algorithm</tt>. The <tt id="mytt">EQPy_init_package</tt> call
 starts a python instance on the specified location and executes code that imports the specified package
 and then calls a <tt id="mytt">run()</tt> function on that package. Your python code
-will need to implement such a function. <tt id="mytt">eqpy_get</tt> will attempt to get
+will need to implement such a function. <tt id="mytt">EQPy_get</tt> will attempt to get
 a string value from the EQ/Py output queue, blocking until there is something to
-get. <tt id="mytt">eqpy_put</tt> will put a string value on the EQ/Py input queue.
+get. <tt id="mytt">EQPy_put</tt> will put a string value on the EQ/Py input queue.
+(All of the <tt id="mytt">EQPy_*</tt> calls are made available to the Swift script via the 
+EQPy import on line <highlight-code code="templating/swift/swift_run_eqpy.swift"
+color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.)
 </p>
 
 <p>
@@ -701,11 +719,13 @@ The sequence of calls then in lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="145" to="147">146-148</highlight-code> consist of:
 <ol id="myol">
-  <li>importing the <tt id="mytt">my_algorithm</tt> package</li>
-  <li>calling <tt id="mytt">my_algorithm.run()</tt></li>
-  <li>waiting for the the python code to put a string value in the EQ/Py output queue</li>
+  <li>importing the <tt id="mytt">my_algorithm</tt> package and calling <tt id="mytt">my_algorithm.run()</tt> (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
+color="rgba(255,255,255,0.3)" from="145" to="145">146</highlight-code>)</li>
+  <li>waiting for the the python code to put a string value in the EQ/Py output queue (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
+color="rgba(255,255,255,0.3)" from="146" to="146">147</highlight-code>)</li>
   <li>putting the <tt id="mytt">algo_params</tt> string into EQ/Py's input queue where it can
-    be retreived by the the python code to parametrically initialize the algorithm.</li>
+    be retreived by the the python code to parametrically initialize the algorithm (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
+color="rgba(255,255,255,0.3)" from="147" to="147">148</highlight-code>).</li>
 </ol>
 </p>
 
@@ -714,9 +734,9 @@ The call to the <tt id="mytt">loop</tt> function (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="148" to="148">149</highlight-code>) begins
 the loop over the coordinated sequence of algorithmic parameter production and
-model runs. The loops itself looks more complicated than it is,
-primarily due to the complexity involved in writing such a loop in swift's
-relentlessly parallelizing environment. Regardless, the essential flow
+model runs. The loop itself looks more complicated than it is,
+primarily due to the complexity involved in writing what is effectively a <tt id=mytt">while</tt> loop in swift's
+relentlessly parallelizing environment. The essential flow
 of the <tt id="mytt">loop</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="78" to="129">79-130</highlight-code>) is
@@ -737,17 +757,19 @@ model run (line
 color="rgba(255,255,255,0.3)" from="112" to="112">113</highlight-code>).
 A foreach loop then iterates over this array calling the <tt id="mytt">obj</tt> function
 that initiates model runs for each element of the array, and gathering the
-results of those model runs in a <tt id="mytt">results</tt> variable (lines
+results of those model runs in a <tt id="mytt">results</tt> array (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="113" to="117">114-118</highlight-code>).
-Once all the results have been gathered, the floating point results are
-transformed into strings, added to a string array, joined into a comma
-separated string and put into the EQ/Py input queue (lines
+Once all the results have been gathered, the floating point results are transformed 
+into a string format and passed back to the EQ/Py input queue. This involves
+transforming the <tt id="mytt">results</tt> float array into the <tt id="mytt">rs</tt> string array
+and joining this array into one comma
+separated string (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="119" to="125">120-126</highlight-code>).
-The python algorithm should then retrieve this results string and
-create new parameters using the additional information in
-those results. The loop then returns to the top (line
+(The python algorithm will then retrieve this results string and
+generate new parameters using the additional information in
+the results.) Finally, the loop returns to the top (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="84" to="84">85</highlight-code>) where
 the swift code waits for the python algorithm to produce new parameters and
@@ -763,10 +785,8 @@ the parameters in that string and calls <tt id="mytt">create_parameter_combinati
 to create an array of parameters strings (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>).
-The intention is that the user implements <tt id="mytt">create_parameter_combinations</tt>
-(lines
-<highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="56" to="62">57-63</highlight-code>)
+The intention is that the user implements <highlight-code code="templating/swift/swift_run_eqpy.swift"
+color="rgba(255,255,255,0.3)" from="56" to="56"><tt id="mytt">create_parameter_combinations</tt></highlight-code>
 to create an array of parameter combinations whose size is equal to the number
 of trials. The <tt id="mytt">obj</tt> function can then iterate over this array in
 a parallel <tt id="mytt">foreach</tt> loop, launching a model run for each of these
@@ -794,7 +814,7 @@ color="rgba(255,255,255,0.3)" from="28" to="31">29-32</highlight-code>).
 The <tt id="mytt">run_model</tt> function is identical to the <tt id="mytt">run_model</tt>
 function described in
 the <tt id="mytt">sweep</tt> subtemplate section, using a bash script to run the
-model. The <tt id="mytt">run_obj</tt> is also similar to the <tt id="mytt">sweep</tt> code
+model. The <tt id="mytt">run_obj</tt> function is also similar to the <tt id="mytt">sweep</tt> code
 that calls <tt id="mytt">run_model</tt>, creating out and err <tt id="mytt">file</tt> objects,
 creating the path for the model script file, and so on (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
@@ -807,7 +827,7 @@ written to a csv file and a column in the last row of that file contains
 the desired value. The <tt id="mytt">get_result</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="33" to="38">34-39</highlight-code>) is an
-example of using some R code (lines
+example of using an R code snippet (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="19" to="26">20-27</highlight-code>) to
 read and return that value.

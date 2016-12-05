@@ -24,19 +24,29 @@
   as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs
   cannot generally be explored via brute force methods, such as full-factorial experiments,
   space-filling sampling techniques, or any other a priori determined sampling schemes.
-  This is where adaptive, heuristics-based approaches are useful and this is the focus of the next two use cases.
+  This is where adaptive, heuristics-based approaches for model exploration (ME) are useful and this is the focus of the next two use cases.
+</p>
+<p>
+In (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">Ozik, Collier, and Wozniak 2015</modal-data>)
+  we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple
+  queue-based interfaces for passing parameters and
+  simulation results, where a metaheuristic method, a genetic algorithm (GA),
+  developed with DEAP (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) is
+  used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. 
+  In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. As we did in the first use case, we continue with the Repast Simphony JZombies demonstration model. The following is the overall EMEWS workflow structure for this use case.
+</p>
+<p>
+  <img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_UC2.png" alt="EMEWS Figure UC2" height="300">
 </p>
 
 <h2> Passing parameters and simulation results to resident task</h2>
 <p>
-  In (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">Ozik, Collier, and Wozniak 2015</modal-data>)
-  we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple
-  queue-based interfaces for passing parameters and
-  simulation results, where a metaheuristic method
-  (GA) developed with DEAP (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) is
-  used to control a large workflow.
-  Our second use case shows how this is done with the EQ/Py extension.
-  The benefit of using external libraries directly is threefold.
+  Resident tasks, which retain state, are accessed via their worker location so that the
+algorithm state can be repeatedly accessed.
+</p>
+
+<p>
+  One unique aspect of the EMEWS framework is its ability to directly incorporate external libraries or code that implements model exploration algorithms. The benefit of using external libraries directly is threefold:
 </p>
 <p>
 <ol id="myol">
@@ -54,17 +64,17 @@
 
 
 <p>
-In this use case we continue with the Repast Simphony JZombies demonstration model.
-For resident tasks, which retain state, the location of a worker is used so that the
-algorithm state can be repeatedly accessed.
-</p>
-<p>
-The EQ/Py extension provides an interface for interacting with Python-based resident tasks
-at specific locations (see the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py section</modal-data>
-of the EMEWS Template tutorial for the preferred
-way of installing and using EQ/Py, and the <a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a> for the EQ/Py source code).
+As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py section</modal-data> of the EMEWS Template tutorial, the EQ/Py extension provides an interface for interacting with Python-based resident tasks
+at specific locations. The code that we present in this use case is directly adapted from the EQ/Py subtemplate, so readers who have completed the EMEWS Templates tutorial will already be familiar with the directory structure and template code.
 
-\CODE{deap} shows how EQ/Py is used in the current example. We import the extension in line 1.
+The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file shows how EQ/Py was adapted for the current example.
+<ul>
+
+<li>We import the eqpy extension in line <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.</li>
+
+</ul>
+
 The deap function is defined to take the arguments py_rank (a unique rank),
 iters (the number of GA iterations), trials (the number of stochastic
 variations per parameter combination, or individual), pop (the number of individuals in the GA population),

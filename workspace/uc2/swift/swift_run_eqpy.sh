@@ -20,7 +20,7 @@ export TURBINE_OUTPUT=$EMEWS_PROJECT_ROOT/experiments/$EXPID
 check_directory_exists
 
 # TODO edit the number of processes as required.
-export PROCS=4
+export PROCS=3
 
 # TODO edit QUEUE, WALLTIME, PPN, AND TURNBINE_JOBNAME
 # as required. Note that QUEUE, WALLTIME, PPN, AND TURNBINE_JOBNAME will
@@ -30,23 +30,23 @@ export WALLTIME=00:10:00
 export PPN=16
 export TURBINE_JOBNAME="${EXPID}_job"
 
+# EQ/Py location
+EQPY=$EMEWS_PROJECT_ROOT/ext/EQ-Py
+
 # if R cannot be found, then these will need to be
 # uncommented and set correctly.
 # export R_HOME=/path/to/R
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/lib
-export PYTHONPATH=$EMEWS_PROJECT_ROOT/python:$EMEWS_PROJECT_ROOT/ext/EQ-Py
+# export PYTHONPATH=$EMEWS_PROJECT_ROOT/python:$EMEWS_PROJECT_ROOT/ext/EQ-Py
 
 # Resident task workers and ranks
 export TURBINE_RESIDENT_WORK_WORKERS=1
 export RESIDENT_WORK_RANKS=$(( PROCS - 2 ))
 
-# EQ/Py location
-EQPY=$EMEWS_PROJECT_ROOT/ext/EQ-Py
-
 # TODO edit command line arguments, e.g. -nv etc., as appropriate
 # for your EQ/Py based run. $* will pass any of this script's command
 # line arguments to swift.
-CMD_LINE_ARGS="$* -nv=5 -seed=0"
+CMD_LINE_ARGS="$* -ni=3 -nv=1 -np=3 -r=0"
 
 # Uncomment this for the BG/Q:
 #export MODE=BGQ QUEUE=default
@@ -68,5 +68,5 @@ log_script
 
 # echo's anything following this to standard out
 set -x
-SWIFT_FILE=swift_run_eqpy.swift
-swift-t -n $PROCS $MACHINE -p -I $EQPY -r $EQPY $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE $CMD_LINE_ARGS
+
+swift-t -n $PROCS $MACHINE -p -I $EQPY -r $EQPY $EMEWS_PROJECT_ROOT/swift/swift_run_eqpy.swift $CMD_LINE_ARGS

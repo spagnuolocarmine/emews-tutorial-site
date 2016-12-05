@@ -1,5 +1,4 @@
 import threading
-import queue
 import random
 import numpy as np
 import time
@@ -10,7 +9,7 @@ from deap import creator
 from deap import tools
 from deap import algorithms
 
-import wapq
+import eqpy
 
 df_params = None
 
@@ -39,8 +38,8 @@ def queue_map(obj_func, pops):
     # [[a,b,c,d],[e,f,g,h],...]
     if not pops:
         return []
-    wapq.OUT_put(create_list_of_lists_string(pops))
-    result = wapq.IN_get()
+    eqpy.OUT_put(create_list_of_lists_string(pops))
+    result = eqpy.IN_get()
     split_result = result.split(',')
     return [(float(x),) for x in split_result]
 
@@ -88,8 +87,8 @@ def run():
     :param seed: random seed
     :param csv_file_name: csv file name (e.g., "params_for_deap.csv")
     """
-    wapq.OUT_put("Params")
-    params = wapq.IN_get()
+    eqpy.OUT_put("Params")
+    params = eqpy.IN_get()
     
     # parse params
     (num_iter, num_pop, seed, csv_file_name) = eval('{}'.format(params))
@@ -124,6 +123,6 @@ def run():
 
     fitnesses = [str(p.fitness.values[0]) for p in pop]
 
-    wapq.OUT_put("FINAL")
+    eqpy.OUT_put("DONE")
     # return the final population
-    wapq.OUT_put("{0}\n{1}\n{2}".format(create_list_of_lists_string(pop), ';'.join(fitnesses), log))
+    eqpy.OUT_put("{0}\n{1}\n{2}".format(create_list_of_lists_string(pop), ';'.join(fitnesses), log))
