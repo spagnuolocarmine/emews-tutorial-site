@@ -18,22 +18,44 @@
   }
 
 </style>
-
+<p>
 In this use case, we will show how to integrate a multi-process distributed
 native code model written in C++ into a Swift/T workflow. The model is a variant
-of the Java Zombies model, written in C++ and using MPI and the Repast HPC
-toolkit~\cite{collier_parallel_2012} to distribute the model across multiple
+of the Java Zombies model, written in C++ and using MPI and
+<modal-data data="plugins/Tutorial-View/tutorial/refs/collier_parallel_2012.html">the Repast HPC
+toolkit</modal-data> to distribute the model across multiple
 processes. The complete two dimensional continuous space and grid span processes
 and each individual process holds some subsection of the continuous space and
 grid. The Zombies and Humans behave as before but may cross process boundaries
 into another subsection of the continuous space and grid as they move about the
-complete space. The HPC Zombies source, a Makefile, the various files required
-to integrate it with Swift/T, and the Swift scripts can be found in the
-\href{https://goo.gl/KNSpWK}{Use Case Three (UC3) project}~\cite{emews_site}.
-There, the HPC Zombie model runs are driven by an active
-learning~\cite{settles_active_2012} algorithm using EQ/R, the R counter-part to
-EQ/Py described above\SLP{workflow_python}.
+complete space. The model itself is driven by an
+<modal-data data="plugins/Tutorial-View/tutorial/refs/settles_active_2012.html">active learning algorith</modal-data>
+algorithm using EQ/R.
+As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpr_section">EQ/R section</modal-data>
+of the EMEWS Template tutorial, the EQ/R extension provides an interface for interacting with R-based code run in a resident tasks
+at specific locations. The code that we present in this use case is directly
+adapted from the EQ/R subtemplate, so readers who have completed the EMEWS
+Templates tutorial should already be familiar with the directory structure and
+template code.
+</p>
 
+<p>
+In contrast to the previous two examples the MPI-based HPC Zombies model is
+compiled as a shared library that exposes a Swift/T Tcl interface
+<modal-data data="plugins/Tutorial-View/tutorial/refs/Swift_2015.html">
+(Wozniak et al. 2015)</modal-data>. Swift/T runs on Tcl and thus wrapping the library
+in Tcl provides tighter integration than an app function
+(e.g. those that call a bash script to run the model as we have seen in
+the previous tutorials). Wrapping the library in a Tcl interface is
+also necessary in the case of multi-process distributed models that use MPI.
+Such models when run as standalone applications initialize an MPI
+Communicator of the correct size within which the model can be distributed
+and run. Since the HPC Zombies model uses MPI, as do all Repast HPC based
+models, it must be treated as an MPI library and passed an MPI communicator
+of the correct size when run from
+<modal-data data="plugins/Tutorial-View/tutorial/swiftt.html" ref="parallel_task">
+Swift/T</modal-data>.
+</p>
 
 %\joz{I think the rest of this paragraph can be removed, since the step
 descriptions are included below?}In order to do this the following steps are
