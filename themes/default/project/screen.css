@@ -5,7 +5,7 @@
 }
 
 .project-wrapper {
-  width: 100%; 
+  width: 100%;
 }
 
 .project-list-title {
@@ -27,7 +27,7 @@
     font-weight: 500;
     color: #666;
     display: block;
-    margin: 10px;    
+    margin: 10px;
 }
 
 .project-list-title .icon {

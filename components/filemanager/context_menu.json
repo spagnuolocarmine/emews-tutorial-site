@@ -12,21 +12,9 @@
         "onclick": null
     },
     {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "directory-only",
-        "onclick": null
-    },
-    {
         "title": "Download",
         "icon": "icon-download",
         "applies-to" : "both no-external",
         "onclick": "codiad.filemanager.download($('#context-menu').attr('data-path'));"
-    },
-    {
-        "title": "Break",
-        "icon": null,
-        "applies-to" : "directory-only",
-        "onclick": null
     }
 ]
