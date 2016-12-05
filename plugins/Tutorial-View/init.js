@@ -280,7 +280,8 @@
 
                           codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
                           setTimeout(function(){
-                            codiad.active.gotoLine(fromline);
+                          //  console.log(parseInt(fromline)+1);
+                            codiad.active.gotoLine(parseInt(fromline)+1);
                             var newmarker=codiad.editor.highlightCode(code,classcolorname,fromline,toline);;
                             if(codiad.tutorial.getHighlightMarker(code) != undefined && newmarker!=codiad.tutorial.getHighlightMarker(code))
                               codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
