@@ -1,0 +1,3 @@
+*.tic
+/output
+/lib/*.so

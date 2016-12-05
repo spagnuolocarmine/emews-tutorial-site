@@ -1,10 +1,61 @@
-label{sec:so:sec2:workflow_R}
+<h1 style="margin-top: 0px;" id="top_title">Workflows with a Distributed MPI-based Model</h1>
+<style>
+  #myol {
+    margin-left: 5%;
+    list-style: none outside none;
+  }
+  #myol li {
+    counter-increment: item;
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  #myol li:before {
+    margin-right: 10px;
+    content: counter(item)")";
+    color: white;
+    text-align: center;
+    display: inline-block;
+  }
 
-In this use case, we will show how to integrate a multi-process distributed native code model written in C++ into a Swift/T workflow. The model is a variant of the Java Zombies model, written in C++ and using MPI and the Repast HPC toolkit~\cite{collier_parallel_2012} to distribute the model across multiple processes. The complete two dimensional continuous space and grid span processes and each individual process holds some subsection of the continuous space and grid. The Zombies and Humans behave as before but may cross process boundaries into another subsection of the continuous space and grid as they move about the complete space. The HPC Zombies source, a Makefile, the various files required to integrate it with Swift/T, and the Swift scripts can be found in the \href{https://goo.gl/KNSpWK}{Use Case Three (UC3) project}~\cite{emews_site}. There, the HPC Zombie model runs are driven by an active learning~\cite{settles_active_2012} algorithm using EQ/R, the R counter-part to EQ/Py described above\SLP{workflow_python}.
+</style>
 
-%\joz{I think the rest of this paragraph can be removed, since the step descriptions are included below?}In order to do this the following steps are necessary. First, the functions to be called must be identified. Second, the program must be compiled as a shared library, removing any use of \T{main()}. Third, the library headers must be processed by SWIG~\cite{Beazley_1996} to create the Tcl bindings for the C/C++ functions. Fourth,  the user generates Swift bindings for the Tcl bindings. Fifth, the user creates a Tcl package that contains the shared library and and any additional required Tcl scripts. When the script is run and the Swift bindings are imported, the Tcl package is loaded, making the Tcl functions and ultimately the C/C++ functions available.
+In this use case, we will show how to integrate a multi-process distributed
+native code model written in C++ into a Swift/T workflow. The model is a variant
+of the Java Zombies model, written in C++ and using MPI and the Repast HPC
+toolkit~\cite{collier_parallel_2012} to distribute the model across multiple
+processes. The complete two dimensional continuous space and grid span processes
+and each individual process holds some subsection of the continuous space and
+grid. The Zombies and Humans behave as before but may cross process boundaries
+into another subsection of the continuous space and grid as they move about the
+complete space. The HPC Zombies source, a Makefile, the various files required
+to integrate it with Swift/T, and the Swift scripts can be found in the
+\href{https://goo.gl/KNSpWK}{Use Case Three (UC3) project}~\cite{emews_site}.
+There, the HPC Zombie model runs are driven by an active
+learning~\cite{settles_active_2012} algorithm using EQ/R, the R counter-part to
+EQ/Py described above\SLP{workflow_python}.
 
-In contrast to the previous two examples the MPI-based HPC Zombies model is compiled as a shared library that exposes a Swift/T Tcl interface~\cite{Swift_2015}.  Swift/T runs on Tcl and thus wrapping the library in Tcl provides tighter integration than an app function, but is also necessary in the case of multi-process distributed models that use MPI. Such models when run as standalone applications initialize an MPI Communicator of the correct size within which the model can be distributed and run. Since the HPC Zombies model uses MPI, as do all Repast HPC based models, it must be treated as an MPI library and passed an MPI communicator of the correct size when run from Swift/T\SLP{paralleltasks}.
+
+%\joz{I think the rest of this paragraph can be removed, since the step
+descriptions are included below?}In order to do this the following steps are
+necessary. First, the functions to be called must be identified. Second, the
+program must be compiled as a shared library, removing any use of \T{main()}.
+Third, the library headers must be processed by SWIG~\cite{Beazley_1996} to
+create the Tcl bindings for the C/C++ functions. Fourth,  the user generates
+Swift bindings for the Tcl bindings. Fifth, the user creates a Tcl package that
+contains the shared library and and any additional required Tcl scripts. When
+the script is run and the Swift bindings are imported, the Tcl package is
+loaded, making the Tcl functions and ultimately the C/C++ functions available.
+
+In contrast to the previous two examples the MPI-based HPC Zombies model is
+compiled as a shared library that exposes a Swift/T Tcl
+interface~\cite{Swift_2015}.  Swift/T runs on Tcl and thus wrapping the library
+in Tcl provides tighter integration than an app function, but is also necessary
+in the case of multi-process distributed models that use MPI. Such models when
+run as standalone applications initialize an MPI Communicator of the correct
+size within which the model can be distributed and run. Since the HPC Zombies
+model uses MPI, as do all Repast HPC based models, it must be treated as an MPI
+library and passed an MPI communicator of the correct size when run from
+Swift/T\SLP{paralleltasks}.
 
 %
 %\begin{wrapfigure}{r}{2.5in}
@@ -17,11 +68,39 @@ In contrast to the previous two examples the MPI-based HPC Zombies model is comp
   \caption{Zombies model Swift interface.\label{sec:so:sec2:code:zombies_model}}
 \end{figure}
 
-The first step in integrating the HPC Zombies model with Swift/T is to compile it as library, converting \I{main()} into a function that runs the model. The next step is to make that function callable from Tcl via a SWIG created binding. SWIG~\cite{Beazley_1996} is a software tool that generates the `glue code' required for some target language, such as Tcl, to call  C or C++ code. The SWIG tool processes an interface file and produces the `glue-code' binding as a source code file. In this case, the C++ code we want to call from Tcl and ultimately from Swift is the Zombies model function:  \T{std::string zombies\_model\_run(MPI\_Comm comm, const std::string\& config, const std::string\& parameters)}. The function takes the MPI communicator in which the model runs, the filename of a Repast HPC config file, and the parameters for the current run. When called, it starts a model run using these arguments. The \href{https://goo.gl/9zmk2o}{SWIG interface}~\cite{emews_site} file is run through SWIG and the resulting source code is compiled with the HPC Zombies model library code. The result is a \T{zombie\_model\_run} function that is callable from Tcl. The Makefile target, \I{./src/zombies\_model\_wrapper.cpp} in the \href{https://goo.gl/hVPoB7}{Makefile}~\cite{emews_site} template is an example of this process.
+The first step in integrating the HPC Zombies model with Swift/T is to compile
+it as library, converting \I{main()} into a function that runs the model. The
+next step is to make that function callable from Tcl via a SWIG created binding.
+SWIG~\cite{Beazley_1996} is a software tool that generates the `glue code'
+required for some target language, such as Tcl, to call  C or C++ code. The SWIG
+tool processes an interface file and produces the `glue-code' binding as a
+source code file. In this case, the C++ code we want to call from Tcl and
+ultimately from Swift is the Zombies model function:  \T{std::string
+zombies\_model\_run(MPI\_Comm comm, const std::string\& config, const
+std::string\& parameters)}. The function takes the MPI communicator in which the
+model runs, the filename of a Repast HPC config file, and the parameters for the
+current run. When called, it starts a model run using these arguments. The
+\href{https://goo.gl/9zmk2o}{SWIG interface}~\cite{emews_site} file is run
+through SWIG and the resulting source code is compiled with the HPC Zombies
+model library code. The result is a \T{zombie\_model\_run} function that is
+callable from Tcl. The Makefile target, \I{./src/zombies\_model\_wrapper.cpp} in
+the \href{https://goo.gl/hVPoB7}{Makefile}~\cite{emews_site} template is an
+example of this process.
 
-%The interface file is used to specify the C/C++ code that will be bound and contains SWIG directives and the relevant C/C++ headers.
-%The details of using SWIG are well covered elsewhere (\url{www.swig.org}).
-%Line 1 begins with the required SWIG module directive. The include directive in line 3 is used to add the built-in SWIG interface file for C++ strings, required because the \T{zombies\_model\_run} function uses C++ standard library strings. Line 4 is similar but in this case the function declarations in our \T{run.h} header are added to the interface file. The code between \T{\%\{} and \T{\%\}} in lines 6 - 9 is added directly to the source code file that SWIG produces, and is typically used to add headers or typedefs without which the resulting source code would not compile. The final line is a SWIG typedef directive that allows it to parse the \T{run.h} file without halting on the MPI\_Comm declaration. This interface file can be easily adapted to any model or scientific application that uses MPI by changing the name of the library header file.
+%The interface file is used to specify the C/C++ code that will be bound and
+contains SWIG directives and the relevant C/C++ headers. %The details of using
+SWIG are well covered elsewhere (\url{www.swig.org}). %Line 1 begins with the
+required SWIG module directive. The include directive in line 3 is used to add
+the built-in SWIG interface file for C++ strings, required because the
+\T{zombies\_model\_run} function uses C++ standard library strings. Line 4 is
+similar but in this case the function declarations in our \T{run.h} header are
+added to the interface file. The code between \T{\%\{} and \T{\%\}} in lines 6 -
+9 is added directly to the source code file that SWIG produces, and is typically
+used to add headers or typedefs without which the resulting source code would
+not compile. The final line is a SWIG typedef directive that allows it to parse
+the \T{run.h} file without halting on the MPI\_Comm declaration. This interface
+file can be easily adapted to any model or scientific application that uses MPI
+by changing the name of the library header file.
 
 \begin{wrapfigure}{r}{3in}
   \begin{minipage}[b]{0.45\linewidth}
@@ -30,13 +109,55 @@ The first step in integrating the HPC Zombies model with Swift/T is to compile i
   \caption{Swift/T Tcl interface functions for HPC Zombies\label{sec:so:sec2:code:zombies_model_tcl}.}
 \end{wrapfigure}
 
-The next step is to create the Swift bindings for the library function. The Swift bindings define how the \T{zombie\_model\_run} function will be called from Swift. The Swift code is shown in \CODE{zombies_model}. The function is annotated with \T{@par}\SLP{features} allowing it to be called as a parallel function. The \T{@dispatch=WORKER}\SLP{features} directs the function to run on a worker node. The function itself returns a string that contains the number of humans and zombies at each time step. For arguments, the function takes the config file file name and a string containing the parameters for the run. The model will parse the individual parameters from this \I{params} string. The final 3 parts of the function definition are the Tcl package name, the required package version, and the Tcl function to call in the package. With this code included in our Swift script (either directly or through an import), we can then run the HPC Zombies model with a call like:
+The next step is to create the Swift bindings for the library function. The
+Swift bindings define how the \T{zombie\_model\_run} function will be called
+from Swift. The Swift code is shown in \CODE{zombies_model}. The function is
+annotated with \T{@par}\SLP{features} allowing it to be called as a parallel
+function. The \T{@dispatch=WORKER}\SLP{features} directs the function to run on
+a worker node. The function itself returns a string that contains the number of
+humans and zombies at each time step. For arguments, the function takes the
+config file file name and a string containing the parameters for the run. The
+model will parse the individual parameters from this \I{params} string. The
+final 3 parts of the function definition are the Tcl package name, the required
+package version, and the Tcl function to call in the package. With this code
+included in our Swift script (either directly or through an import), we can then
+run the HPC Zombies model with a call like:
 
 \begin{center}
 \T{string output = @par=4 zombies\_model\_run(config\_file, params);}
 \end{center}
 
 
-Our Swift binding references a \I{zombies\_model} Tcl package and a \T{zombies\_model\_tcl} function in that package. The final step in integrating the HPC Zombies model with Swift is to create this package and the function. A Tcl package is defined by its \T{pkgIndex.tcl} file that specifies the libraries that need to be loaded as part of the package and the Tcl code that is in the package. Tcl has a built-in function \T{::pkg::create} that can be used to create a \T{pkgIndex.tcl} given a package name, version, the name of the library to load, and the Tcl code file name. The HPC Zombies example uses some simple Tcl code to call this function as part of a Makefile to create the package (c.f. the \href{https://goo.gl/52eJUo}{\T{zombies\_tcl\_lib}} Makefile target and the \href{https://goo.gl/WlZmXX}{\T{make-package.tcl}} script~[\cite{emews_site}]).
+Our Swift binding references a \I{zombies\_model} Tcl package and a
+\T{zombies\_model\_tcl} function in that package. The final step in integrating
+the HPC Zombies model with Swift is to create this package and the function. A
+Tcl package is defined by its \T{pkgIndex.tcl} file that specifies the libraries
+that need to be loaded as part of the package and the Tcl code that is in the
+package. Tcl has a built-in function \T{::pkg::create} that can be used to
+create a \T{pkgIndex.tcl} given a package name, version, the name of the library
+to load, and the Tcl code file name. The HPC Zombies example uses some simple
+Tcl code to call this function as part of a Makefile to create the package (c.f.
+the \href{https://goo.gl/52eJUo}{\T{zombies\_tcl\_lib}} Makefile target and the
+\href{https://goo.gl/WlZmXX}{\T{make-package.tcl}} script~[\cite{emews_site}]).
 
-The code in the \T{zombies\_model} Tcl package that our Swift function calls is shown in \CODE{zombies_model_tcl}.  For parallel tasks, Swift/T currently requires  two Tcl procedures, a dataflow interface (line 1 f.) and a body (line 7 f.) that calls our \T{zombies\_model\_run} function.  The \T{rule} command (line 2) registers dataflow execution: when all input IDs \T{ins} are available, \T{zombies\_model\_body} will be released to the load balancer and executed on an available subset of workers.  The \T{args} are Swift-specific task settings, including the \T{@par} parallel settings, and are not accessed by the user.  The body function retrieves the input parameter values from Swift by applying the provided \T{retrieve\_string} function on the IDs, obtaining the configuration file name and the sample model parameters.  The MPI subcommunicator for the parallel task and the current MPI rank in that communicator are accessed using functions by Swift (lines 11-12). The communicator \T{comm} will be of the size specified by the \T{@par} annotation. Our HPC Zombies library interface is called (line 15) and returns a string containing the model output that is stored in \T{z\_value}. Only one process need store the output \T{z} in Swift memory; we use rank 0 (lines 16-17). (This interface / body pattern can easily be adapted for any MPI library, adjusting for any differences in the wrapped library function arguments and additional input/output parameters.) With the various bindings having been created, the HPC Zombies model can now be called from a Swift script.
+The code in the \T{zombies\_model} Tcl package that our Swift function calls is
+shown in \CODE{zombies_model_tcl}.  For parallel tasks, Swift/T currently
+requires  two Tcl procedures, a dataflow interface (line 1 f.) and a body (line
+7 f.) that calls our \T{zombies\_model\_run} function.  The \T{rule} command
+(line 2) registers dataflow execution: when all input IDs \T{ins} are available,
+\T{zombies\_model\_body} will be released to the load balancer and executed on
+an available subset of workers.  The \T{args} are Swift-specific task settings,
+including the \T{@par} parallel settings, and are not accessed by the user.  The
+body function retrieves the input parameter values from Swift by applying the
+provided \T{retrieve\_string} function on the IDs, obtaining the configuration
+file name and the sample model parameters.  The MPI subcommunicator for the
+parallel task and the current MPI rank in that communicator are accessed using
+functions by Swift (lines 11-12). The communicator \T{comm} will be of the size
+specified by the \T{@par} annotation. Our HPC Zombies library interface is
+called (line 15) and returns a string containing the model output that is stored
+in \T{z\_value}. Only one process need store the output \T{z} in Swift memory;
+we use rank 0 (lines 16-17). (This interface / body pattern can easily be
+adapted for any MPI library, adjusting for any differences in the wrapped
+library function arguments and additional input/output parameters.) With the
+various bindings having been created, the HPC Zombies model can now be called
+from a Swift script.

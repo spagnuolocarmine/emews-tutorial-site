@@ -1,0 +1,31 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+*~
+.DS_Store
+
+*.d
+/io.txt
+/.cproject
+/.project
+/.settings
+
+src/*_wrap.cpp
+src/*_wrap.cpp.bu
+
+Debug/
+Release/
+/ReleaseWithDebInfo/
+/Profiling/
+/TODO.txt
+/scratch.txt
