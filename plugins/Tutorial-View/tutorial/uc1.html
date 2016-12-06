@@ -20,13 +20,13 @@
 </style>
 
 <p>
-  For a first demonstration ABM use case, we begin with an example of a Swift/T parallel parameter
-  sweep to explore the parameter space of a model.
+  For a first demonstration ABM use case, we begin with an example of a Swift/T
+  parallel parameter sweep to explore the parameter space of a model.
 </p>
 Tutorial goals:
 <p>
   <ul>
-    <li> Run ABM simulation using Repast in Swift/T</li>
+    <li> Run an ABM simulation using Repast in Swift/T</li>
     <li> Execute parallel parameters sweep of ABM simulation model </li>
     <li> Implement parallel evaluation of the simulation results using Swift/T and R</li>
   </uL>
@@ -74,7 +74,7 @@ Tutorial goals:
 
         <p>
           In order for Swift/T to call our external application (i.e., the Zombies model),
-          we define an 
+          we define an
           <modal-data data="plugins/Tutorial-View/tutorial/swiftt.html" ref="external_execution">app</modal-data> function.
           (The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
           choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
@@ -250,7 +250,7 @@ Tutorial goals:
               results array that contain the maximum human counts and use those indices
               to retrieve the parameters from the parameters array.</p>
               <p>
-                First Swift's <i>string_join</i> function (requiring importing of the <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module) 
+                First Swift's <i>string_join</i> function (requiring importing of the <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module)
                 is used to join all the elements of the results array (i.e., all the final human counts)
                 into a comma separated string
                 (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="51" to="51">52</highlight-code>).
