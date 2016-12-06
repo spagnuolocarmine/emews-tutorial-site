@@ -597,12 +597,12 @@ table [class^="icon-"], [class*=" icon-"] {
     top: 33px;
     left: 0;
     right: 10px;
-    bottom: 276px;
+    bottom: 340px;
 }
 
 .sb-left-projects {
     position:absolute;
-    height:176px;
+    height:220px;
     bottom:0;
     left:0;
     right:10px;

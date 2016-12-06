@@ -479,12 +479,12 @@ command to run the model on line
 <p>
 The <tt id="mytt">eqpy</tt> subtemplate generates files and code for model
 exploration using the EQ/Py EMEWS extension (EMEWS Templates are the preferred
-way of installing and using EQ/Py, however the 
-<a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a> 
+way of installing and using EQ/Py, however the
+<a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a>
 can be accessed for those interested in the EQ/Py source code). The EQ/Py
 extension adds two blocking queues through which a Swift/T script and a
 python code algorithm can coordinate execution. The following is the EMEWS workflow
-structure with EQ/Py. 
+structure with EQ/Py.
 
 <p>
 <img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQPy.png" alt="EMEWS Figure EQPy" height="300">
@@ -709,7 +709,7 @@ and then calls a <tt id="mytt">run()</tt> function on that package. Your python 
 will need to implement such a function. <tt id="mytt">EQPy_get</tt> will attempt to get
 a string value from the EQ/Py output queue, blocking until there is something to
 get. <tt id="mytt">EQPy_put</tt> will put a string value on the EQ/Py input queue.
-(All of the <tt id="mytt">EQPy_*</tt> calls are made available to the Swift script via the 
+(All of the <tt id="mytt">EQPy_*</tt> calls are made available to the Swift script via the
 EQPy import on line <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.)
 </p>
@@ -735,7 +735,7 @@ The call to the <tt id="mytt">loop</tt> function (line
 color="rgba(255,255,255,0.3)" from="148" to="148">149</highlight-code>) begins
 the loop over the coordinated sequence of algorithmic parameter production and
 model runs. The loop itself looks more complicated than it is,
-primarily due to the complexity involved in writing what is effectively a <tt id=mytt">while</tt> loop in swift's
+primarily due to the complexity involved in writing what is effectively a <tt id="mytt">while</tt> loop in swift's
 relentlessly parallelizing environment. The essential flow
 of the <tt id="mytt">loop</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
@@ -760,7 +760,7 @@ that initiates model runs for each element of the array, and gathering the
 results of those model runs in a <tt id="mytt">results</tt> array (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="113" to="117">114-118</highlight-code>).
-Once all the results have been gathered, the floating point results are transformed 
+Once all the results have been gathered, the floating point results are transformed
 into a string format and passed back to the EQ/Py input queue. This involves
 transforming the <tt id="mytt">results</tt> float array into the <tt id="mytt">rs</tt> string array
 and joining this array into one comma
@@ -841,6 +841,7 @@ customized for your particular use case.
 </p>
 
 <p>
+<span id="eqr_section"/>
 <h3>The <tt id="mytt">eqr</tt> Subtemplate</h3>
 </p>
 

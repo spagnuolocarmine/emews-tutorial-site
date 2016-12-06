@@ -1,1 +1,0 @@
-# HPC Zombies and WAR.Q
