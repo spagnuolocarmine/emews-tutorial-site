@@ -1,0 +1,29 @@
+diff --git a/config.php b/config.php
+index 7528465..2130d34 100755
+--- a/config.php
++++ b/config.php
+@@ -11,16 +11,21 @@
+ //////////////////////////////////////////////////////////////////
+ 
+ // PATH TO CODIAD
+-define("BASE_PATH", "/Library/WebServer/Documents/emews-tutorial-site");
++// define("BASE_PATH", "/Library/WebServer/Documents/emews-tutorial-site");
++define("BASE_PATH", "/disks/www/www.mcs.anl.gov/userdirs/ozik/emews-tutorial-site");
++
+ 
+ // BASE URL TO CODIAD (without trailing slash)
+-define("BASE_URL", "127.0.0.1");
++// define("BASE_URL", "127.0.0.1");
++define("BASE_URL", "http://www.mcs.anl.gov/~wozniak/emews-tutorial-site");
+ 
+ // THEME : default, modern or clear (look at /themes)
+ define("THEME", "default");
+ 
+ // ABSOLUTE PATH
+-define("WHITEPATHS", BASE_PATH . ",/Library/WebServer/Documents/emews-tutorial-site");
++// define("WHITEPATHS", BASE_PATH . ",/Library/WebServer/Documents/emews-tutorial-site");
++
++define("WHITEPATHS", BASE_PATH . ",/disks/www/www.mcs.anl.gov/userdirs/wozniak/public_html/emews-tutorial-site");
+ 
+ // SESSIONS (e.g. 7200)
+ $cookie_lifetime = "0";
