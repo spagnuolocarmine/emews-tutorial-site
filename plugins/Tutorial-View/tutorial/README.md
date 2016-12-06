@@ -10,6 +10,12 @@
 - (Discouraged) **Normal link**: ```<a href="http://swift-lang.org/Swift-T">Swift/T website</a>```
 - (Don't use) **Jump within tutorial**: ```<move-withintutorial ref="someref">move tutorial</move-withintutorial>``` and this on some part of the tutorial page ```<span id="someref"></span>```
 
+## Direct Links to Specific Tutorials From External Locations
+
+```
+http://www.mcs.anl.gov/~emews/tutorial/?action=tutorial-view&tutorial=uc3
+```
+
 ##Styling ordered list
 
 ```
