@@ -64,7 +64,7 @@
         //////////////////////////////////////////////////////////////////
 
         open: function(path) {
-        
+
             var _this = this;
             codiad.finder.contractFinder();
 
@@ -109,9 +109,9 @@
 
         projectsExpand: function() {
             this._sideExpanded = true;
-            $('#side-projects').css('height', 176+'px');
+            $('#side-projects').css('height', 220+'px');
             $('.project-list-title').css('right', 0);
-            $('.sb-left-content').css('bottom', 176+'px');
+            $('.sb-left-content').css('bottom', 220+'px');
             $('#projects-collapse')
                 .removeClass('icon-up-dir')
                 .addClass('icon-down-dir');
