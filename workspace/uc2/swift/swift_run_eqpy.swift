@@ -101,9 +101,6 @@ app (file so, file se) run_model (string model_sh, string param_line, string ins
   }
 }
 
-// TODO
-// Edit function arguments to include those passed from main function
-// below
 (void o) start (int ME_rank, int iters, int pop, 
                int num_variations, int random_seed) {
   location ME = locationFromRank(ME_rank);
