@@ -1,19 +1,33 @@
-<h1 style="margin-top: 0px;"> INTRODUCTION</h1>
-<h2>Modern simulation-based application studies are campaigns</h2>
-<p>
-Consisting of large numbers of simulations with many possible
+
+<h1 style="margin-top: 0px;"> INTRODUCTION</h1><br>
+
+<style>
+  #myi {
+    font-style: italic;
+  }
+</style>
+
+<style>
+  #myb {
+    font-weight: bold;
+  }
+</style>
+
+<b id="myb">Modern simulation-based application studies are campaigns</b>
+consisting of large numbers of simulations with many possible
 variations.  Simulations may be run with different parameters,
 possibly as part of an automated model parameter optimization,
-classification, or, more generally, \emph{model exploration} (ME). Constructing the software to run
+classification, or, more generally, <i id="myi">model exploration</i> (ME). Constructing the software to run
 such studies at the requisite computational scales is often unnecessarily time-consuming and the resulting
 software artifacts are typically difficult to generalize and
 package for other users.
 </p>
+
 <p>
 In this tutorial, we present a solution for many of the challenges in
 running large-scale simulation studies.  Our framework, Extreme-scale Model
-Exploration with Swift/T (\B{EMEWS}), uses the general-purpose parallel
-scripting language Swift~\shortcite{STC_2014} to generate highly
+Exploration with Swift/T (<b>EMEWS</b>), uses the general-purpose parallel
+scripting language Swift <modal-data data="plugins/Tutorial-View/tutorial/refs/STC_2014.html">Armstrong et al. 2014</modal-data> to generate highly
 concurrent simulation workflows.  These workflows enable the integration of
 external ME algorithms to coordinate the running and evaluation of large numbers of simulations.  The general-purpose nature of
 the programming model allows the user to supplement the workflows with additional
