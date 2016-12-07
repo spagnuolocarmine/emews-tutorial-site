@@ -1,7 +1,7 @@
 import io;    import string;
 import files; import R;
-// -hline-
-app (file o) _F_simulation_C__C_(int i) {
+
+app (file o) simulation(int i) {
   "bash" "-c"
     ("RANDOM=%i; echo $RANDOM" % i)
     @stdout=o;
