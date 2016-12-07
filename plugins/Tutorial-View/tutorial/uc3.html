@@ -406,8 +406,7 @@ via the clustering. The following is the overall EMEWS workflow structure for th
 <p>
   The workflow is defined in the swift script,
   <open-code code="uc3/swift/uc3.swift"><tt id="mytt">uc3.swift</tt></open-code>.
-  The script was created using the <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-  ref="eqr_section"><tt id="mytt">eqr</tt></modal-data> template and then customized
+  The script was created using the <tt id="mytt">eqr</tt> template and then customized
   for the HPC Zombies model. The details of the script have been well covered
   in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
   ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> template tutorial, and only the
@@ -446,10 +445,10 @@ via the clustering. The following is the overall EMEWS workflow structure for th
 <p>
   Script execution begins in the
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="100" to="113">main</highlight-code> function which is unaltered from
+    from="109" to="112">main</highlight-code> function which is unaltered from
     the
     <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-    ref="swift_run_eqr.swift"><tt id="mytt">eqr</tt></modal-data> default. The main
+    ref="swift_run_eqr.swift"><tt id="mytt">EQ/R</tt></modal-data> default. The main
     function calls the <highlight-code code="uc3/swift/uc3.swift"
     color="rgba(255,255,255,0.3)"
       from="87" to="97">start</highlight-code> function to begin the
@@ -458,13 +457,13 @@ via the clustering. The following is the overall EMEWS workflow structure for th
       <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="89" to="92">90-93</highlight-code>, the
       <tt id="mytt">start</tt> function intializes EQ/R (sourcing the <tt id="mytt">algo.R</tt> file
-      from the path in <tt id="mytt">algorithm</tt> variable),
+      from the path in the <tt id="mytt">algorithm</tt> variable),
       initializes the active learning algorithm using the <tt id="mytt">algo_params</tt>
-      string, and the the loop over the coordinated
-      sequence of algorithmic parameter production and model runs is begun. More
+      string, and starts loop over the coordinated
+      sequence of algorithmic parameter production and model runs. More
       details on these calls can be found in the
       <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-      ref="swift_run_eqr.swift"><tt id="mytt">eqr</tt></modal-data> section of the
+      ref="swift_run_eqr.swift"><tt id="mytt">EQ/R</tt></modal-data> section of the
       templating tutorial. The <tt id="mytt">algorithm</tt> variable is defined on
       line <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="15" to="15">16</highlight-code> and the <tt id="mytt">algo_params</tt>
@@ -479,29 +478,31 @@ via the clustering. The following is the overall EMEWS workflow structure for th
   from="90" to="90">91</highlight-code> will block until there is a corresponding
   <tt id="mytt">OUT_put</tt> call in the R algorithm code. Similarly, an <tt id="mytt">IN_get</tt> call
   in the R code will block until there is a corresponding <tt id="mytt">EQR_put</tt> call
-  in the swift code  We can see the corresponding sequence of calls
-  in  <open-code code="uc3/R/algo.R"><tt id="mytt">algo.R</tt></open-code> in
+  in the swift code  We can see R sequence of calls that correspond to lines
+  <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
+    from="90" to="91">91-92</highlight-code>,
+  in <open-code code="uc3/R/algo.R"><tt id="mytt">algo.R</tt></open-code> in
   lines
-  <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+  <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
     from="204" to="205">205-206</highlight-code>. The <tt id="mytt">EQR_get</tt> on
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
       from="90" to="90">91</highlight-code> gets the <tt id="mytt">"Params"</tt>
       string that was <tt id="mytt">OUT_put</tt> on line
-      <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+      <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
         from="204" to="204">205</highlight-code> in <tt id="mytt">algo.R</tt>. The
     <tt id="mytt">IN_get</tt> on line
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="205" to="205">206</highlight-code> in <tt id="mytt">algo.R</tt>
       gets the <tt id="mytt">algo_params</tt> string that is <tt id="mytt">EQR_put</tt> in line
       <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="91" to="91">92</highlight-code> in <tt id="mytt">uc3.swift</tt>.
     <tt id="mytt">algo.R</tt> parses this string as list that can passed as
     named arguments to a R function in line
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="207" to="207">208</highlight-code> and then calls the
       <tt id="mytt">main_function</tt> passing it that list which starts the active learning
       algorithm (line
-      <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+      <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
         from="208" to="208">209</highlight-code>).
 </p>
 
@@ -516,7 +517,7 @@ The
     from="77" to="77">78</highlight-code>), or exits when it receives
     the <tt id="mytt">"FINAL"</tt> flag. The R <tt id="mytt">OUT_put</tt> calls corresponding to
     the swift <tt id="mytt">EQR_get</tt> calls are on lines
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="82" to="82">83</highlight-code>
     <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
       from="154" to="154">155</highlight-code>
