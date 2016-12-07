@@ -82,7 +82,7 @@ at specific locations. The code that we present in this use case is directly ada
 
 <h3> EQ/Py swift script </h3>
 <p>
-The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file shows how EQ/Py was adapted for the current example.
+The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
 </p>
 
 <ul>
@@ -96,17 +96,33 @@ The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-
  color="rgba(255,255,255,0.3)" from="103" to="104"><tt id="mytt">start</tt></highlight-code> function were modified to reflect the new information that is passed in via the command line.</li>
 
  <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mytt">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task was modified.</li>
+ color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mytt">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task, was modified.</li>
 
 <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
  color="rgba(255,255,255,0.3)" from="54" to="54"><tt id="mytt">loop</tt></highlight-code> function the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mytt">param_names</tt></highlight-code> string variable is added to track which parameters are being modified by the GA. This allows us to specify the subset of model parameters that we'd like to explore.
-<!-- 
-<li>We import the eqpy extension in line <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.</li>
- -->
+ color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mytt">param_names</tt></highlight-code> string variable is added to track which parameters are being explored by the GA. This allows us to specify the subset of model parameters to explore.
+ 
+ <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="42" to="42"><tt id="mytt">obj</tt></highlight-code> function we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="44" to="44"><tt id="mytt">create_upfs</tt></highlight-code> function (defined in a separate swift file <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code>, discussed below) to generate stochastic variations of individual parameter combinations. These are stored in the string variable <tt id="mytt">upfs</tt> as semicolon separated sets of parameters. The string array <tt id="mytt">parameter_combos</tt> is created by <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="45" to="45">splitting</highlight-code> <tt id="mytt">upfs</tt> using semicolons as delimiters. Once the parameter combinations are <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="48" to="48">evaluated</highlight-code>, their average is <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="51" to="51">calculated</highlight-code>.
+</li>
+
+<li>In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="27" to="27"><tt id="mytt">run_obj</tt></highlight-code> function we removed the <tt id="mytt">out</tt> and <tt id="mytt">err</tt> files for tracking stdout and stderr (these can be included for debugging purposes). We define the path to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="32" to="32">script file</highlight-code> to run our model. Finally, we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="35" to="35"><tt id="mytt">calc_obj</tt></highlight-code> function (also defined in <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mytt">param_line</tt>.</li>
 
 </ul>
+
+<p>
+TODO: R_utils.swift and testing
+</p>
+
 
 The deap function is defined to take the arguments py_rank (a unique rank),
 iters (the number of GA iterations), trials (the number of stochastic
