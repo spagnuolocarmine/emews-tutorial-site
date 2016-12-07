@@ -8,7 +8,6 @@ import assert;
 import zombies_model;
 import R_obj;
 
-
 string emews_root = getenv("EMEWS_PROJECT_ROOT");
 string turbine_output = getenv("TURBINE_OUTPUT");
 string resident_work_ranks = getenv("RESIDENT_WORK_RANKS");
