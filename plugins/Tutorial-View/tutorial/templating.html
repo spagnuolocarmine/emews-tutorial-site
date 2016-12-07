@@ -848,9 +848,21 @@ customized for your particular use case.
 <p>
 The <tt id="mytt">eqr</tt> subtemplate works much the same as the <tt id="mytt">eqpy</tt> template,
 but for model exploration algorithms written in R. It generates files and code for model
-exploration using the EQ/R EMEWS extension. The EQ/R
+exploration using the EQ/R EMEWS extension. (EMEWS Templates are the preferred
+way of installing and using EQ/R, however the
+<a target="_blank" href="https://github.com/emews/EQ-R">EQ/R code repository</a>
+can be accessed for those interested in the EQ/R source code). The EQ/R
 extension adds two blocking queues through which a Swift/T script and a
-R code algorithm can coordinate execution. The <tt id="mytt">eqr</tt>
+R code algorithm can coordinate execution. The following is the EMEWS workflow
+structure with EQ/R.
+</p>
+
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQR.png" alt="EMEWS Figure EQ/R" height="300">
+</p>
+
+<p>
+The <tt id="mytt">eqr</tt>
 subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a R code algorithm
 using the two queues. By default the coordinated execution of the two uses
