@@ -19,8 +19,8 @@ string all_zombie_data = read(input(data_loc + "/zombie_data.csv"));
 string str_zombie_data = get_zombie_data(all_zombie_data);
 printf("str_zombie_data: %s", str_zombie_data);
 string grid_loc = data_loc + "/my_grid.Rds";
-string config_file = argv("config","");
 
+string config_file = argv("config","");
 int num_clusters = toint(argv("num_clusters"));
 int num_random_sampling = toint(argv("num_random_sampling"));
 int n = num_clusters + num_random_sampling;
@@ -45,9 +45,9 @@ string algo_params = """
 string baseline_params = read(input(data_loc + "/baseline_params.txt"));
 
 (string fitness) obj(string param) {
-    string s_full = baseline_params + "\t" + param;
+    string full_parameters = baseline_params + "\t" + param;
     // zombies model needs 4 processes
-    string z = @par=4 zombies_model_run(config_file, s_full);
+    string z = @par=4 zombies_model_run(config_file, full_parameters);
     fitness = calc_obj(z, str_zombie_data);
     //printf("z: %s", z);
     printf("fitness: %s", fitness);

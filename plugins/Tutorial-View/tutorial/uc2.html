@@ -18,6 +18,13 @@
   }
 
 </style>
+
+<style>
+  #mytt {
+    font-family:'Lucida Console', monospace;
+  }
+</style>
+
 <p>
 
   Due to the highly non-linear relationship between ABM input parameters and model outputs,
@@ -31,19 +38,25 @@ In (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">O
   we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple
   queue-based interfaces for passing parameters and
   simulation results, where a metaheuristic method, a genetic algorithm (GA),
-  developed with DEAP (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) is
+  is
   used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. 
-  In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. As we did in the first use case, we continue with the Repast Simphony JZombies demonstration model. The following is the overall EMEWS workflow structure for this use case.
+  In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. The following is the overall EMEWS workflow structure for this use case.
 </p>
 <p>
   <img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_UC2.png" alt="EMEWS Figure UC2" height="300">
 </p>
 
-<h2> Passing parameters and simulation results to resident task</h2>
+<p>
+We use a GA model exploration module developed with the Python DEAP library (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>). We also use the same Java-based JZombies model from the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="jzombies">Use Case 1 Tutorial</modal-data>. The GA is used to automatically discover the best input parameter combinations which yield the maximum number of surviving humans. For each parameter combination, this "fitness" metric is calculated by averaging over a number of stochastic variations. Unlike the example presented in <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="finding_best">Use Case 1 Tutorial</modal-data>, we aren't specifying an a priori set of parameter combinations for evaluation. Rather, we are using the GA heuristic to dynamically explore the input parameter space of the JZombies model. With EMEWS, this model exploration (ME) can be done at scale, without needing to modify either the ME code or the model code.
+</p>
+
+<h2> EQ/Py with EMEWS </h2>
+<!-- 
 <p>
   Resident tasks, which retain state, are accessed via their worker location so that the
 algorithm state can be repeatedly accessed.
 </p>
+ -->
 
 <p>
   One unique aspect of the EMEWS framework is its ability to directly incorporate external libraries or code that implements model exploration algorithms. The benefit of using external libraries directly is threefold:
@@ -65,15 +78,51 @@ algorithm state can be repeatedly accessed.
 
 <p>
 As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py section</modal-data> of the EMEWS Template tutorial, the EQ/Py extension provides an interface for interacting with Python-based resident tasks
-at specific locations. The code that we present in this use case is directly adapted from the EQ/Py subtemplate, so readers who have completed the EMEWS Templates tutorial will already be familiar with the directory structure and template code.
+at specific locations. The code that we present in this use case is directly adapted from the EQ/Py subtemplate, so readers who have completed the EMEWS Templates tutorial will already be familiar with the directory structure and template code. 
 
-The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file shows how EQ/Py was adapted for the current example.
+<h3> EQ/Py swift script </h3>
+<p>
+The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
+</p>
+
 <ul>
+<li>Starting from lines <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="148" to="152">149-153</highlight-code> in the main function, we've modified the command line arguments that are sent to the swift script. </li>
+ 
+<li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="134" to="136"><tt id="mytt">run_prerequisites</tt></highlight-code> Swift function was implemented, using the same functionality as <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="utility_functions">cp_message_center in UC1</modal-data>. </li>
+ 
+ <li>The arguments passed to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="103" to="104"><tt id="mytt">start</tt></highlight-code> function were modified to reflect the new information that is passed in via the command line.</li>
 
-<li>We import the eqpy extension in line <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.</li>
+ <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mytt">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task, was modified.</li>
+
+<li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="54" to="54"><tt id="mytt">loop</tt></highlight-code> function the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mytt">param_names</tt></highlight-code> string variable is added to track which parameters are being explored by the GA. This allows us to specify the subset of model parameters to explore.
+ 
+ <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="42" to="42"><tt id="mytt">obj</tt></highlight-code> function we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="44" to="44"><tt id="mytt">create_upfs</tt></highlight-code> function (defined in a separate swift file <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code>, discussed below) to generate stochastic variations of individual parameter combinations. These are stored in the string variable <tt id="mytt">upfs</tt> as semicolon separated sets of parameters. The string array <tt id="mytt">parameter_combos</tt> is created by <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="45" to="45">splitting</highlight-code> <tt id="mytt">upfs</tt> using semicolons as delimiters. Once the parameter combinations are <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="48" to="48">evaluated</highlight-code>, their average is <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="51" to="51">calculated</highlight-code>.
+</li>
+
+<li>In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="27" to="27"><tt id="mytt">run_obj</tt></highlight-code> function we removed the <tt id="mytt">out</tt> and <tt id="mytt">err</tt> files for tracking stdout and stderr (these can be included for debugging purposes). We define the path to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="32" to="32">script file</highlight-code> to run our model. Finally, we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
+ color="rgba(255,255,255,0.3)" from="35" to="35"><tt id="mytt">calc_obj</tt></highlight-code> function (also defined in <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mytt">param_line</tt>.</li>
 
 </ul>
+
+<p>
+TODO: R_utils.swift and testing
+</p>
+
 
 The deap function is defined to take the arguments py_rank (a unique rank),
 iters (the number of GA iterations), trials (the number of stochastic

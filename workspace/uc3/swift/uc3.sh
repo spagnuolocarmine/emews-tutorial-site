@@ -49,7 +49,7 @@ NUM_RANDOM_SAMPLING=3
 ZOMBIES=$EMEWS_PROJECT_ROOT/hpc_zombies/swift/lib
 
 # TODO edit command line arguments, e.g. -nv etc., as appropriate
-# for your EQ/Py based run. $* will pass all of this script's
+# for your EQ/R based run. $* will pass all of this script's
 # command line arguments to the swift script
 CMD_LINE_ARGS="$* --num_clusters=$NUM_CLUSTERS --num_random_sampling=$NUM_RANDOM_SAMPLING"
 

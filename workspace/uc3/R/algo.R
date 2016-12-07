@@ -20,7 +20,7 @@ create_scaled_ev_df <- function(x){
   scaling <- attr(sx,"scaled:scale")
   centering <- attr(sx,"scaled:center")
   scaled.df <- data.frame(sx,ev = F, cl = NA)
-  list(scaled.df = scaled.df, scaling = scaling, 
+  list(scaled.df = scaled.df, scaling = scaling,
        centering = centering)
 }
 
@@ -29,13 +29,13 @@ create_scaled_ev_df <- function(x){
 # 2x2 confusion matrix
 get_accuracy_precision_recall_fscore <- function(confusion,positive){
   p_i = which(colnames(confusion) == positive)
-  
+
   total <- sum(confusion)
   tp <- confusion[p_i,p_i]
   tn <- confusion[-p_i,-p_i]
   fp <- confusion[p_i,-p_i]
   fn <- confusion[-p_i,p_i]
-  
+
   accuracy <- (tp + tn) / total
   precision <- tp / (tp + fp)
   recall <- tp / (tp + fn)
@@ -70,22 +70,22 @@ main_function <- function(data_file,
   res <- create_scaled_ev_df(df)
   sdf <- res$scaled.df
   data_names <- colnames(df)
-  
+
   sdf.sample_is <- sample(which(!sdf$ev),n)
-  
+
   # first set of sampled parameters from original unscaled data
   p1 <- df[sdf.sample_is,]
-  
+
   # upf representation of parameters
   sp1 <- rows_to_upfs(p1,data_names)
-  
-  # WAR.Q calls
+
+  # EQ/R calls
   OUT_put(sp1)
   sr1 = IN_get()
-  
+
   # result list of vectors (in this case the vectors are of length 1)
   r1 <- as.numeric(unlist(strsplit(sr1,";")))
-  
+
   # use the results from r1 to map sdf$cl column to X0 and X1 class labels
   sdf[sdf.sample_is,"cl"] <- ifelse(r1 < sse_threshold,"X1","X0")
   # mark sdf$ev columns to TRUE
@@ -94,19 +94,19 @@ main_function <- function(data_file,
 	OUT_put("FINAL")
 	OUT_put("Error: only found 1 class from random sampling, try sampling more or changing threshold")
 	return("ending early")
-  }  
+  }
   sdf.ev_is <- which(sdf$ev)
   train_control <- trainControl(method="repeatedcv", number=10, repeats = 1, sampling = "up",
                                 classProbs = T, summaryFunction = aprfSummary)
   stat_names <- c("accuracy","precision","recall","fscore")
   stat_sd_names <- paste0(stat_names,"SD")
-  model <- train(x = sdf[sdf.ev_is,data_cols], y = make.names(factor(sdf$cl[sdf.ev_is])), 
-                 trControl=train_control, tuneGrid = data.frame(mtry = 3), 
+  model <- train(x = sdf[sdf.ev_is,data_cols], y = make.names(factor(sdf$cl[sdf.ev_is])),
+                 trControl=train_control, tuneGrid = data.frame(mtry = 3),
                  method="rf", ntree=ntree, metric = "accuracy")
-  
+
   # iteration variable
   iter <- 0
-  
+
   # data accumulators
   cv_means = vector("list", max_iter + 1)
   cv_sds = vector("list", max_iter + 1)
@@ -117,7 +117,7 @@ main_function <- function(data_file,
   # Predict on all of P_unev
   sdf.unev_is <- which(!sdf$ev)
   pred <- predict(model,newdata = sdf[sdf.unev_is,data_cols], type = "raw")
-  
+
   while(iter < max_iter & model$results[target_metric] < target_metric_value){
     iter <- iter + 1
     unev_prob <- predict(model,newdata = sdf[sdf.unev_is,data_cols], type = "prob")
@@ -137,49 +137,49 @@ main_function <- function(data_file,
     sdf.c_is <- sdf.unev_is[unev.c_is]
     # select candidate random sample points
     if (length(sdf.c_is) > 0 ){
-      sdf.crs_is <- sdf.unev_is[-unev.c_is] 
+      sdf.crs_is <- sdf.unev_is[-unev.c_is]
     } else {
       sdf.crs_is <- sdf.unev_is
     }
     stopifnot(all(sdf$ev[sdf.crs_is]==F))
     # choose random sample points
     sdf.rs_is <- sample(sdf.crs_is,num_random_sampling)
-    
+
     sdf.all_samples_is <- c(sdf.c_is,sdf.rs_is)
     # params from original unscaled data
     params <- df[sdf.all_samples_is,]
-    
+
     # upf representation of parameters
     string_params <- rows_to_upfs(params,data_names)
-    # WAR.Q calls
+    # EQ/R calls
     OUT_put(string_params)
     string_results = IN_get()
-    
+
     # results
     results <- as.numeric(unlist(strsplit(string_results,";")))
-    
+
     sdf[sdf.all_samples_is,"cl"] <- ifelse(results < sse_threshold,"X1","X0")
     # mark sdf$ev columns to TRUE
     sdf[sdf.all_samples_is,"ev"] <- TRUE
-    
+
     # update ev and unev indices
     sdf.ev_is <- which(sdf$ev)
     sdf.unev_is <- which(!sdf$ev)
-    
+
     # Cross validate currently evaluated points
-    model <- train(x = sdf[sdf.ev_is,data_cols], y = make.names(factor(sdf$cl[sdf.ev_is])), 
-                    trControl=train_control, tuneGrid = data.frame(mtry = 3), 
+    model <- train(x = sdf[sdf.ev_is,data_cols], y = make.names(factor(sdf$cl[sdf.ev_is])),
+                    trControl=train_control, tuneGrid = data.frame(mtry = 3),
                     method="rf", ntree=ntree, metric = "accuracy")
-    
+
     cat("Iteration",iter,"\n")
     cat("CV scores:\n")
     print(unlist(model$results[stat_names]))
     cv_means[[iter + 1]] <- c(iter = iter, model$results[stat_names])
     cv_sds[[iter + 1]] <- c(iter = iter, model$results[stat_sd_names])
-   
+
     pred <- predict(model,newdata = sdf[sdf.unev_is,data_cols], type = "raw")
   }
-  
+
   # record classification
   sdf[sdf.unev_is,"cl"] <- as.character(pred)
   # record probability
@@ -194,23 +194,20 @@ main_function <- function(data_file,
   # add ev, cl and prob columns to original unscaled data
   df[c("ev","cl","prob")] = sdf[c("ev","cl","prob")]
   saveRDS(df, file="df.Rds")
-  
+
   dt_cv_means <- data.table::rbindlist(cv_means)
   dt_cv_sds <- data.table::rbindlist(cv_sds)
-  
+
   list(df = df, dt_cv_means = dt_cv_means, dt_cv_sds = dt_cv_sds)
 }
 
-print("algorithm start!")
 # ask for parameters from queue
 OUT_put("Params")
 res <- IN_get()
 
 l <- eval(parse(text = paste0("list(",res,")")))
-
 res2 <- do.call(main_function,l)
 OUT_put("FINAL")
 
 OUT_put("Look at df.Rds for final model")
 print("algorithm done.")
-

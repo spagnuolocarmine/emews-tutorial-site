@@ -11,8 +11,6 @@
 #include <string>
 #include <mpi.h>
 
-//void seir_model_init(MPI_Comm comm, int n);
-
 /**
  * Runs the model using the specified configuration file and parameters.
  *

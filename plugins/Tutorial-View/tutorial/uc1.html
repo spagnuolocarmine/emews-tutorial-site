@@ -1,4 +1,12 @@
 <h1 style="margin-top: 0px;" id="top_title">Simple Workflows with ABM</h1>
+
+<style>
+  #mytt {
+    font-family:'Lucida Console', monospace;
+  }
+</style>
+
+
 <style>
   #myol {
     margin-left: 5%;
@@ -20,19 +28,24 @@
 </style>
 
 <p>
-  For a first demonstration ABM use case, we begin with an example of a Swift/T parallel parameter
-  sweep to explore the parameter space of a model.
+  For a first demonstration ABM use case, we begin with an example of a Swift/T
+  parallel parameter sweep to explore the parameter space of a model. Note
+  that this tutorial uses the project structure and files created from the
+  EMEWS <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
+  ref="sweep_section"><tt id="mytt">sweep</tt></modal-data> template, and that should
+  be read before this.
+
 </p>
 Tutorial goals:
 <p>
   <ul>
-    <li> Run ABM simulation using Repast in Swift/T</li>
+    <li> Run an ABM simulation using Repast in Swift/T</li>
     <li> Execute parallel parameters sweep of ABM simulation model </li>
     <li> Implement parallel evaluation of the simulation results using Swift/T and R</li>
   </uL>
 </p>
 
-<h2>JZombie: Repast simulation </h2>
+<h2 id="jzombies">JZombie: Repast simulation </h2>
 
 <p>The example model used here is an adaptation of the JZombies demonstration model distributed with Repast Simphony
   (<modal-data data="plugins/Tutorial-View/tutorial/refs/rj_getting_started.html">Nick Collier and Michael North 2015</modal-data>). This is only an example model. Any simulation
@@ -63,18 +76,18 @@ Tutorial goals:
 
         <p> The full Swift/T script can be seen in <open-code code="uc1/swift/swiftrun.swift">swiftrun.swift</open-code>.
           The scripts consists of three functions, one that calls the simulation
-          (lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
+          (lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="7" to="10">8-11</highlight-code>)
           and two utility functions (lines <highlight-code code="uc1/swift/swiftrun.swift"
-          color="rgba(255,255,255,0.3)" from="11" to="13">12-14</highlight-code> and
+          color="rgba(255,255,255,0.3)" from="12" to="14">13-15</highlight-code> and
           <highlight-code code="uc1/swift/swiftrun.swift"
-         color="rgba(255,255,255,0.3)" from="15" to="17">16-18</highlight-code> respectively), followed
+         color="rgba(255,255,255,0.3)" from="16" to="18">17-19</highlight-code> respectively), followed
          by the code that performs the sweep (lines
          <highlight-code code="uc1/swift/swiftrun.swift"
-        color="rgba(255,255,255,0.3)" from="19" to="31">20-32</highlight-code>).
+        color="rgba(255,255,255,0.3)" from="20" to="32">21-33</highlight-code>).
 
         <p>
           In order for Swift/T to call our external application (i.e., the Zombies model),
-          we define an 
+          we define an
           <modal-data data="plugins/Tutorial-View/tutorial/swiftt.html" ref="external_execution">app</modal-data> function.
           (The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
           choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
@@ -85,44 +98,52 @@ Tutorial goals:
           <open-code code="uc1/scripts/repast.sh">repast.sh</open-code> to ease command line usage. Other
           non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
           and run similarly.
-        </p><p>
-          <!-- TODO update scripts to EMEWS_ROOT etc. from tooth, explain standard project layout here -->
+        </p>
+
+        <p>
           The Swift app function that calls Repast Simphony is shown in
           <open-code code="uc1/swift/swiftrun.swift">swiftrun.swift</open-code>.
           Prior to the actual function definition, the environment variable
           EMEWS_PROJECT_ROOT is accessed. This variable is used to define the project's top level
           directory, relative to which other directories (e.g., the directory
-          that contains the Zombies model) are defined.
-          On line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7</highlight-code>,
+          that contains the Zombies model) are defined. The value of the TURBINE_OUTPUT
+          environment variable is also retrieved. This specifies the path to
+          a directory where Swift/T stores its log files and which we will use
+          as a parent directory for the working directories of our individual runs.
+          For more on these variables see the
+          <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
+          ref="swift_run_sweep.sh">discussion</modal-data> in the template tutorial.
+
+          On line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>,
           the app function definition begins. The function returns two files, one for standard output and one for standard error.
           The function arguments are those required to run <open-code code="uc1/scripts/repast.sh">repast.sh</open-code>, that is,
-          the full path of the script, the current run number, the directory where the model run output should be written,
-          and the model's input scenario directory. The scenario directory is specific to Repast Simphony and
-          contains various meta-data required to run a Repast Simphony model.
+          the full path of the script, the parameters to run and the directory where the model run output should be written,
+          and the model's input scenario directory.
           The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
-          arguments as well as the project root directory.
+          arguments as well as the project root, that is, <tt id="mytt">emews_root</tt> directory.
           @stdout=out and @stderr=err redirect stdout and stderr to the files out and err.
           It should be easy to see how any model or application that can be run from the command line
           and wrapped in a bash script can be called from Swift in this way.
         </p>
 
-        <h3>Utility Functions</h3>
+        <h3 id="utility_functions">Utility Functions</h3>
         The script also contains two other app functions. The first <highlight-code code="uc1/swift/swiftrun.swift"
-        color="rgba(255,255,255,0.3)" from="11" to="13">make_dir</highlight-code> simply
+        color="rgba(255,255,255,0.3)" from="12" to="14">make_dir</highlight-code> simply
         calls the Unix mkdir command to create a specified directory. The second
-        <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="15" to="18">cp_message_center</highlight-code>
+        <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="16" to="19">cp_message_center</highlight-code>
         calls the unix cp command to copy a Repast Simphony logging configuration file into
         the current working directory. Both of these are used by the parameter sweeping part of the script.
 
         <h2> Parameter Sweeping</h2>
-        <p>The remainder of the script performs a simple parameter sweep using the <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="6" to="10">repast</highlight-code>
+        <p>The remainder of the script performs a simple parameter sweep using the
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="7" to="10">repast</highlight-code>
           app function to run the model. The parameters over which we want to sweep are defined in an external file
           where each row of the file contains a parameter set for an individual run. The script will read
           these parameter sets and launch as many parallel runs as possible for a given process configuration,
           passing each run an individual parameter set. The general script flow is as follows:
 
           <ol id="myol">
-            <li>Read the the list of parameters into a <i>file</i> object.</li>
+            <li>Read the the list of parameters into a <tt id="mytt">file</tt> object.</li>
             <li>Split the contents of the file into lines and store each as an array element.</li>
             <li>Iterate over the array in parallel, launching a model run
               for each parameter set (i.e., array element) in the array, using
@@ -130,50 +151,56 @@ Tutorial goals:
           </ol>
 
           Script execution begins in line
-          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="19" to="19">20</highlight-code>,
-          by calling the cp_message_center app function.
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="20" to="20">21</highlight-code>,
+          by calling the <tt id="mytt">cp_message_center</tt> app function.
           In the absence of any data flow dependency, Swift statements will execute in parallel whenever possible.
           However, in our case, the Repast Simphony logging configuration file must be in place before a Zombie model run begins.
-          The => symbol enforces the required sequential execution:
+          The <tt id="mytt">=></tt> symbol enforces the required sequential execution:
           the code on its left-hand side must complete execution before the code on the right-hand side begins execution.
 
-          Line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="20" to="20">21</highlight-code>
-          initializes a Swift/T <i>file</i> variable with the location of the repast.sh script file. Note that the Swift/T <i>input</i>
-          function takes a path and returns a <i>file</i>. Then in line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)"
-          from="21" to="21">22</highlight-code> the path of the parameter file that contains
-          the parameter sets that will be passed as input to the Zombies model is defined, also as a <i>file</i> variable. This line uses
-          the swift built-in function <i>argv</i> to parse command line arguments to the Swift script.
-          As indicated earlier, each line of this <i>upf</i> file contains an individual parameter set, that is,
+          Line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="21" to="21">22</highlight-code>
+          initializes a Swift/T <tt id="mytt">file</tt> variable with the location of the repast.sh script file. Note that the Swift/T <tt id="mytt">input</tt>
+          function takes a path and returns a <tt id="mytt">file</tt>. Then in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)"
+          from="22" to="22">23</highlight-code> the path of the parameter file that contains
+          the parameter sets that will be passed as input to the Zombies model is defined, also as a <tt id="mytt">file</tt> variable.
+          This line uses
+          the swift built-in function <tt id="mytt">argv</tt> to parse command line arguments to the Swift script.
+          As indicated earlier, each line of this <tt id="mytt">upf</tt> file contains an individual parameter set, that is,
           the random_seed, zombie_count, human_count, zombie_step_size and human_step_size
           for a single model run. The parameter set is passed as a single string
           (e.g., random_seed = 14344, zombie_count = 10 ...)
           to the Zombies model where it is parsed into the individual parameters.
-        </p><p>
-          Line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="22" to="22">23</highlight-code>
-          reads the <i>upf</i> file into an array of strings where each line of the file is an element in the array.
-          The built-in Swift <i>file_lines</i> function (requires import of files module in line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="2" to="2">3</highlight-code>) is used to read the upf file into this array of strings.
-          The <i>foreach</i> loop that begins on line
-          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="23" to="23">24</highlight-code>
-          executes its loop iterations in parallel. In the <i>foreach</i> loop, the variable s is set to an
-          array element (that is, a single parameter set represented as a string) while the variable i is the index of that array element.
-          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="24" to="24">25</highlight-code>
-          and <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="25" to="25">26</highlight-code>
+        </p>
+
+        <p>
+          Line <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="23" to="23">24</highlight-code>
+          reads the <tt id="mytt">upf</tt> file into an array of strings where each line of the file is an element in the array.
+          The built-in Swift <tt id="mytt">file_lines</tt> function (requires import of files module in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="2" to="2">3</highlight-code>)
+          is used to read the upf file into this array of strings.
+          The <tt id="mytt">foreach</tt> loop that begins on line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="24" to="24">25</highlight-code>
+          executes its loop iterations in parallel. In the <tt id="mytt">foreach</tt> loop, the variable <tt id="mytt">s</tt> is set to an
+          array element (that is, a single parameter set represented as a string) while the variable <tt id="mytt">i</tt> is the index of that array element.
+          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="25" to="25">26</highlight-code>
+          and <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="26" to="26">27</highlight-code>
           create an instance directory into which each model run will write its output. The make_dir app function
-          is used to create the directory. The <i>=></i> keyword is again used to ensure that the directory is created before the actual model
+          is used to create the directory. The <tt id="mytt">=></tt> keyword is again used to ensure that the directory is created before the actual model
           run that uses that directory is performed.</p>
           <p>
-          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="26" to="27">27-28</highlight-code>
+          Lines <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="27" to="28">28-29</highlight-code>
           create file objects into which the standard out and standard error streams are
-          redirected by the <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="6" to="9">repast</highlight-code> function.
+          redirected by the <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="7" to="10">repast</highlight-code> function.
           Lastly, in line
-          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="28" to="28">29</highlight-code>,
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="29" to="29">30</highlight-code>,
           the repast app function that performs the Zombie model run is called with the required arguments.</p>
 
           <p>
           <b>This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
           is the set of parameters for an individual run. A foreach loop is then
           used to iterate over the array, lauching parallel model runs each with
-          their own parameters. In this way the number of  model runs that can be
+          their own parameters. In this way the number of model runs that can be
           performed in parallel is limited only by hardware resources.</b>
         </p>
 
@@ -186,7 +213,7 @@ Tutorial goals:
             The new scripts consists of the following steps:
 
             <ol id="myol">
-              <li>Read the the list of a parameters into a <i>file</i> object.</li>
+              <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
               <li>Split the contents of the file into an array where each line of
                 file is an array element.</li>
               <li>Iterate over the array in parallel, launching a model run
@@ -202,7 +229,7 @@ Tutorial goals:
             </ol>
           </p><p>
 
-            We present this in two parts. The first describes the changes to the <i>foreach</i> loop to gather the output and the
+            We present this in two parts. The first describes the changes to the <tt id="mytt">foreach</tt> loop to gather the output and the
             second describes how that output is analyzed to determine the "best" parameter combination.
           </p>
 
@@ -220,16 +247,16 @@ Tutorial goals:
             Here the repast call is now followed by the execution of an R script in line
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.
             This uses Swift/T's support for the R language. R code can be run using
-            Swift's <i>R</i> function. <i>R</i> takes two arguments, the R code to run,
+            Swift's <tt id="mytt">R</tt> function. <tt id="mytt">R</tt> takes two arguments, the R code to run,
             and an additional R statement that generates the desired return value of the R
-            code as a string. The return statement is typically something like <i>"toString(res)"</i>
-            where R's <i>toString</i> function is passed a variable that contains what
+            code as a string. The return statement is typically something like <tt id="mytt">"toString(res)"</tt>
+            where R's <tt id="mytt">toString</tt> function is passed a variable that contains what
             you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
             accesses the last row of that data frame, and then the value of the human_count column in that row is
-            assigned to the <i>res</i> variable.
+            assigned to the <tt id="mytt">res</tt> variable.
             This script itself (lines
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
-            is assigned to the <i>count_humans</i> string variable. The string contains a template character, "%s",
+            is assigned to the <tt id="mytt">count_humans</tt> string variable. The string contains a template character, "%s",
             (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>)
             that can be replaced with the actual directory in which the output file (counts.csv) is written.
             Line
@@ -237,12 +264,12 @@ Tutorial goals:
             performs this substitution with the directory for the current run, using the "%" format Swift operator.
             The resulting R code string is evaluated in line
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>
-            using the Swift <i>R</i> function.
-            In this case, the res variable in the R script (line
+            using the Swift <tt id="mytt">R</tt> function.
+            In this case, the <tt id="mytt">res</tt> variable in the R script (line
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
             contains the number of surviving humans. This string is then placed in the results array at the ith index.
           </p><p>
-            <h3> Finding the Best Parameters</h3>
+            <h3 id="finding_best"> Finding the Best Parameters</h3>
             <p>
               The final workflow steps are to determine which runs yielded the maximum
               number of humans and write out the parameters for those runs. The core idea here is
@@ -250,40 +277,41 @@ Tutorial goals:
               results array that contain the maximum human counts and use those indices
               to retrieve the parameters from the parameters array.</p>
               <p>
-                First Swift's <i>string_join</i> function (requiring importing of the <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module) 
+                First Swift's <tt id="mytt">string_join</tt> function (requiring importing the
+                 <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module)
                 is used to join all the elements of the results array (i.e., all the final human counts)
                 into a comma separated string
                 (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="51" to="51">52</highlight-code>).
                 We then use
               R to find the indices of the maximum values in the results array
               by substituting the template variable in the R code template
-              contained in the string variable <i>find_max</i>
+              contained in the string variable <tt id="mytt">find_max</tt>
               (lines <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="11" to="14">12-15</highlight-code>)
               with this comma separated string
               (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="52" to="52">53</highlight-code>)
               to create the working R code. The R code is executed in line
               line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="53" to="53">54</highlight-code>
-              using the <i>R</i> function. The R code returns a comma separated string
+              using the <tt id="mytt">R</tt> function. The R code returns a comma separated string
               of numbers where each number is the index in the results array that contained
-              a maximum value. This string is split into a <i>max_idxs</i> array using Swift's <i>split</i>
+              a maximum value. This string is split into a <tt id="mytt">max_idxs</tt> array using Swift's <tt id="mytt">split</tt>
               function
               (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="54" to="54">55</highlight-code>).
-              The <i>split</i> function takes two arguments, the string to split and the string
+              The <tt id="mytt">split</tt> function takes two arguments, the string to split and the string
               to split on, and returns an array of strings.
             </p>
             <p>
             The foreach loop (lines
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="56" to="59">57-60</highlight-code>)
-            iterates through <i>max_idxs</i> array, converts the string representation of the number to an
-            integer, retrieves the corresponding parameter string from the <i>upf_lines</i> array, and
-            adds it to the <i>best_params</i> array.
-            Given that the value in <i>results</i>[i] (from which the max indices are derived) is produced from the parameter combination in
-            <i>upf_lines</i>[i],
-            the index of the maximum value or values in the <i>max_idxs</i> array is the index of the best parameter combination or combinations.
-            Note that we subtract one from <i>idx</i> because R indices start at 1 while Swift's start at 0.
+            iterates through <tt id="mytt">max_idxs</tt> array, converts the string representation of the number to an
+            integer, retrieves the corresponding parameter string from the <tt id="mytt">upf_lines</tt> array, and
+            adds it to the <tt id="mytt">best_params</tt> array.
+            Given that the value in <tt id="mytt">results</tt>[i] (from which the max indices are derived) is produced from the parameter combination in
+            <tt id="mytt">upf_lines</tt>[i],
+            the index of the maximum value or values in the <tt id="mytt">max_idxs</tt> array is the index of the best parameter combination or combinations.
+            Note that we subtract one from <tt id="mytt">idx</tt> because R indices start at 1 while Swift's start at 0.
             The final step is to write the best parameters to a file as seen in lines
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="60" to="61">61-62</highlight-code>,
-            using Swift's <i>write</i> function.
+            using Swift's <tt id="mytt">write</tt> function.
           </p>
 
           <h2>Running the Swift Script</h2>
@@ -296,10 +324,10 @@ Tutorial goals:
           our simple workflow can be see in
           <open-code code="uc1/swift/workflow.sh">workflow.sh</open-code>.
 
-          <!-- TODO: reference template section for this -->
-          The workflow.sh file assumes the canonical EMEWS directory structure (see the EMEWS templates tutorial for more details) where
+          The workflow.sh file assumes the canonical EMEWS directory structure
+          (see the EMEWS templates tutorial for more details) where
           a so-called EMEWS project root directory contains other directories
-          such as a <i>swift</i> directory in which your swift scripts are
+          such as a <tt id="mytt">swift</tt> directory in which your swift scripts are
           located. workflow.sh defines and exports EMEWS_PROJECT_ROOT in line
           <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="12" to="12">13</highlight-code>,
           and you can see EMEWS_PROJECT_ROOT being used in line
@@ -309,17 +337,20 @@ Tutorial goals:
 
           workflow.sh takes 1 required argument: an experiment id (e.g., experiment_1).
           The experiment id is used to define a TURBINE_OUTPUT directory
-          (line <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="14" to="14">15</highlight-code>)
+          (line <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="17" to="17">18</highlight-code>)
           into which per workflow output can be written. Swift will also write its own
           log files into this directory as the workflow executes. workflow.sh
           also defines additional environment variables that are required for
-          cluster execution such as <i>WALLTIME</i>, <i>PPN</i>, <i>MACHINE</i>
+          cluster execution such as <tt id="mytt">WALLTIME</tt>, <tt id="mytt">PPN</tt>, <tt id="mytt">MACHINE</tt>
           and so forth. The final line of workflow.sh (line
-          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="44" to="44">45</highlight-code>)
+          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>)
           runs the swift script by
-          calling <i>swift-t</i> with the script as the argument followed by any
-          arguments to the swift script itself (i.e. "-f="). The <i>-n</i> argument
+          calling <tt id="mytt">swift-t</tt> with the script as the argument followed by any
+          arguments to the swift script itself (i.e. "-f="). The <tt id="mytt">-n</tt> argument
           specifies the total number of processes on which to run. Additional
-          help for the arguments to <i>swift-t</i> can be seen by running
-          <i>swift-t -h</i>.
+          help for the arguments to <tt id="mytt">swift-t</tt> can be seen by running
+          <tt id="mytt">swift-t -h</tt>. More information on shell script used to
+          launch the Swift/T workflow can be seen in the description of the
+          <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></modal-data>
+          section of the templating tutorial.
         </p>

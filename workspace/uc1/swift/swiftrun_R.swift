@@ -15,10 +15,11 @@ res <- which(v == max(v))
 ----;
 
 string emews_root = getenv("EMEWS_PROJECT_ROOT");
+string turbine_output = getenv("TURBINE_OUTPUT");
 
 app (file out, file err) repast (file shfile, string param_line, string outputdir)
 {
-    "bash" shfile param_line outputdir emews_root @stdout=out @stderr=err;
+    "bash" shfile param_line emews_root outputdir @stdout=out @stderr=err;
 }
 
 app (void o) make_dir(string dirname) {
@@ -26,7 +27,7 @@ app (void o) make_dir(string dirname) {
 }
 
 app (void o) cp_message_center() {
-  "cp" (strcat(emews_root,"/complete_model/MessageCenter.log4j.properties")) ".";
+  "cp" (emews_root+"/complete_model/MessageCenter.log4j.properties") turbine_output;
 }
 
 cp_message_center() => {
@@ -35,10 +36,9 @@ cp_message_center() => {
   string upf_lines[] = file_lines(upf);
 
   string results[];
-  string out_dir = emews_root +  "/output";
 
   foreach s,i in upf_lines {
-    string instance = "instance_%i/" % (i+1);
+    string instance = "%s/instance_%i/" % (turbine_output, i+1);
     make_dir(instance) => {
       file out <instance+"out.txt">;
       file err <instance+"err.txt">;
