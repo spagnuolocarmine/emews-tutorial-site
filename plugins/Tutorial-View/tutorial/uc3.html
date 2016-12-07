@@ -33,10 +33,10 @@ of the Java Zombies model, written in C++ and using MPI and
 toolkit</modal-data> to distribute the model across multiple
 processes. The complete two dimensional continuous space and grid span processes
 and each individual process holds some subsection of the continuous space and
-grid. The Zombies and Humans behave as before but may cross process boundaries
+grid. The Zombies and Humans behave as in the other tutorials but may cross process boundaries
 into another subsection of the continuous space and grid as they move about the
 complete space. The model itself is driven by an
-<modal-data data="plugins/Tutorial-View/tutorial/refs/settles_active_2012.html">active learning algorith</modal-data>
+<modal-data data="plugins/Tutorial-View/tutorial/refs/settles_active_2012.html">active learning</modal-data>
 algorithm using EQ/R.
 As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
 ref="eqr_section">EQ/R section</modal-data>
@@ -50,14 +50,14 @@ template code.
 
 <h2>Integrating the distributed MPI-based Model with Swift/T</h2>
 <p>
-In contrast to the previous two examples the MPI-based HPC Zombies model is
+In contrast to the previous two tutorials the MPI-based HPC Zombies model is
 compiled as a shared library that exposes a Swift/T Tcl interface
 <modal-data data="plugins/Tutorial-View/tutorial/refs/Swift_2015.html">
 (Wozniak et al. 2015)</modal-data>. Swift/T runs on Tcl and thus wrapping the library
 in Tcl provides tighter integration than an app function
 (e.g. those that call a bash script to run the model as we have seen in
 the previous tutorials). Wrapping the library in a Tcl interface is
-also necessary in the case of multi-process distributed models that use MPI.
+also necessary for multi-process distributed models that use MPI.
 Such models when run as standalone applications initialize an MPI
 Communicator of the correct size within which the model can be distributed
 and run. Since the HPC Zombies model uses MPI, as do all Repast HPC based
@@ -69,20 +69,20 @@ Swift/T</modal-data>.
 
 The steps for integrating an MPI distributed application, such as HPC Zombies,
  with Swift/T are as follows:
-<ol>
+<ol id="myol">
   <li>Modify the application code such that it will work as a
     shared library rather than a standalone application.</li>
-  <li>Create a Tcl binding for the application's function entry point.</li>
+  <li>Create a Tcl binding for the function that runs the application.</li>
   <li>Create a Swift/T extension Tcl package from the binding and library code.</li>
-  <li>Create swift bindings for the Tcl function created in step 2, using
+  <li>Create swift language bindings for the Tcl function created in step 2, using
     the package created in step 3.</li>
 </ol>
 
 <h3>Modifing the Application Code</h3>
 <p>
 The first step in integrating the HPC Zombies model with Swift/T is to compile
-it as library, replacing the standalone applications version's <tt id="mytt">main()</tt>
-function into a function that can the model for some particular set of parameters.
+it as library, replacing the standalone application's <tt id="mytt">main()</tt>
+function with a function that can run the model with some particular set of parameters.
 In the HPC Zombies case, we have defined this new function in
  <open-code code="uc3/hpc_zombies/src/run.h"><tt id="mytt">run.h</tt></open-code>
  and
@@ -101,8 +101,8 @@ In the HPC Zombies case, we have defined this new function in
    this function is called, it starts a model run using these arguments. Note
    that the same function will be a called iteratively on the same process,
    and so there may be some additional initialization and termination
-   code required to insure that a current run is not all effected by anything
-   left over from a previous one.
+   code required to insure that a current run is not effected by anything
+   left over from a previous run.
 </p>
 
 <h3>Creating the Tcl Binding</h3>
@@ -112,23 +112,24 @@ The next step is to make this function callable from Tcl via a SWIG created bind
 is a software tool that generates the 'glue code'
 required for some target language, such as Tcl, to call C or C++ code. The SWIG
 tool processes an interface file and produces the glue code binding as a
-source code file. In this case, the C++ code we want to be able to call
+source code file. In this case, the C++ code we want to be able to call from Tcl
+is our
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
   from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function
-from Tcl and thus need to generate the glue code binding for it.
+and thus we need to generate the glue code binding for it.
 The interface file is used to specify the C/C++ code that will be bound and
 contains SWIG directives and the relevant C/C++ headers. The following
 briefly describes the HPC Zombies interface file,
 <open-code code="uc3/hpc_zombies/swift/zombies_model.i">zombies_model.i</open-code>,
-and more details on SWIG are well covered elsewhere
-<a target="_blank" href="www.swig.org">www.swig.org</a>. The interface file
+(Using SWIG is well covered elsewhere
+<a target="_blank" href="http://www.swig.org">www.swig.org</a>.) The interface file
 begins in line
 <highlight-code code="uc3/hpc_zombies/swift/zombies_model.i" color="rgba(255,255,255,0.3)"
 from="0" to="0">1</highlight-code> with the
 required SWIG module directive. The include directive in line
 <highlight-code code="uc3/hpc_zombies/swift/zombies_model.i" color="rgba(255,255,255,0.3)"
 from="2" to="2">3</highlight-code> is used to add
-the built-in SWIG interface file for C++ strings, required because the
+the built-in SWIG interface file for C++ strings. This is required because the
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
   from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function
 uses C++ standard library strings. Line
@@ -138,9 +139,9 @@ similar, but in this case the function declaration in our
 <open-code code="uc3/hpc_zombies/src/run.h"><tt id="mytt">run.h</tt></open-code>
 header are added to the interface file. SWIG will then produce glue code that
 allows that function to be called from Tcl. The code between <tt id="mytt">%{</tt> and
-%} in lines
+<tt id="mytt">%}</tt> in lines
 <highlight-code code="uc3/hpc_zombies/swift/zombies_model.i" color="rgba(255,255,255,0.3)"
-from="5" to="8">6-9</highlight-code> is added directly to the source code
+from="5" to="8">6-9</highlight-code> is added as-is directly to the source code
 file that SWIG produces, and is typically
 used to add headers or typedefs without which the resulting source code would
 not compile. The final line is a SWIG typedef directive that allows it to parse
@@ -174,7 +175,7 @@ including the glue code, a <tt id="mytt">pkgIndex.tcl</tt> file, and a
 Tcl script. The glue code generated in the previous step exposes the
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
   from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function in the
-shared library as a Tcl procedure, and the code in
+shared library as a Tcl function, and the code in
 <open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="mytt">zombies_model.tcl</tt></open-code>
 allows that Tcl function to be correctly called from within a swift script.
 A Tcl package is defined by its <tt id="mytt">pkgIndex.tcl</tt>file that specifies the libraries
@@ -188,7 +189,7 @@ Tcl code,
 <open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="mytt">make-package.tcl</tt></open-code>
 to call this function to create the <tt id="mytt">zombies_model</tt> Tcl package. The
 <open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="mytt">make-package.tcl</tt></open-code>
-script completely generic, getting its parameters from environment variables
+script is completely generic, getting its parameters from environment variables
 set in the Makefile
 <highlight-code code="uc3/hpc_zombies/Makefile.tmplt" color="rgba(255,255,255,0.3)"
   from="109" to="111"><tt id="mytt">target</tt></highlight-code>. As such, it can be used for other models / applications
@@ -198,7 +199,7 @@ as is.
 <p>
 The
 <open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="mytt">zombies_model.tcl</tt></open-code>
-scripts contains two procedures that integrate the generic Tcl package with
+script contains two procedures that integrate the generic Tcl package with
 Swift/T. The script begins by specifying that this script requires the
 Swift/T turbine package and that the two producers are in the <tt id="mytt">zombies_model</tt>
 namespace (lines
@@ -237,7 +238,7 @@ Ultimately, we want the body function to call our
   <li>Retrieve the configuration file, parameters, and MPI communicator
     arguments.</li>
   <li>Call our <tt id="mytt">zombies_model_run</tt> function, passing it those arguments.</li>
-  <li>Retrieve and return result of the <tt id="mytt">zombies_model_run</tt> function.</li>
+  <li>Retrieve and return the result of the <tt id="mytt">zombies_model_run</tt> function.</li>
 </ol>
 </p>
 
@@ -257,8 +258,8 @@ ref="parallel_task">parallel task</modal-data>. The communicator <tt id="mytt">c
 will be of the size specified by the Swift/T <tt id="mytt">@par</tt> annotation. Line
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
   from="13" to="13"><tt id="mytt">14</tt></highlight-code> gets the current MPI rank
-  in that communicator using built-in Swift/t functions. Our HPC Zombies library i
-  nterface function is then called in line
+  in that communicator using built-in Swift/t functions. Our HPC Zombies library
+  function is then called in line
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
   from="15" to="15"><tt id="mytt">16</tt></highlight-code>, and returns a string containing
   the model output that is stored in <tt id="mytt">z_value</tt>. Only one process need
@@ -282,7 +283,7 @@ previous step. These Swift bindings define a swift function,
 The Swift bindings are defined in the
 <open-code code="uc3/swift/zombies_model.swift">zombies_model.swift</open-code>
 swift script file. The script defines a single function:
-<highlight-code code="uc3/swift/zombies_model.swift"><tt id="mytt">zombies_model_run</tt></highlight-code>.
+<highlight-code code="uc3/swift/zombies_model.swift" from="0" to="0"><tt id="mytt">zombies_model_run</tt></highlight-code>.
 The function is annotated with <tt id="mytt">@par</tt>, allowing it to be called as a parallel
 function, and with <tt id="mytt">@dispatch=WORKER</tt> directing the function to run on
 a worker node. The function itself returns a string that contains the number of
@@ -299,7 +300,7 @@ a call like:
 <p>
 <pre>
 string output = @par=4 zombies_model_run(config_file, params);
-<pre>
+</pre>
 </p>
 
 <h2>The Integrated Model Workflow</h2>
