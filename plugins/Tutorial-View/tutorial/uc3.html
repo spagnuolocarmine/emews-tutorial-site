@@ -448,7 +448,7 @@ via the clustering. The following is the overall EMEWS workflow structure for th
     from="109" to="112">main</highlight-code> function which is unaltered from
     the
     <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-    ref="swift_run_eqr.swift"><tt id="mytt">EQ/R</tt></modal-data> default. The main
+    ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> default. The main
     function calls the <highlight-code code="uc3/swift/uc3.swift"
     color="rgba(255,255,255,0.3)"
       from="87" to="97">start</highlight-code> function to begin the
@@ -463,7 +463,7 @@ via the clustering. The following is the overall EMEWS workflow structure for th
       sequence of algorithmic parameter production and model runs. More
       details on these calls can be found in the
       <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-      ref="swift_run_eqr.swift"><tt id="mytt">EQ/R</tt></modal-data> section of the
+      ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> section of the
       templating tutorial. The <tt id="mytt">algorithm</tt> variable is defined on
       line <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="15" to="15">16</highlight-code> and the <tt id="mytt">algo_params</tt>
@@ -473,12 +473,12 @@ via the clustering. The following is the overall EMEWS workflow structure for th
 </p>
 
 <p>
-<tt id="mytt">EQR_get</tt> as seen on line
+<tt id="mytt">EQR_get</tt> (line
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-  from="90" to="90">91</highlight-code> will block until there is a corresponding
+  from="90" to="90">91</highlight-code>) will block until there is a corresponding
   <tt id="mytt">OUT_put</tt> call in the R algorithm code. Similarly, an <tt id="mytt">IN_get</tt> call
   in the R code will block until there is a corresponding <tt id="mytt">EQR_put</tt> call
-  in the swift code  We can see R sequence of calls that correspond to lines
+  in the swift code  We can see the R code sequence of calls that correspond to lines
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
     from="90" to="91">91-92</highlight-code>,
   in <open-code code="uc3/R/algo.R"><tt id="mytt">algo.R</tt></open-code> in
@@ -496,7 +496,7 @@ via the clustering. The following is the overall EMEWS workflow structure for th
       gets the <tt id="mytt">algo_params</tt> string that is <tt id="mytt">EQR_put</tt> in line
       <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="91" to="91">92</highlight-code> in <tt id="mytt">uc3.swift</tt>.
-    <tt id="mytt">algo.R</tt> parses this string as list that can passed as
+    <tt id="mytt">algo.R</tt> parses this string as a list that can be passed as
     named arguments to a R function in line
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="207" to="207">208</highlight-code> and then calls the
@@ -516,30 +516,31 @@ The
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
     from="77" to="77">78</highlight-code>), or exits when it receives
     the <tt id="mytt">"FINAL"</tt> flag. The R <tt id="mytt">OUT_put</tt> calls corresponding to
-    the swift <tt id="mytt">EQR_get</tt> calls are on lines
+    the swift <tt id="mytt">EQR_get</tt> calls in the <tt id="mytt">loop</tt> function are on lines
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
-      from="82" to="82">83</highlight-code>
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
-      from="154" to="154">155</highlight-code>
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
-      from="209" to="209">210</highlight-code>
-    <highlight-code code="uc3/swift/algo.R" color="rgba(255,255,255,0.3)"
+      from="82" to="82">83</highlight-code>,
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
+      from="154" to="154">155</highlight-code>,
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
+      from="209" to="209">210</highlight-code>, and
+    <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="211" to="211">212</highlight-code> respectively. The first of these
       passes the initial set of random parameters selected by the algorithm. The
       second passes the random set and those selected by the clustering. The final
       two pass the <tt id="mytt">"FINAL"</tt> flag and a message about the location
       of the final serialized classifier. Unlike the default <tt id="mytt">eqr</tt> version,
       our <tt id="mytt">obj</tt> function returns strings and joins those with a
-      <tt id="mytt">";"</tt> eliminating the need for the default second foreach
+      <tt id="mytt">";"</tt> eliminating the need for the second foreach
+      loop that is present in the default template created
       <highlight-code code="templating/swift/swift_run_eqr.swift"
-      color="rgba(255,255,255,0.3)" from="114" to="117">loop</highlight-code>.
+      color="rgba(255,255,255,0.3)" from="114" to="117">version</highlight-code>.
 </p>
 
 <p>
 The <tt id="mytt">loop</tt> function runs the model by calling the
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
   from="77" to="77"><tt id="mytt">obj</tt></highlight-code> function within a
-  parallel <tt id="mytt">foreach</tt> passing each model run a set of parmaeters.
+  parallel <tt id="mytt">foreach</tt> loop, passing each model run a set of parameters.
   The <tt id="mytt">obj</tt> function first creates a complete parameter string
   by combining the dynamic parameters received from the active learning
   algorithm with some "baseline" constant parameters
@@ -548,28 +549,32 @@ The <tt id="mytt">loop</tt> function runs the model by calling the
     from="47" to="47"><tt id="mytt">48</tt></highlight-code>)
   that are read from a file (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="44" to="44"><tt id="mytt">45</tt></highlight-code>).
+    from="44" to="44"><tt id="mytt">45</tt></highlight-code>). The HPC Zombies
+    model requires that all its parameters are passed at run time. The active
+    learning algorithm only produces a subset of those. Consequently, the
+    active learning produced parameters need to be combined with the remaining
+    required parameters.
   This <tt id="mytt">full_parameters</tt> string together with the path to the config file
   is then passed to our <tt id="mytt">zombies_model_run</tt> function (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="49" to="49"><tt id="mytt">50</tt></highlight-code>). Recall that this
-    was the function we created in our swift bindings to run the model.
+    from="49" to="49"><tt id="mytt">50</tt></highlight-code>), that is,
+    function we created in our swift bindings to run the model.
     The <tt id="mytt">zombies_model_run</tt> call is annotated with <tt id="mytt">@par=4</tt>,
     running the function as a parallel task in an MPI communicator of size 4,
     the number required to correctly run the HPC Zombies model. The
-    results of the model run aare stored in the <tt id="mytt">z</tt> variable. In
+    results of the model run are stored in the <tt id="mytt">z</tt> variable. In
     line <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
       from="50" to="50"><tt id="mytt">51</tt></highlight-code> <tt id="mytt">calc_obj</tt> is called.
     <tt id="mytt">calc_obj</tt> is defined in <open-code code="uc3/swift/R_obj.swift">R_obj.swift</open-code>.
     It calculates the sum of squared errors between the model results (<tt id="mytt">z</tt>)
     and the synthetic expected output (<tt id="mytt">str_zombie_data</tt>).
-    The functions return value <tt id="mytt">fitness</tt> is set to this sum of squared errors.
+    The function's return value <tt id="mytt">fitness</tt> is set to this sum of squared errors.
     Both the <tt id="mytt">zombies_model_run</tt> and the <tt id="mytt">calc_obj</tt> function are
     included via swift imports on lines
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
       from="7" to="7"><tt id="mytt">8</tt></highlight-code> and
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-      from="10" to="10"><tt id="mytt">9</tt></highlight-code> respectively.
+      from="8" to="8"><tt id="mytt">9</tt></highlight-code> respectively.
 </p>
 <p>
 
@@ -578,18 +583,21 @@ gathered in the <tt id="mytt">results</tt> array in the loop function, and
 then joined into a single string and passed to the R algorithm using
 <tt id="mytt">EQR_put</tt> (lines
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-  from="81" to="82"><tt id="mytt">82-83</tt></highlight-code>).
+  from="80" to="81"><tt id="mytt">81-82</tt></highlight-code>).
 </p>
+
+<p>
 <tt id="mytt">uc3.swift</tt> contains a few other changes from the default not
 included in the above description. These are described below.
   <ul>
 
    <li>Lines
      <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-       from="15" to="20">16-21</highlight-code> define the path to algorithm,
-       the locatio of the data directory, the "zombie data" against which
-       the sum of squared errors will be calculated, and the path to the
-       a serialized R data table that contains the model run parameters
+       from="15" to="20">16-21</highlight-code> define the path to the
+       active learning algorithm R file,
+       the location of the data directory, the "zombie data" against which
+       the sum of squared errors will be calculated, and the path to
+       a serialized R data table that contains the pre-existing set of model run parameters
        used by the algorithm.</li>
 
    <li>Lines
@@ -600,15 +608,16 @@ included in the above description. These are described below.
 
    <li>Lines
      <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-       from="27" to="42">28-43</highlight-code> define a <tt id="mytt">algo_params</tt>
+       from="27" to="42">28-43</highlight-code> define the <tt id="mytt">algo_params</tt>
        string that is passed to the R active learing algorithm to
        initialize it.</li>
 </ul>
 </p>
 
 The substantive changes to the default <tt id="mytt">eqr</tt> were primarily concerned
-with running the model now that we have made the model itself a Swift/T
+with running the model, given that the model itself is now a Swift/T
 extension. Consequently, all the swift code that concerned with running the
 model could be removed and gathering results could be removed. As
 an extension the model can be run with a single function that returns
-all the output of interest.
+all the output of interest. Any MPI-based distributed application or model
+will make similar changes.
