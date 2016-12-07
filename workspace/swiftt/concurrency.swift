@@ -1,4 +1,4 @@
-(int o) _F_fib_C__C_(int i) {
+(int o) fib(int i) {
   if (i < 2) {
     ... // base cases
   }
