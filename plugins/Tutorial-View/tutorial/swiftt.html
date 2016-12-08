@@ -47,6 +47,7 @@
 </p>
 
 <h2>Invocation</h2>
+
 <p>
 Running Swift/T in the shell is easy: an example of running
 <open-code code="swiftt/add.swift"><tt id="myfn">add.swift</tt></open-code>
@@ -54,20 +55,23 @@ is shown in
 <open-code code="swiftt/add.transcript.sh"><tt id="myfn">add.transcript.sh</tt></open-code>.
 </p>
 
-<h3 id="external_execution">External execution</h3>
+<h2 id="external_execution">External execution</h2>
+
 <p>
   Swift is primarily designed to call into external user code, such as
   simulations or analysis routines implemented in various languages.
   Like many other systems, Swift/T supports calls into the shell.
   However, this is not efficient at large scale, and so Swift/T also
   supports calls into native code libraries directly.
-</p><p>
+</p>
+<p>
   An example use of Swift for shell tasks is shown in <open-code code="swiftt/compile.swift"><tt id="myfn">compile.swift</tt></open-code>.
   This example demonstrates a fragment of a build system.  The user
   defines two app functions, which compile and link a C language
   file.  Swift app functions differ from other Swift functions in
   that they operate primarily on variables of type file.
-</p><p>
+</p>
+<p>
   Other forms of external execution in Swift/T allow the user to call
   into native code (C/C++/Fortran) directly by constructing a package
   with SWIG.  Such libraries can be assembled with dynamic or static
@@ -78,9 +82,8 @@ is shown in
 </p>
 
 <h2>Concurrency</h2>
+
 <p>
-
-
   The key purpose of Swift is to gain concurrency easily and correctly.
   This is accomplished in Swift through the use of <i id="myi">dataflow</i> instead
   of <i id="myi">control flow</i>.  In Swift, there is no instruction pointer,
@@ -95,7 +98,9 @@ is shown in
   <tt id="mycode"><i id="myi">statement1</i> => <i id="myi">statement2</i></tt> syntax, which creates an artificial
   data dependency.
 </p>
+
 <h2>Support for interpreted languages</h2>
+
 <p>
   Swift/T also provides high-level, easy to use interfaces for
   Python, R, Julia and Tcl, allowing the developer to pass a string of
@@ -108,126 +113,126 @@ is shown in
   supercomputers, enabling us to make millions of calls to the
   interpreter per second.
 </p>
+
+<h3>Python</h3>
+
 <p>
-  <p style="font-weight:bold;">
-    Python
-  </p>
-  <p>
-    Many users desire to access Python from the top level of the
-    scientific workflow; and optionally call down from the interpreted
-    level into native code, to gain high-performance operations for
-    numerical methods or event-based simulation.  A popular example of
-    this model is Numpy, which provides a high-level interface for
-    interaction, with high-performance, vendor-optimized BLAS, LAPACK,
-    and/or ATLAS numerical libraries underneath.  (Python, R, Julia and
-    Tcl each support calling to native code in some way; Tcl was designed
-    for this purpose.)
-  </p>
-  <p>
-    One use of Python from Swift/T is shown in
-    <open-code code="swiftt/F.py">F.py</open-code>
-    <open-code code="swiftt/python-f.swift">python-f.swift</open-code>.
-    In this example, a short module is defined in
-    <open-code code="swiftt/F.py">F.py</open-code>
-    which provides an
-    addition function named f().  A call to this function from Swift/T
-    is shown in <open-code code="swiftt/python-f.swift">python-f.swift</open-code> lines
-    <highlight-code code="swiftt/python-f.swift" color="rgba(0,0,255,0.3)" from="2" to="3">3-4</highlight-code>.
-    The string containing the
-    Python code is populated with the Pythonic <tt id="mycode">%</tt> operator, which fills in
-    values for <tt id="mycode">x</tt> and <tt id="mycode">y</tt> at the conversion specifiers <tt id="mycode">%i</tt>.  The
-    Python function <tt id="mycode">F.f()</tt> receives these values, adds them, and
-    returns the result as a string.  Swift/T receives the result in z
-    and reports it with the Swift/T builtin trace() function.  Thus, data can
-    easily be passed to and from Python with Pythonic conventions; only
-    stringification is required.  To execute, the user simply
-    sets PYTHONPATH so that the Python interpreter can find
-    module F, and runs swift-t.
-  </p>
-  <p>
-    <p style="font-weight:bold;">R</p> <p>
-      The R support in Swift/T is similar to the Python support.  An example
-      use case is shown in
-      <open-code code="swiftt/stats.swift">stats.swift</open-code>.
-      This script intends to run a
-      collection of simulations in parallel, then send result values to R
-      for statistical processing.  The first section (lines
-      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="0" to="1">1-2</highlight-code>
-      ) simply
-      imports requisite Swift packages.  The second section (lines
-      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="3" to="7">4-9</highlight-code>
-      )
-      defines the external simulation program, which is implemented as a
-      call to the bash shell random number generator, seeded with the
-      simulation number <tt id="mycode">i</tt>.  The output goes to temporary file <tt id="mycode">o</tt>.
-      The third section (lines
-      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="9" to="14">10-14</highlight-code>
-      ) calls the simulation a number of times,
-      reading the output number from disk and storing it in the
-      array results.  The fourth section (lines
-      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="15" to="18">16-19</highlight-code>
-      ) computes the mean
-      of results via R.  It joins the results into an R vector,
-      constructed with the R function <tt id="mycode">c()</tt>, uses the R
-      function <tt id="mycode">mean()</tt>, and returns the mean as a string <tt id="mycode">mean</tt> that is
-      printed by Swift.
-    </p>
-    <h3>Features for large-scale computation</h3>
-    <p>
+  Many users desire to access Python from the top level of the
+  scientific workflow; and optionally call down from the interpreted
+  level into native code, to gain high-performance operations for
+  numerical methods or event-based simulation.  A popular example of
+  this model is Numpy, which provides a high-level interface for
+  interaction, with high-performance, vendor-optimized BLAS, LAPACK,
+  and/or ATLAS numerical libraries underneath.  (Python, R, Julia and
+  Tcl each support calling to native code in some way; Tcl was designed
+  for this purpose.)
+</p>
+<p>
+  One use of Python from Swift/T is shown in
+  <open-code code="swiftt/F.py">F.py</open-code>
+  <open-code code="swiftt/python-f.swift">python-f.swift</open-code>.
+  In this example, a short module is defined in
+  <open-code code="swiftt/F.py">F.py</open-code>
+  which provides an
+  addition function named <tt id="mycode">f()</tt>.  A call to this function from Swift/T
+  is shown in <open-code code="swiftt/python-f.swift"><tt id="myfn">python-f.swift</tt></open-code> lines
+  <highlight-code code="swiftt/python-f.swift" color="rgba(0,0,255,0.3)" from="2" to="3">3-4</highlight-code>.
+  The string containing the
+  Python code is populated with the Pythonic <tt id="mycode">%</tt> operator, which fills in
+  values for <tt id="mycode">x</tt> and <tt id="mycode">y</tt> at the conversion specifiers <tt id="mycode">%i</tt>.  The
+  Python function <tt id="mycode">F.f()</tt> receives these values, adds them, and
+  returns the result as a string.  Swift/T receives the result in <tt id="mycode">z</tt>
+  and reports it with the Swift/T builtin <tt id="mycode">trace()</tt> function.  Thus, data can
+  easily be passed to and from Python with Pythonic conventions; only
+  stringification is required.  To execute, the user simply
+  sets <tt id="mycode">PYTHONPATH</tt> so that the Python interpreter can find
+  module <tt id="mycode">F</tt>, and runs <tt id="mycode">swift-t</tt>.
+</p>
 
-      Swift/T has multiple other features to support the needs of workflow
-      applications, including support for locations and MPI tasks.  The
-      underlying call from Swift to external code (via the shell, a script,
-      or native code) is called a leaf function as its execution is
-      opaque to Swift.  These features are accessed by
-      Swift/T annotations that are applied to the leaf function
-      invocation.  A generic annotation takes the form
-      <p id="mycode" align="center">
-        type result = @key=value f(params);
-      </p>
+<h3>R</h3>
 
-      where the key and value denote the annotation type.
-    </p>
-    <p>
-      <span id="task_locations" />
-      <p style="font-weight:bold;">
-        Task locations
-      </p>
+<p>
+  The R support in Swift/T is similar to the Python support.  An example
+  use case is shown in
+  <open-code code="swiftt/stats.swift"><tt id="myfn">stats.swift</tt></open-code>.
+  This script intends to run a
+  collection of simulations in parallel, then send result values to R
+  for statistical processing.  The first section (lines
+  <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="0" to="1">1-2</highlight-code>
+  ) simply
+  imports requisite Swift packages.  The second section (lines
+  <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="3" to="7">4-9</highlight-code>
+  )
+  defines the external simulation program, which is implemented as a
+  call to the Bash shell random number generator, seeded with the
+  simulation number <tt id="mycode">i</tt>.  The output goes to temporary file <tt id="mycode">o</tt>.
+  The third section (lines
+  <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="9" to="14">10-14</highlight-code>
+  ) calls the simulation a number of times,
+  reading the output number from disk and storing it in the
+  array results.  The fourth section (lines
+  <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="15" to="18">16-19</highlight-code>
+  ) computes the mean
+  of results via R.  It joins the results into an R vector,
+  constructed with the R function <tt id="mycode">c()</tt>, uses the R
+  function <tt id="mycode">mean()</tt>, and returns the mean as a string <tt id="mycode">mean</tt> that is
+  printed by Swift.
+</p>
 
-      <p>
-        Task locations allow the developer to specify the location of task
-        execution in the system.  Locations are optional; Swift/T defaults to
-        placing the next task in a location determined by the load balancer.
-        Locations can be used to direct computation to part of the system for
-        multiple reasons~.  In a data-intensive
-        application, tasks can be sent to the location containing the data
-        they desire to process.  In a workflow with resident
-        tasks}, certain processes retain state from
-        task to task, and can be queried by sending a task to that process.
-      </p>  <p>
-        A location object L in Swift/T is a data structure containing
-        an MPI rank R and optionally other location-aware scheduling
-        constraint information.  The MPI rank is the target of the location,
-        it is simply a rank integer in the overall Swift/T run, representing a
-        single process.  The code in   <open-code code="swiftt/loc.swift">loc.swift</open-code> shows the Swift steps for
-        looking up a hostname, constructing a location object, and sending
-        a task there.
-      </p>
-    </p>
-    <p><p style="font-weight:bold;">
-      <span id="parallel_task"></span>
-      Parallel tasks</p>
+<h3>Features for large-scale computation</h3>
 
+<p>
 
-      Swift/T offers the ability to construct workflows containing large
-      numbers of MPI tasks that run on variably-sized
-      communicators, see code <open-code code="swiftt/par.swift">par.swift</open-code>.
-      <p>  These tasks obtain a
-        communicator of a programmatically-determined size, specified with the
-        <tt id="mycode">@par</tt> annotation, and (optionally) destroy it on completion.
-        Swift/T obtains the given number of worker processes and constructs
-        these communicators using the <tt id="mycode">MPI_Comm_create_group()</tt> function
-        in MPI 3.  Parallel tasks can be configured to run on contiguous
-        processes, or on any available processes.  The <tt id="mycode">@par</tt> annotation can
-        be combined with other annotations such as <tt id="mycode">@location</tt>.</p>
-      </p>
+  Swift/T has multiple other features to support the needs of workflow
+  applications, including support for locations and MPI tasks.  The
+  underlying call from Swift to external code (via the shell, a script,
+  or native code) is called a leaf function as its execution is
+  opaque to Swift.  These features are accessed by
+  Swift/T annotations that are applied to the leaf function
+  invocation.  A generic annotation takes the form
+<p id="mycode" align="center">
+  type result = @key=value f(params);
+</p>
+where the key and value denote the annotation type.
+</p>
+
+<h3>
+  <span id="task_locations" />
+  Task locations
+</h3>
+
+<p>
+  Task locations allow the developer to specify the location of task
+  execution in the system.  Locations are optional; Swift/T defaults to
+  placing the next task in a location determined by the load balancer.
+  Locations can be used to direct computation to part of the system for
+  multiple reasons~.  In a data-intensive
+  application, tasks can be sent to the location containing the data
+  they desire to process.  In a workflow with resident
+  tasks}, certain processes retain state from
+  task to task, and can be queried by sending a task to that process.
+</p>
+<p>
+  A location object <tt id="mycode">L</tt> in Swift/T is a data structure containing
+  an MPI rank <tt id="mycode">R</tt> and optionally other location-aware scheduling
+  constraint information.  The MPI rank is the target of the location,
+  it is simply a rank integer in the overall Swift/T run, representing a
+  single process.  The code in <open-code code="swiftt/loc.swift"><tt id="myfn">loc.swift</tt></open-code> shows the Swift steps for
+  looking up a hostname, constructing a location object, and sending
+  a task there.
+</p>
+
+<h3 id="parallel_task">Parallel tasks</h3>
+
+<p>
+  Swift/T offers the ability to construct workflows containing large
+  numbers of MPI tasks that run on variably-sized
+  communicators, see code <open-code code="swiftt/par.swift">par.swift</open-code>. These tasks obtain a
+  communicator of a programmatically-determined size, specified with the
+  <tt id="mycode">@par</tt> annotation, and (optionally) destroy it on completion.
+  Swift/T obtains the given number of worker processes and constructs
+  these communicators using the <tt id="mycode">MPI_Comm_create_group()</tt> function
+  in MPI 3.  Parallel tasks can be configured to run on contiguous
+  processes, or on any available processes.  The <tt id="mycode">@par</tt> annotation can
+  be combined with other annotations such as <tt id="mycode">@location</tt>.
+</p>
