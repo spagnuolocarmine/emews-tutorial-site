@@ -37,10 +37,17 @@ Polymer({
       codiad.tutorial.openEditor(_this);
       codiad.filemanager.openFile(code,true);
       codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
+    /*  var res = code.split("/");
+      var open = "";
+      for(i=0; i < res.length -3;i++)
+      {
+        open+=res[i]+"/"
+        console.log(open);
+        if(i > 0)
+        codiad.filemanager.index(open,true);
+      }*/
 
       setTimeout(function(){
-
-
         parent="";
         tobreak=false;
         parent=findElement($(".tutorial"), _this, parent, tobreak);
@@ -65,12 +72,16 @@ Polymer({
 
         });
 
-        var scrollTo = $(lielementcode);
-        if(scrollTo != null)
-        $("#file-manager").animate({
-          scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
+        if(lielementcode != undefined)
+        {
+          var scrollTo = $(lielementcode);
+          if(scrollTo != null)
+          $("#file-manager").animate({
+            scrollTop:   scrollTo.offset().top - container.offset().top + container.scrollTop()
 
-        }, 200);
+          }, 200);
+        }
+
 
       }, 100);
     }

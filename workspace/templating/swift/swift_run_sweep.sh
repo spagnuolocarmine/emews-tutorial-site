@@ -24,7 +24,7 @@ check_directory_exists
 export PROCS=2
 
 # TODO edit QUEUE, WALLTIME, PPN, AND TURNBINE_JOBNAME
-# as required. Note that QUEUE, WALLTIME, PPN, AND TURNBINE_JOBNAME will
+# as required. Note that QUEUE, WALLTIME, PPN, AND TURBINE_JOBNAME will
 # be ignored if the MACHINE variable (see below) is not set.
 export QUEUE=batch
 export WALLTIME=00:10:00
@@ -62,4 +62,5 @@ log_script
 # echo's anything following this standard out
 set -x
 
-swift-t -n $PROCS $MACHINE -p $EMEWS_PROJECT_ROOT/swift/swift_run_sweep.swift -f="$EMEWS_PROJECT_ROOT/data/input.txt" $CMD_LINE_ARGS
+swift-t -n $PROCS $MACHINE -p $EMEWS_PROJECT_ROOT/swift/swift_run_sweep.swift \
+    -f="$EMEWS_PROJECT_ROOT/data/input.txt" $CMD_LINE_ARGS
