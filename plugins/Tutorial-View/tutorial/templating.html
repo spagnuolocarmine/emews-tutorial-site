@@ -539,7 +539,7 @@ When run, the <tt id="mytt">eqpy</tt> subtemplate will ask you for the following
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
   is the same script as the <tt id="mytt">X.sh</tt>
-  <!-- <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial> -->
+  <!-- <modal-data ref="templating:X.sh">X.sh</modal-data> -->
 file described in the previous section.</li>
   <li>Your python code's python package name. In the typical
     case this will be the name of your python file excluding the .py
@@ -581,7 +581,7 @@ above) and the names below are the defaults.
       <tt id="mytt">eqpy_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
       <tt id="mytt">sweep</tt> template, so see  <!-- TODO: fix if not right -->
-      <move-withintutorial ref="X.sh">scripts/X.sh</move-withintutorial> for more details.</li>
+      <modal-data ref="X.sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
       <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
       </open-code> - a bash script used to launch the EQ/Py-based workflow.</li>
@@ -599,7 +599,7 @@ above) and the names below are the defaults.
   </open-code>
 </p>
 <p>
-This file is very similar to the  <move-withintutorial ref="swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></move-withintutorial>
+This file is very similar to the  <modal-data ref="swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -678,7 +678,7 @@ For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
  <tt id="mytt">swift_run_eqpy.sh</tt>), the main function starts the coordinated
  sequence of algorithmic parameter production and model runs as described above.
 
-<!--  <move-withintutorial ref="overview">above</move-withintutorial>. -->
+<!--  <modal-data ref="overview">above</modal-data>. -->
  By default the <highlight-code code="templating/swift/swift_run_eqpy.sh"
   color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="mytt">swift_run_eqpy.sh</tt></highlight-code>
   defined only a single rank.
@@ -909,7 +909,7 @@ When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
   is the same script as the
-  <move-withintutorial ref="templating:X.sh">X.sh</move-withintutorial>
+  <modal-data ref="templating:X.sh">X.sh</modal-data>
 file described in the sweep section.</li>
   <li>The file name for your R model exploration code. This defaults
   to <tt id="mytt">my_algorithm.R</tt>. This file is sourced as part of EQ/R
@@ -963,7 +963,7 @@ above) and the names below are the defaults.
       <tt id="mytt">eqr_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
       <tt id="mytt">sweep</tt> template, so see
-      <move-withintutorial ref="X.sh">scripts/X.sh</move-withintutorial> for more details.</li>
+      <modal-data ref="X.sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
       <open-code code="templating/swift/swift_run_eqr.sh"><tt id="mytt">swift_run_eqr.sh</tt>
       </open-code> - a bash script used to launch the EQ/R-based workflow.</li>
@@ -982,7 +982,7 @@ above) and the names below are the defaults.
 </p>
 <p>
 This file is nearly identical to
-<move-withintutorial ref="swift_run_eqpy"><tt id="mytt">swift_run_eqpy.sh</tt></move-withintutorial>
+<modal-data ref="swift_run_eqpy"><tt id="mytt">swift_run_eqpy.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -1043,7 +1043,7 @@ to the analogous
    <tt id="mytt">swift_run_eqr.sh</tt>), the main function starts the coordinated
    sequence of algorithmic parameter production and model runs as described
 
-   <move-withintutorial ref="eqr_overview">above</move-withintutorial>.
+   <modal-data ref="eqr_overview">above</modal-data>.
    By default <highlight-code code="templating/swift/swift_run_eqr.sh"
     color="rgba(255,255,255,0.3)" from="40" to="40">
     <tt id="mytt">swift_run_eqr.sh</tt></highlight-code>
