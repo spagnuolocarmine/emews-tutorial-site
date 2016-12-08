@@ -70,14 +70,17 @@ Polymer({
         }, 200);
         amplify.publish('tutorial.onToc', ['toc',parent.getAttribute('tocid'),"h"]);
         //MOVE FILE manager search li with code
-        var lielementcode;
-        container = $('#file-manager');
-        container.find("li").each(function(i, value){
+        if(lielementcode != undefined)
+        {
+          var lielementcode;
+          container = $('#file-manager');
+          container.find("li").each(function(i, value){
 
-          if($(this).find("a").attr("data-path") == code)
-            lielementcode=this;
+            if($(this).find("a").attr("data-path") == code)
+              lielementcode=this;
 
-        });
+          });
+        }
       }, 100);
     }
 });
