@@ -82,7 +82,7 @@ at specific locations. The code that we present in this use case is directly ada
 
 <h3> EQ/Py swift script </h3>
 <p>
-The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
+The <open-code code="uc2/swift/swift_run_eqpy.swift"><tt id="mytt">swift_run_eqpy.swift</tt></open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
 </p>
 
 <ul>
@@ -115,15 +115,37 @@ The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-
  color="rgba(255,255,255,0.3)" from="27" to="27"><tt id="mytt">run_obj</tt></highlight-code> function we removed the <tt id="mytt">out</tt> and <tt id="mytt">err</tt> files for tracking stdout and stderr (these can be included for debugging purposes). We define the path to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
  color="rgba(255,255,255,0.3)" from="32" to="32">script file</highlight-code> to run our model. Finally, we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
  color="rgba(255,255,255,0.3)" from="35" to="35"><tt id="mytt">calc_obj</tt></highlight-code> function (also defined in <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mytt">param_line</tt>.</li>
+ color="rgba(255,255,255,0.3)" from="9" to="14">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mytt">param_line</tt>.</li>
 
 </ul>
 
+<h3> R_utils swift script and swift script testing </h3>
 <p>
-TODO: R_utils.swift and testing
+The <open-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)">R_utils.swift</open-code> file was used to define utility functions used in the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file. The two functions implemented are <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> and <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mytt">create_upfs</tt></highlight-code>.
 </p>
 
+<!-- <h4> <tt id="mytt">calc_obj</tt> </h4> -->
+The <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> function is implemented just like the counting of humans was implemented in the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="gather_results">Gathering the Results</modal-data> section of the Use Case 1 Tutorial. The only difference is that all of the relevant code is captured within the <highlight-code code="uc2/swift/R_utils.swift"
+ color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> function and that this function is individually tested in 
+<highlight-code code="uc2/swift/test/R_utils_tests.swift"
+ color="rgba(255,255,255,0.3)" from="20" to="31"><tt id="mytt">test2</tt></highlight-code> in R_utils_tests.swift. In a multi-module and multi-language setting like EMEWS, it is crucial for separate modules to be tested individually before all of the components are assembled into a single workflow. For testing Swift code, the <highlight-code code="uc2/swift/test/R_utils_tests.swift"
+ color="rgba(255,255,255,0.3)" from="24" to="24"><tt id="mytt">assert</tt></highlight-code> keyword is used to ensure that the expected results are returned from executing the code being tested. 
+The <tt id="mytt">test2</tt> function contains three separate tests to exercise the <tt id="mytt">calc_obj</tt> function. Each of these tests is passed a different path to a test data folder (data, data/d1, and data/d2), each containing three separate counts.csv files (<open-code code="uc2/swift/test/data/counts.csv"
+ color="rgba(255,255,255,0.3)">data/counts.csv</open-code>, <open-code code="uc2/swift/test/data/d1/counts.csv"
+ color="rgba(255,255,255,0.3)">data/d1/counts.csv</open-code>, and <open-code code="uc2/swift/test/data/d2/counts.csv"
+ color="rgba(255,255,255,0.3)">data/d2/counts.csv</open-code>). The test is run using the <open-code code="uc2/swift/test/R_utils_tests.sh"
+ color="rgba(255,255,255,0.3)">R_utils_tests.sh</open-code> bash file. For this test, since we're using the R capabilities of Swift, we need to specify the correct <highlight-code code="uc2/swift/test/R_utils_tests.sh"
+ color="rgba(255,255,255,0.5)" from="1" to="1"><tt id="mytt">R_HOME</tt></highlight-code> and <highlight-code code="uc2/swift/test/R_utils_tests.sh"
+ color="rgba(255,255,255,0.5)" from="2" to="2"><tt id="mytt">LD_LIBRARY_PATH</tt></highlight-code> environment variables. Line <highlight-code code="uc2/swift/test/R_utils_tests.sh"
+ color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> contains the call to the swift-t executable, specifying that the preprocessor should not be run (-p), and that additional necessary Swift files can be found one directory up (-I ..). 
 
+ 
+<br>
+<br><br><br><br><br><br><br><br><br><br>
 The deap function is defined to take the arguments py_rank (a unique rank),
 iters (the number of GA iterations), trials (the number of stochastic
 variations per parameter combination, or individual), pop (the number of individuals in the GA population),
