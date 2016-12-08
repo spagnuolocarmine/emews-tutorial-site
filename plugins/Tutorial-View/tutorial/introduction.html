@@ -1,5 +1,5 @@
 
-<h1 style="margin-top: 0px;"> INTRODUCTION</h1><br>
+<h1 style="margin-top: 0px;"> INTRODUCTION</h1>
 
 <style>
   #myi {
@@ -22,29 +22,29 @@
 
 <h2>Navigating the Tutorial</h2>
 
-The tutorial window is composed of 5 panes.
+Before we begin, here's an orientation for how the tutorial works. The tutorial window is composed of 5 panes.
 
 <p>
   <img src="plugins/Tutorial-View/tutorial/img/tutorial_window.png" alt="Tutorial Window" height="400" width="600">
 </p>
 
 <p>
-The tutorial text appears in pane 1 (see the image above). Within the text
-you will see hyperlinks to source code being explained as part of the tutorial. These links are
-of two types. Both types will display the source code file in pane 2. The
-second type will scroll the source code and highlight lines of interest.
+The tutorial text appears in pane 1 (see the image above). Within the tutorial text
+you will see hyperlinks to source code that is being explained. These links are
+of two types. Both types will display the content of the relevant source code file in pane 2. The
+second type will also scroll the source code and highlight lines of interest.
 For example, clicking on this link:
 <open-code code="uc1/swift/swiftrun.swift">swiftrun.swift</open-code>
 will open the <tt id="mytt">swiftrun.swift</tt> file in pane 2, and clicking
 on this <highlight-code code="uc1/swift/swiftrun.swift"
 color="rgba(255,255,255,0.3)" from="12" to="14">one</highlight-code> will scroll
-and highlight lines 13-15 in that file in pane 2. Other links refer to sections
-from other tutorials, or bibliographic references. These will appear as a modal browser window, displaying
-the relevant text. To dismiss the window, click the X at the top right corner.
-Note that you may have to scroll the modal window's content to the top
-for the X to appear. Click this reference link
+and highlight lines 13-15 in that file. Other links refer to sections
+in other tutorials, or bibliographic references. These will appear as a modal browser window, displaying
+the relevant text. To dismiss the window, click the X at the top right corner of the window or just hit the Esc key.
+(Note that you may have to scroll the modal window's content to the top
+for the X to appear. The place-marker icon to the left of the X can be used to move the modal window.) Click this reference link
 <modal-data data="plugins/Tutorial-View/tutorial/refs/rj_getting_started.html">Nick Collier and Michael North 2015</modal-data>
-as example.
+as an example.
 </p>
 
 <p>
@@ -56,19 +56,30 @@ as example.
 
   <p>
   Clicking the arrow again will restore the source pane. The slider at
-  the bottom of the source pane can be used to change the height of the
-  source pane.
+  the bottom of the source pane can be used to change its height (see figure).
+  <p>
+    <img src="plugins/Tutorial-View/tutorial/img/source_slider.png" alt="Source Header" width="600">
+  </p>
 </p>
 
 <p>
 Pane 3 displays the source files and project structure for the tutorial
-currently displayed in pane 1. From within that pane you can open folders
-and display files in pane 2 by double clicking on the file.
+currently displayed in pane 1. Double-clicking a folder or single-clicking the 
+triangle symbol to the left of the folder will reveal its contents.
+  <p>
+    <img src="plugins/Tutorial-View/tutorial/img/explore_folder.png" alt="Source Header" width="300">
+  </p>
+
+Double-clicking on a file will display it in pane 2.
+
+  <p>
+    <img src="plugins/Tutorial-View/tutorial/img/explore_file.png" alt="Source Header" width="300">
+  </p>
+
 </p>
 
 <p>
-Pane 4 displays a table of contents for the tutorial
-currently displayed in pane 1. Single click on an entry to scroll
+Pane 4 displays a table of contents for the current tutorial. Single click on an entry to scroll
 the tutorial text in pane 1 to that section.
 </p>
 
@@ -77,6 +88,15 @@ the tutorial text in pane 1 to that section.
   that tutorial.
 </p>
 
+<p>
+If you leave the tutorial and come back to it, you will be placed into the last section you were in when you left.
+The tutorial can be reset back to the introduction by clicking on the top right globe icon 
+and choosing the refresh icon in the displayed window.
+<p>
+    <img src="plugins/Tutorial-View/tutorial/img/globe.png" alt="Source Header" width="300">
+  </p>
+You can click the home icon to return to the title page of the tutorial as well.
+</p>
 <p>
 <b id="myb">Modern simulation-based application studies are campaigns</b>
 consisting of large numbers of simulations with many possible
