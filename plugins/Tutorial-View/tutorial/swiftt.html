@@ -1,6 +1,15 @@
 <h1 style="margin-top: 0px;">SWIFT/T: HIGH-PERFORMANCE WORKFLOW LANGUAGE</h1>
-<p>
 
+<style>
+  #mycode {
+  font-family: 'Lucida Console',monospace;
+  font-color: white;
+  background-color: #525254;
+  }
+</style>
+
+
+<p>
   The Swift language allows the developer to rapidly implement workflows.
   The Swift/T implementation of Swift focuses on high-performance workflows to
   utilize TOP500 machines.  Such systems are characterized by high
@@ -11,6 +20,7 @@
   overall workflow. The following sections describe Swift/T features
   relevant to EMEWS. For more details, see the <a target="_blank" href="http://swift-lang.org/Swift-T">Swift/T website</a>.
 </p>
+
 <h2>Syntax</h2>
 <p>
 
@@ -53,7 +63,8 @@ is shown in
   system dependencies for the most efficient loading on a large-scale
   machine.
 </p>
-<h3>Concurrency</h3>
+
+<h2>Concurrency</h2>
 <p>
 
 
@@ -71,7 +82,7 @@ is shown in
   statement1 => statement2 syntax, which creates an artificial
   data dependency.
 </p>
-<h3>Support for interpreted languages</h3>
+<h2>Support for interpreted languages</h2>
 <p>
   Swift/T also provides high-level, easy to use interfaces for
   Python, R, Julia and Tcl, allowing the developer to pass a string of
@@ -108,11 +119,11 @@ is shown in
     which provides an
     addition function named f().  A call to this function from Swift/T
     is shown in <open-code code="swiftt/python-f.py">python-f.swift</open-code> lines
-    <highlight-code code="swiftt/python-f.swift" color="rgba(0,0,255,0.3)" from="4" to="6">5-7</highlight-code>.
+    <highlight-code code="swiftt/python-f.swift" color="rgba(0,0,255,0.3)" from="2" to="3">3-4</highlight-code>.
     The string containing the
-    python code is populated with the Pythonic % operator, which fills in
-    values for x and y at the conversion specifiers %i.  The
-    Python function F.f() receives these values, adds them, and
+    Python code is populated with the Pythonic <tt id="mycode">%</tt> operator, which fills in
+    values for <tt id="mycode">x</tt> and <tt id="mycode">y</tt> at the conversion specifiers <tt id="mycode">%i</tt>.  The
+    Python function <tt id="mycode">F.f()</tt> receives these values, adds them, and
     returns the result as a string.  Swift/T receives the result in z
     and reports it with the Swift/T builtin trace() function.  Thus, data can
     easily be passed to and from Python with Pythonic conventions; only
