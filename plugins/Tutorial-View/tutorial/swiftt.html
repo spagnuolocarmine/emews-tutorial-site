@@ -1,5 +1,6 @@
 <h1 style="margin-top: 0px;">SWIFT/T: HIGH-PERFORMANCE WORKFLOW LANGUAGE</h1>
 
+<!-- Code snippets -->
 <style>
   #mycode {
   font-family: 'Lucida Console',monospace;
@@ -8,6 +9,18 @@
   }
 </style>
 
+<!-- File names -->
+<style>
+  #myfn {
+  font-family: 'Lucida Console',monospace;
+  }
+</style>
+
+<style>
+  #myi {
+    font-style: italic;
+  }
+</style>
 
 <p>
   The Swift language allows the developer to rapidly implement workflows.
@@ -28,7 +41,7 @@
   as int, float, and string.It also has typical control
   constructs such as if, for, and foreach.  Swift code can
   be encapsulated into functions, which can be called recursively.  As
-  shown in <open-code code="swiftt/add.swift">add.swift</open-code>, Swift can perform typical arithmetic and string
+  shown in <open-code code="swiftt/add.swift"><tt id="myfn">add.swift</tt></open-code>, Swift can perform typical arithmetic and string
   processing tasks quite naturally.  Swift also has a file type,
   that allows dataflow processing on files.
 </p>
@@ -36,9 +49,9 @@
 <h2>Invocation</h2>
 <p>
 Running Swift/T in the shell is easy: an example of running
-<open-code code="swiftt/add.swift">add.swift</open-code>
+<open-code code="swiftt/add.swift"><tt id="myfn">add.swift</tt></open-code>
 is shown in
-<open-code code="swiftt/add.transcript.sh">add.transcript.sh</open-code>.
+<open-code code="swiftt/add.transcript.sh"><tt id="myfn">add.transcript.sh</tt></open-code>.
 </p>
 
 <h3 id="external_execution">External execution</h3>
@@ -49,7 +62,7 @@ is shown in
   However, this is not efficient at large scale, and so Swift/T also
   supports calls into native code libraries directly.
 </p><p>
-  An example use of Swift for shell tasks is shown in <open-code code="swiftt/compile.swift">compile.swift</open-code>.
+  An example use of Swift for shell tasks is shown in <open-code code="swiftt/compile.swift"><tt id="myfn">compile.swift</tt></open-code>.
   This example demonstrates a fragment of a build system.  The user
   defines two app functions, which compile and link a C language
   file.  Swift app functions differ from other Swift functions in
@@ -69,17 +82,17 @@ is shown in
 
 
   The key purpose of Swift is to gain concurrency easily and correctly.
-  This is accomplished in Swift through the use of \I{dataflow} instead
-  of \I{control flow}.  In Swift, there is no instruction pointer,
+  This is accomplished in Swift through the use of <i id="myi">dataflow</i> instead
+  of <i id="myi">control flow</i>.  In Swift, there is no instruction pointer,
   execution is triggered wherever possible limited only by data
   availability.  This results in an implicitly parallel programming
   model.  Two modes of concurrency are shown in
-  <open-code code="swiftt/concurrency.swift">concurrency.swift</open-code>, both
-  based on the ready availability of i.  Computing the
+  <open-code code="swiftt/concurrency.swift"><tt id="myfn">concurrency.swift</tt></open-code>, both
+  based on the ready availability of <tt id="mycode">i</tt>.  Computing the
   ith Fibonacci number relies on two concurrent recursive
   calls, and iteration over an array of known values allows for parallel
   execution.  Ordering can be forced with the
-  statement1 => statement2 syntax, which creates an artificial
+  <tt id="mycode"><i id="myi">statement1</i> => <i id="myi">statement2</i></tt> syntax, which creates an artificial
   data dependency.
 </p>
 <h2>Support for interpreted languages</h2>
