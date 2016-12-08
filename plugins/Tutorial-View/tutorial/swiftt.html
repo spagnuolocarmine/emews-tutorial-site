@@ -142,11 +142,11 @@ is shown in
       <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="0" to="1">1-2</highlight-code>
       ) simply
       imports requisite Swift packages.  The second section (lines
-      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="2" to="6">3-7</highlight-code>
+      <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="3" to="7">4-9</highlight-code>
       )
       defines the external simulation program, which is implemented as a
       call to the bash shell random number generator, seeded with the
-      simulation number i.  The output goes to temporary file o.
+      simulation number <tt id="mycode">i</tt>.  The output goes to temporary file <tt id="mycode">o</tt>.
       The third section (lines
       <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="9" to="14">10-14</highlight-code>
       ) calls the simulation a number of times,
@@ -155,8 +155,8 @@ is shown in
       <highlight-code code="swiftt/stats.swift" color="rgba(0,0,255,0.3)" from="15" to="18">16-19</highlight-code>
       ) computes the mean
       of results via R.  It joins the results into an R vector,
-      constructed with the R function c(), uses the R
-      function mean(), and returns the mean as a string mean that is
+      constructed with the R function <tt id="mycode">c()</tt>, uses the R
+      function <tt id="mycode">mean()</tt>, and returns the mean as a string <tt id="mycode">mean</tt> that is
       printed by Swift.
     </p>
     <h3>Features for large-scale computation</h3>
@@ -169,7 +169,7 @@ is shown in
       opaque to Swift.  These features are accessed by
       Swift/T annotations that are applied to the leaf function
       invocation.  A generic annotation takes the form
-      <p style="font-weight:bold;">
+      <p id="mycode" align="center">
         type result = @key=value f(params);
       </p>
 
@@ -211,10 +211,10 @@ is shown in
       communicators, see code <open-code code="swiftt/par.swift">par.swift</open-code>.
       <p>  These tasks obtain a
         communicator of a programmatically-determined size, specified with the
-        @par annotation, and (optionally) destroy it on completion.
+        <tt id="mycode">@par</tt> annotation, and (optionally) destroy it on completion.
         Swift/T obtains the given number of worker processes and constructs
-        these communicators using the MPI_Comm_create_group() function
+        these communicators using the <tt id="mycode">MPI_Comm_create_group()</tt> function
         in MPI 3.  Parallel tasks can be configured to run on contiguous
-        processes, or on any available processes.  The @par annotation can
-        be combined with other annotations such as @location.</p>
+        processes, or on any available processes.  The <tt id="mycode">@par</tt> annotation can
+        be combined with other annotations such as <tt id="mycode">@location</tt>.</p>
       </p>
