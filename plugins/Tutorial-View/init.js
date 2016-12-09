@@ -44,6 +44,12 @@
           $('#application-progress').tooltipster();
           $('#downeditor').tooltipster();
           $('#lock-left-sidebar').hide();
+          $('#clear-highlight').tooltipster();
+          $('#clear-highlight').click(function(){
+            var code =codiad.active.getPath();
+            if(codiad.tutorial.getHighlightMarker(code) != undefined)
+              codiad.editor.clearHighlightCode(code,codiad.tutorial.getHighlightMarker(code));
+          });
 
           storage=Storages.localStorage;
 

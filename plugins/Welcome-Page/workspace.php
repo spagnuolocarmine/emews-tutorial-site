@@ -210,7 +210,7 @@
         <option value="audi">40%</option>
       </select>
     </div>  <div id="progress"></div>-->
-
+    <div id="clear-highlight" class="icon-box" title="Click here to remove highlights."></div>
     <div id="application-progress" title="Slide to change the dimension of the files viewer."></div>
       <div id="modal-overlay" ></div>
       <div id="modal"><div id="close-handle" class="icon-cancel" onclick="codiad.modal.unload();"></div><div id="drag-handle" class="icon-location"></div><div id="modal-content"></div></div>
