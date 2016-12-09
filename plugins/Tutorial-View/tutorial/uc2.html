@@ -144,7 +144,36 @@ The <tt id="mycode">test2</tt> function contains three separate tests to exercis
  
  <h3> Python DEAP model exploration code </h3>
  <p>
- The <open-code code="uc2/python/deap_ga.py">deap_ga.py</open-code> file is the Python model exploration code that controls the workflow, communicating with the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file via EQ/Py queues. 
+ The <open-code code="uc2/python/deap_ga.py">deap_ga.py</open-code> file is the Python model exploration code that controls the workflow, communicating with the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file via EQ/Py queues. The EQ/Py functionality is imported in line <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.
+ </p>
+  <p> 
+ As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py Subtemplate section</modal-data> of the EMEWS Templates tutorial, the python algorithm's <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="82" to="82"><tt id="mycode">run</tt></highlight-code> function is invoked when <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="115" to="115"><tt id="mycode">EQPy_init_package</tt></highlight-code> is called in <tt id="myfn">swift_run_eqpy.swift</tt>. At this point the model exploration (ME) code takes control of the workflow. The parameters for initializing the ME code is obtained by first calling <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="89" to="89"><tt id="mycode">eqpy.OUT_put</tt></highlight-code> with "Params" as the argument. This puts the "Params" string in the EQ/Py output queue. This is obtained from the output queue by <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="116" to="116"><tt id="mycode">EQPy_get</tt></highlight-code>. (Note that while the "Params" value passed at this stage was an unused dummy value, this handshake could be used to pass different types of information to and from the ME algorithm prior to the iterative steps that form the central ME functionality, which we discuss below.) The ME parameters are passed to the EQ/Py input queue via the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="117" to="117"><tt id="mycode">EQPy_put</tt></highlight-code> call and are obtained from the EQ/Py input queue with a call to <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="90" to="90"><tt id="mycode">eqpy.IN_get</tt></highlight-code>. The Python variables <tt id="mycode">num_iter, num_pop, seed, csv_file_name</tt> are <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="93" to="93">initialized</highlight-code> by taking advantage of the Python <tt id="mycode">eval</tt> method. This simplifies passing information to the Python ME algorithm by allowing literal representations of the Python code, in this case the variable values, to be sent through the EQ/Py input queue from Swift.
+ The next part of the <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="94" to="96"><tt id="mycode">run</tt></highlight-code> method involves setting the random seed and reading in data about the JZombies model parameters, parameter names, parameter types, their low and high values, from <open-code code="uc2/data/params_for_deap.csv"><tt id="myfn">params_for_deap.csv</tt></open-code> and storing them as a <a target="_blank" href="http://pandas.pydata.org">Pandas</a> dataframe.
+</p>
+ <p>
+  The DEAP framework (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) makes defining and running evolutionary algorithms like GAs easy. 
+Our GA creates an initial population <tt id="mycode">p<span class="sub">0</span></tt>
+
+<tt id="mycode">p<sub>0</sub></tt> p<sub>0</sub>
+<p>Test<span class="sub">test</span></p>
+
+<!-- 
+of parameter combinations, or individuals, of size \T{pop} and
+proceeds to iteratively generate populations $p_i$, for each
+generation $i$, based on the evaluated performance of individuals in
+the previous population $p_{i-1}$. Each new population $p_i$ is
+created by first selecting with replacement \T{pop} individuals from
+$p_{i-1}$ using a stochastic selection method (tournament selection
+with size 3 here). This biases $p_i$ to higher performing
+individuals. Then the population members are mated and mutated to
+create a new generation of \T{pop} offspring, where both mating and
+mutation probabilities are set through user defined parameters.
+ -->
+  
+</p>
+ <p>
+  
+  Lines <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="98" to="117">99-118</highlight-code> show how we utilized DEAP functionality in this use case. While interested readers can look at the <a target="_blank" href="http://deap.readthedocs.io/en/master">DEAP website</a> and the <a target="_blank" href="http://deap.readthedocs.io/en/master/overview.html">DEAP Overview</a> for more information, here we highlight the EMEWS specific elements. Line <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="109" to="109">110</highlight-code> contains the crux of integrating our Python algorithm with EMEWS. Here we define the <tt id="mycode">map</tt> function within the DEAP toolbox to point to our <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="34" to="34"><tt id="mycode">queue_map</tt></highlight-code> function. The <tt id="mycode">map</tt> function is used for abstracting the evaluation of GA populations 
  </p>
 
 
