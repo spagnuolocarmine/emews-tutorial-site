@@ -2,6 +2,21 @@
 <h1 style="margin-top: 0px;"> Introduction</h1>
 
 <style>
+  #mycode {
+  font-family: 'Lucida Console',monospace;
+  font-color: white;
+  background-color: #525254;
+  }
+</style>
+
+<!-- File names -->
+<style>
+  #myfn {
+  font-family: 'Lucida Console',monospace;
+  }
+</style>
+
+<style>
   #myi {
     font-style: italic;
   }
@@ -180,13 +195,16 @@ This figure illustrates the main components of the <b id="myb">EMEWS</b>
 framework.  The main user interface is the Swift script, a high-level
 program.  The core novel contributions of
 <b id="myb">EMEWS</b> are shown in green, these allow the Swift script to access a
-running ME algorithm.  This algorithm can be expressed in Python, R, C, C++,
+running ME algorithm.  
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQX.png" alt="EMEWS Figure EQX" height="150">
+</p>
+The ME algorithm can be expressed in Python, R, C, C++,
 Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
 a high-level queue-like interface with (currently) two
 implementations: EQ/Py and EQ/R (EMEWS Queues for
-Python and R).  These allow the Swift script to obtain
-candidate model parameter inputs and return model outputs to the ME.  The
-simulation models are distributed by the Swift/T runtime over a
+Python and R). The interface defines the two functions <tt id="mycode">OUT_put</tt> and <tt id="mycode">IN_get</tt> for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allow the Swift script to obtain 
+candidate model parameter inputs (<tt id="mycode">EQX_get</tt>) and return model outputs to the ME (<tt id="mycode">EQX_put</tt>).  The simulation models are distributed by the Swift/T runtime over a
 potentially large computer system, but smaller systems that run one
 model at a time are also supported.  The simulations can be
 implemented as external applications called through the shell, or
@@ -216,14 +234,23 @@ practice of simulation ME studies: <!--
 
 <h2> Tutorial Goals</h2>
 <p>
-Our tutorial will present these contributions in more detail.  The
-examples use cases presented in this paper are generally runnable
-Swift (not pseudocode) and are published on a <a target="_blank" href="https://goo.gl/Wia9Rm">public repository</a>.
-<p>
 </p>
-<b id="myb">TODO</b>: Include mention of downloadable UC1-3 archives.
-</p>
+This tutorial aims to describe through examples the following main elements of the EMEWS framework:
+<ol id="myol">
+<li> How external code can be incorporated with minimal modifications</li>
+<li> How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift</li>
+<li> How EMEWS enables the scaling of simulation and black box model exploration to large computing resources</li>
+<li> How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework</li>
+</ol>
 
+<h2> Tutorial Code </h2>
+The examples use cases presented in this tutorial can be downloaded here:
+<b id="myb">TODO</b>: Include mention of downloadable UC1-3 archives.
+
+<h2> EMEWS Mailing List </h2>
+For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
+<a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">https://lists.mcs.anl.gov/mailman/listinfo/emews</b></a>
+<br><br>
 <!--
 <p>
 The remainder of this paper is organized as follows.  In \SLF{related},
