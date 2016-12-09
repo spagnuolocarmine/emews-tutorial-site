@@ -44,13 +44,15 @@ Polymer({
       codiad.tutorial.replaceElementTag('#modal-content open-code', '<span></span>');
       codiad.tutorial.replaceElementTag("#modal-content highlight-code", "<span></span>");
       codiad.tutorial.replaceElementTag("#modal-content modal-data", "<span></span>");
-        codiad.tutorial.replaceElementTag("#modal-content move-withintutorial", "<span></span>");
+      codiad.tutorial.replaceElementTag("#modal-content move-withintutorial", "<span></span>");
       codiad.modal.hideOverlay();
+      if(ref==null || ref=="" || ref == undefined )return;
 
       var checkExist=setInterval(function() {
         if ($("#modal")) {
-            var scrollTo = $("#"+ref);
-            if(scrollTo != null)
+            var scrollTo = $("#modal").find("#"+ref);
+          
+            if(scrollTo != null && scrollTo != undefined && scrollTo.offset() !=null)
             setTimeout(function(){
             //  console.log("scroll");
               $("#modal").animate({
