@@ -56,13 +56,16 @@
           <div class="contacts" style="margin-top:20px; font-size:17px">
           <span style=" font-size:20px; ">Contacts</span>
           <ul class="contacts" style="margin-top:20px;">
-              <li class="contacts"> Jonathan Ozik <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
+              <li> Jonathan Ozik <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
 <hr style="width:100%;">
-              <li class="contacts">Nicholson Collier  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
+              <li>Nicholson Collier  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
 <hr style="width:100%;">
-              <li class="contacts">Justin Wozniak  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
+              <li>Justin Wozniak  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
 <hr style="width:100%;">
-              <li class="contacts">Carmine Spagnuolo  <br><span style="float:right;margin-left:10px;font-weight:normal;">Univeristà degli Studi di Salerno</span> </li>
+              <li>Carmine Spagnuolo  <br><span style="float:right;margin-left:10px;font-weight:normal;">Univeristà degli Studi di Salerno</span> </li>
+              <hr style="width:100%;">
+              <li><br><br>For questions about EMEWS or to access archived questions, please subscribe to the
+<a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">EMEWS mailing list</b></a>. </li>
           </ul>
           </div>
 
