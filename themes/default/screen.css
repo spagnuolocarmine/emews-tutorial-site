@@ -1,5 +1,9 @@
 /* WEBKIT SCROLLBARS */
-
+.sub{
+  vertical-align: sub;
+  font-size: smaller;
+  line-height: normal;
+}
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
