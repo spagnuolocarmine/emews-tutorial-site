@@ -37,15 +37,35 @@ Polymer({
       codiad.tutorial.openEditor(_this);
       codiad.filemanager.openFile(code,true);
       codiad.filemanager.index(code.substring(0,code.lastIndexOf("/")),true);
-    /*  var res = code.split("/");
+  /*    var res = code.split("/");
       var open = "";
-      for(i=0; i < res.length -3;i++)
+      for(i=0; i < res.length - 2;i++)
       {
-        open+=res[i]+"/"
-        console.log(open);
+        open+=res[i];
+
         if(i > 0)
-        codiad.filemanager.index(open,true);
-      }*/
+        {
+          var listItems = $("#file-manager li");
+            listItems.each(function(idx, li) {
+                var ele = $(li);
+                //console.log(ele.children("span").attr('class'));
+                //console.log(ele.children("a").attr('data-path'));
+                if(ele.children("a").attr('data-path') == open)
+                {
+                    console.log("Click "+open+ " "+li);
+                    ele.children("a").dblclick();
+                }
+            });
+        //  var f=function(path){
+          //  console.log(path);
+          //  codiad.filemanager.index(path);
+          //  codiad.filemanager.rescan(path);
+          //}
+          //setTimeout(f(open),(i*200));
+        }
+        open+="/";
+      }
+*/
 
       setTimeout(function(){
         parent="";

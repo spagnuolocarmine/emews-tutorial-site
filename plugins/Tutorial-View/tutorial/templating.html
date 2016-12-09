@@ -188,7 +188,7 @@ fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
 
 <p>
 
-<span id="swift_run_sweep.sh"></span>
+<span id="swift_run_sweep_sh"></span>
 The <open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</open-code> file
 </p>
 <p>
@@ -402,7 +402,7 @@ required arguments.
 </p>
 
 <p>
-<span id="templating:X.sh"></span>
+<span id="X_sh"></span>
 <open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
 </p>
 <p>
@@ -485,10 +485,14 @@ way of installing and using EQ/Py, however the
 can be accessed for those interested in the EQ/Py source code). The EQ/Py
 extension adds two blocking queues through which a Swift/T script and a
 python code algorithm can coordinate execution. The following is the EMEWS workflow
-structure with EQ/Py.
+structure with EQ/Py,
 
 <p>
 <img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQPy.png" alt="EMEWS Figure EQPy" height="300">
+</p>
+and this is a zoomed in picture showing the Python-based ME and Swift script queue coordination.
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_zoomed_EQPy.png" alt="EMEWS Figure EQPy" height="150">
 </p>
 
 <p>
@@ -581,7 +585,7 @@ above) and the names below are the defaults.
       <tt id="mytt">eqpy_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
       <tt id="mytt">sweep</tt> template, so see  <!-- TODO: fix if not right -->
-      <modal-data ref="X.sh">scripts/X.sh</modal-data> for more details.</li>
+      <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
       <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
       </open-code> - a bash script used to launch the EQ/Py-based workflow.</li>
@@ -599,7 +603,7 @@ above) and the names below are the defaults.
   </open-code>
 </p>
 <p>
-This file is very similar to the  <modal-data ref="swift_run_sweep.sh"><tt id="mytt">swift_run_sweep.sh</tt></modal-data>
+This file is very similar to the  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="mytt">swift_run_sweep.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -854,11 +858,15 @@ way of installing and using EQ/R, however the
 can be accessed for those interested in the EQ/R source code). The EQ/R
 extension adds two blocking queues through which a Swift/T script and a
 R code algorithm can coordinate execution. The following is the EMEWS workflow
-structure with EQ/R.
+structure with EQ/R,
 </p>
 
 <p>
 <img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQR.png" alt="EMEWS Figure EQ/R" height="300">
+</p>
+and this is a zoomed in picture showing the R-based ME and Swift script queue coordination.
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_zoomed_EQR.png" alt="EMEWS Figure EQR" height="150">
 </p>
 
 <p>
@@ -909,7 +917,7 @@ When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
   is the same script as the
-  <modal-data ref="templating:X.sh">X.sh</modal-data>
+  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">X.sh</modal-data>
 file described in the sweep section.</li>
   <li>The file name for your R model exploration code. This defaults
   to <tt id="mytt">my_algorithm.R</tt>. This file is sourced as part of EQ/R
@@ -963,7 +971,7 @@ above) and the names below are the defaults.
       <tt id="mytt">eqr_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
       <tt id="mytt">sweep</tt> template, so see
-      <modal-data ref="X.sh">scripts/X.sh</modal-data> for more details.</li>
+      <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
       <open-code code="templating/swift/swift_run_eqr.sh"><tt id="mytt">swift_run_eqr.sh</tt>
       </open-code> - a bash script used to launch the EQ/R-based workflow.</li>
@@ -982,7 +990,7 @@ above) and the names below are the defaults.
 </p>
 <p>
 This file is nearly identical to
-<modal-data ref="swift_run_eqpy"><tt id="mytt">swift_run_eqpy.sh</tt></modal-data>
+<modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_eqpy"><tt id="mytt">swift_run_eqpy.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -1043,7 +1051,7 @@ to the analogous
    <tt id="mytt">swift_run_eqr.sh</tt>), the main function starts the coordinated
    sequence of algorithmic parameter production and model runs as described
 
-   <modal-data ref="eqr_overview">above</modal-data>.
+   <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqr_overview">above</modal-data>.
    By default <highlight-code code="templating/swift/swift_run_eqr.sh"
     color="rgba(255,255,255,0.3)" from="40" to="40">
     <tt id="mytt">swift_run_eqr.sh</tt></highlight-code>

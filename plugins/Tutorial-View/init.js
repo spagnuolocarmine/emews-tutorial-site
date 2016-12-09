@@ -71,6 +71,7 @@
                      });
                      $('#application-progress').slider('value', codiad.tutorial.perc_tutorial_size);
                      $('#application-progress').hide();
+                       $('#clear-highlight').hide();
                  clearInterval(checkExist);
                }else console.log("try")
              }, 20);
@@ -143,6 +144,7 @@
                 $('#downeditor').removeClass("icon-down-dir");
                 $('#downeditor').addClass("icon-up-dir");
                 $('#application-progress').hide();
+                $('#clear-highlight').hide();
 
 
               }else{
@@ -159,6 +161,8 @@
                 $(".editor").css("height",$(window).height() - h - $("#editor-bottom-bar").height()
                 -  $("#editor-top-bar").height() - 12+"px");
                 $('#application-progress').show();
+
+                $('#clear-highlight').show();
                 editor_open = true;
               }
 
@@ -239,6 +243,7 @@
             -  $("#editor-top-bar").height() - 12+"px");
             editor_open = true;
             $('#application-progress').show();
+            $('#clear-highlight').show();
             if(element !=null && element != undefined)
             {
 
@@ -269,6 +274,7 @@
             $('#downeditor').removeClass("icon-down-dir");
             $('#downeditor').addClass("icon-up-dir");
                $('#application-progress').hide();
+                 $('#clear-highlight').hide();
           }
         },
         highlightCode: function(code,fromline,toline,colorvalue)
