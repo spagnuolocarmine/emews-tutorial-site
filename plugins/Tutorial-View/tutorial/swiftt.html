@@ -242,10 +242,17 @@ where the key and value denote the annotation type.
   execution in the system.  Locations are optional; Swift/T defaults to
   placing the next task in a location determined by the load balancer.
   Locations can be used to direct computation to part of the system for
-  multiple reasons~.  In a data-intensive
+  multiple reasons.  In a data-intensive
   application, tasks can be sent to the location containing the data
-  they desire to process.  In a workflow with resident
-  tasks}, certain processes retain state from
+  they desire to process.  Data can also be kept in memory, for example, in
+  a global Python variable set by a <tt id="mycode">python()</tt> task.
+</p>
+<p>
+  A <tt id="mycode">python()</tt> task could also launch a Python
+  <tt id="mycode">Thread</tt> or <tt id="mycode">Process</tt>
+  that could continue computation in the background.
+  We call these <span class="myi">resident tasks</span>.
+  In a workflow with resident tasks, these processes retain state from
   task to task, and can be queried by sending a task to that process.
 </p>
 <p>
