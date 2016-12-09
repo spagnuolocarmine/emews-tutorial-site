@@ -25,6 +25,28 @@
   }
 </style>
 
+<!-- Code snippets -->
+<style>
+  #mycode {
+  font-family: 'Lucida Console',monospace;
+  font-color: white;
+  background-color: #525254;
+  }
+</style>
+
+<!-- File names -->
+<style>
+  #myfn {
+  font-family: 'Lucida Console',monospace;
+  }
+</style>
+
+<style>
+  #myi {
+    font-style: italic;
+  }
+</style>
+
 <p>
 
   Due to the highly non-linear relationship between ABM input parameters and model outputs,
@@ -82,67 +104,43 @@ at specific locations. The code that we present in this use case is directly ada
 
 <h3> EQ/Py swift script </h3>
 <p>
-The <open-code code="uc2/swift/swift_run_eqpy.swift"><tt id="mytt">swift_run_eqpy.swift</tt></open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
+The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file is the main swift file generated for the EQ/Py subtemplate. Here we discuss how this template file was modified for the current example.
 </p>
 
 <ul>
-<li>Starting from lines <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="148" to="152">149-153</highlight-code> in the main function, we've modified the command line arguments that are sent to the swift script. </li>
+<li>Starting from lines <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="148" to="152">149-153</highlight-code> in the main function, we've modified the command line arguments that are sent to the swift script. </li>
  
-<li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="134" to="136"><tt id="mytt">run_prerequisites</tt></highlight-code> Swift function was implemented, using the same functionality as <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="utility_functions">cp_message_center in UC1</modal-data>. </li>
+<li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="134" to="136"><tt id="mycode">run_prerequisites</tt></highlight-code> Swift function was implemented, using the same functionality as <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="utility_functions">cp_message_center in UC1</modal-data>. </li>
  
- <li>The arguments passed to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="103" to="104"><tt id="mytt">start</tt></highlight-code> function were modified to reflect the new information that is passed in via the command line.</li>
+ <li>The arguments passed to the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="103" to="104"><tt id="mycode">start</tt></highlight-code> function were modified to reflect the new information that is passed in via the command line.</li>
 
- <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mytt">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task, was modified.</li>
+ <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mycode">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task, was modified.</li>
 
-<li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="54" to="54"><tt id="mytt">loop</tt></highlight-code> function the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mytt">param_names</tt></highlight-code> string variable is added to track which parameters are being explored by the GA. This allows us to specify the subset of model parameters to explore.
+<li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="54" to="54"><tt id="mycode">loop</tt></highlight-code> function the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mycode">param_names</tt></highlight-code> string variable is added to track which parameters are being explored by the GA. This allows us to specify the subset of model parameters to explore.
  
- <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="42" to="42"><tt id="mytt">obj</tt></highlight-code> function we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="44" to="44"><tt id="mytt">create_upfs</tt></highlight-code> function (defined in a separate swift file <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code>, discussed below) to generate stochastic variations of individual parameter combinations. These are stored in the string variable <tt id="mytt">upfs</tt> as semicolon separated sets of parameters. The string array <tt id="mytt">parameter_combos</tt> is created by <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="45" to="45">splitting</highlight-code> <tt id="mytt">upfs</tt> using semicolons as delimiters. Once the parameter combinations are <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="48" to="48">evaluated</highlight-code>, their average is <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="51" to="51">calculated</highlight-code>.
+ <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="42" to="42"><tt id="mycode">obj</tt></highlight-code> function we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="44" to="44"><tt id="mycode">create_upfs</tt></highlight-code> function (defined in a separate swift file <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code>, discussed below) to generate stochastic variations of individual parameter combinations. These are stored in the string variable <tt id="mycode">upfs</tt> as semicolon separated sets of parameters. The string array <tt id="mycode">parameter_combos</tt> is created by <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="45" to="45">splitting</highlight-code> <tt id="mycode">upfs</tt> using semicolons as delimiters. Once the parameter combinations are <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="48" to="48">evaluated</highlight-code>, their average is <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="51" to="51">calculated</highlight-code>.
 </li>
 
-<li>In the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="27" to="27"><tt id="mytt">run_obj</tt></highlight-code> function we removed the <tt id="mytt">out</tt> and <tt id="mytt">err</tt> files for tracking stdout and stderr (these can be included for debugging purposes). We define the path to the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="32" to="32">script file</highlight-code> to run our model. Finally, we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift"
- color="rgba(255,255,255,0.3)" from="35" to="35"><tt id="mytt">calc_obj</tt></highlight-code> function (also defined in <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="9" to="14">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mytt">param_line</tt>.</li>
+<li>In the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="27" to="27"><tt id="mycode">run_obj</tt></highlight-code> function we removed the <tt id="mycode">out</tt> and <tt id="mycode">err</tt> files for tracking stdout and stderr (these can be included for debugging purposes). We define the path to the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="32" to="32">script file</highlight-code> to run our model. Finally, we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="35" to="35"><tt id="mycode">calc_obj</tt></highlight-code> function (also defined in <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14">R_utils.swift</highlight-code> and discussed below) to calculate the fitness of the parameter combination <tt id="mycode">param_line</tt>.</li>
 
 </ul>
 
 <h3> R_utils swift script and swift script testing </h3>
 <p>
-The <open-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)">R_utils.swift</open-code> file was used to define utility functions used in the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file. The two functions implemented are <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> and <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mytt">create_upfs</tt></highlight-code>.
+The <open-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)">R_utils.swift</open-code> file was used to define utility functions used in the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file. The two functions implemented are <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mycode">calc_obj</tt></highlight-code> and <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mycode">create_upfs</tt></highlight-code>.
 </p>
 
 <!-- <h4> <tt id="mytt">calc_obj</tt> </h4> -->
-The <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> function is implemented just like the counting of humans was implemented in the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="gather_results">Gathering the Results</modal-data> section of the Use Case 1 Tutorial. The only difference is that all of the relevant code is captured within the <highlight-code code="uc2/swift/R_utils.swift"
- color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mytt">calc_obj</tt></highlight-code> function and that this function is individually tested in 
-<highlight-code code="uc2/swift/test/R_utils_tests.swift"
- color="rgba(255,255,255,0.3)" from="20" to="31"><tt id="mytt">test2</tt></highlight-code> in R_utils_tests.swift. In a multi-module and multi-language setting like EMEWS, it is crucial for separate modules to be tested individually before all of the components are assembled into a single workflow. For testing Swift code, the <highlight-code code="uc2/swift/test/R_utils_tests.swift"
- color="rgba(255,255,255,0.3)" from="24" to="24"><tt id="mytt">assert</tt></highlight-code> keyword is used to ensure that the expected results are returned from executing the code being tested. 
-The <tt id="mytt">test2</tt> function contains three separate tests to exercise the <tt id="mytt">calc_obj</tt> function. Each of these tests is passed a different path to a test data folder (data, data/d1, and data/d2), each containing three separate counts.csv files (<open-code code="uc2/swift/test/data/counts.csv"
- color="rgba(255,255,255,0.3)">data/counts.csv</open-code>, <open-code code="uc2/swift/test/data/d1/counts.csv"
- color="rgba(255,255,255,0.3)">data/d1/counts.csv</open-code>, and <open-code code="uc2/swift/test/data/d2/counts.csv"
- color="rgba(255,255,255,0.3)">data/d2/counts.csv</open-code>). The test is run using the <open-code code="uc2/swift/test/R_utils_tests.sh"
- color="rgba(255,255,255,0.3)">R_utils_tests.sh</open-code> bash file. For this test, since we're using the R capabilities of Swift, we need to specify the correct <highlight-code code="uc2/swift/test/R_utils_tests.sh"
- color="rgba(255,255,255,0.5)" from="1" to="1"><tt id="mytt">R_HOME</tt></highlight-code> and <highlight-code code="uc2/swift/test/R_utils_tests.sh"
- color="rgba(255,255,255,0.5)" from="2" to="2"><tt id="mytt">LD_LIBRARY_PATH</tt></highlight-code> environment variables. Line <highlight-code code="uc2/swift/test/R_utils_tests.sh"
- color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> contains the call to the swift-t executable, specifying that the preprocessor should not be run (-p), and that additional necessary Swift files can be found one directory up (-I ..). 
-
+<p>The <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mycode">calc_obj</tt></highlight-code> function is implemented just like the counting of humans was implemented in the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="gather_results">Gathering the Results</modal-data> section of the Use Case 1 Tutorial. The only difference is that all of the relevant code is captured within the <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mycode">calc_obj</tt></highlight-code> function and that this function is individually tested in 
+<highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="20" to="31"><tt id="mycode">test2</tt></highlight-code> in R_utils_tests.swift. </p>
+<p>In a multi-module and multi-language setting like EMEWS, it is crucial for separate modules to be tested individually before all of the components are assembled into a single workflow. For testing Swift code, the <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="24" to="24"><tt id="mycode">assert</tt></highlight-code> keyword is used to ensure that the expected results are returned from executing the code being tested. 
+The <tt id="mycode">test2</tt> function contains three separate tests to exercise the <tt id="mycode">calc_obj</tt> function. Each of these tests is passed a different path to a test data folder (data, data/d1, and data/d2), each containing three separate counts.csv files (<open-code code="uc2/swift/test/data/counts.csv"  color="rgba(255,255,255,0.3)">data/counts.csv</open-code>, <open-code code="uc2/swift/test/data/d1/counts.csv" color="rgba(255,255,255,0.3)">data/d1/counts.csv</open-code>, and <open-code code="uc2/swift/test/data/d2/counts.csv" color="rgba(255,255,255,0.3)">data/d2/counts.csv</open-code>). The test is run using the <open-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.3)">R_utils_tests.sh</open-code> bash file. For this test, since we're using the R capabilities of Swift, we need to specify the correct <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.5)" from="1" to="1"><tt id="mycode">R_HOME</tt></highlight-code> and <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.5)" from="2" to="2"><tt id="mycode">LD_LIBRARY_PATH</tt></highlight-code> environment variables. Line <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> contains the call to the swift-t executable, specifying that the preprocessor should not be run (-p), and that additional necessary Swift files can be found one directory up (-I ..). For more details on Swift/T command line options, see the Usage section of the <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_usage">Swift/T website</a>. If all the <tt id="mycode">assert</tt>s pass, the script will run without error. If any of them fail, the message specified in the second argument of the failed <tt id="mycode">assert</tt> (e.g., "test2: unexpected result for calc_obj") will be displayed.
+ </p>
+ 
+ <p>The <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mycode">create_upfs</tt></highlight-code> function is specific to creating stochastic variations for individual parameter combinations when running Repast Simphony models. The logic for the function is implemented in an R function, also called <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="19" to="35"><tt id="mycode">create_upfs</tt></highlight-code>. A Repast Simphony parameters.xml file is read in using the read_xml function from the R xml2 package on line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="21" to="21">22</highlight-code>. The full parameter names and default values are both collected into a named vector <tt id="all_params_values">create_upfs</tt> in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="22" to="25">23-26</highlight-code>. The parameter names to vary, along with their values are used to overwrite the default values in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="27" to="29">28-30</highlight-code>. Finally, random seed values from 0 to <tt id="mytt">stoch_variations-1</tt> are applied to create <tt id="mycode">stoch_variations</tt> parameter combinations in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="30" to="34">31-35</highlight-code>. Once the R function is defined, it is called in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="37" to="37">38</highlight-code>, where the arguments to the function are set in the Swift code in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="42" to="42">43</highlight-code> and the results are obtained in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="43" to="43">44</highlight-code>.
+</p>
+<p>The <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="6" to="17"><tt id="mycode">test1</tt></highlight-code> function in R_utils_tests.swift is used to test <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mycode">create_upfs</tt></highlight-code>.
+ </p>
  
 <br>
 <br><br><br><br><br><br><br><br><br><br>
