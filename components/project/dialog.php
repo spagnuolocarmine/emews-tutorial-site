@@ -48,7 +48,7 @@
                 <?php
                 } else {
                 ?>
-                <li ondblclick=" codiad.project.open('<?php echo($data['path']); ?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
+                <li onclick=" codiad.project.open('<?php echo($data['path']); ?>');"><div class="icon-archive icon"></div><?php echo($data['name']); ?></li>
 
                 <?php
                 }
