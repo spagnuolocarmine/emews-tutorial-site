@@ -1,5 +1,5 @@
 
-<h1 style="margin-top: 0px;"> INTRODUCTION</h1>
+<h1 style="margin-top: 0px;"> Introduction</h1>
 
 <style>
   #myi {
@@ -19,6 +19,25 @@
   }
 </style>
 
+<style>
+  #myol {
+    margin-left: 5%;
+    list-style: none outside none;
+  }
+  #myol li {
+    counter-increment: item;
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  #myol li:before {
+    margin-right: 10px;
+    content: counter(item)")";
+    color: white;
+    text-align: center;
+    display: inline-block;
+  }
+
+</style>
 
 <h2>Navigating the Tutorial</h2>
 
@@ -58,22 +77,29 @@ as an example.
   Clicking the arrow again will restore the source pane. The slider at
   the bottom of the source pane can be used to change its height (see figure).
   <p>
-    <img src="plugins/Tutorial-View/tutorial/img/source_slider.png" alt="Source Header" width="600">
+    <img src="plugins/Tutorial-View/tutorial/img/source_slider.png" alt="Source Slider" width="600">
+  </p>
+</p>
+
+<p>
+  The button next to the slider can be used to remove highlights from code.
+  <p>
+    <img src="plugins/Tutorial-View/tutorial/img/source_remove_highlights.png" alt="Source Remove Highlights" width="600">
   </p>
 </p>
 
 <p>
 Pane 3 displays the source files and project structure for the tutorial
-currently displayed in pane 1. Double-clicking a folder or single-clicking the 
+currently displayed in pane 1. Double-clicking a folder or single-clicking the
 triangle symbol to the left of the folder will reveal its contents.
   <p>
-    <img src="plugins/Tutorial-View/tutorial/img/explore_folder.png" alt="Source Header" width="300">
+    <img src="plugins/Tutorial-View/tutorial/img/explore_folder.png" alt="Explore Folder" width="300">
   </p>
 
 Double-clicking on a file will display it in pane 2.
 
   <p>
-    <img src="plugins/Tutorial-View/tutorial/img/explore_file.png" alt="Source Header" width="300">
+    <img src="plugins/Tutorial-View/tutorial/img/explore_file.png" alt="Explore File" width="300">
   </p>
 
 </p>
@@ -90,13 +116,14 @@ the tutorial text in pane 1 to that section.
 
 <p>
 If you leave the tutorial and come back to it, you will be placed into the last section you were in when you left.
-The tutorial can be reset back to the introduction by clicking on the top right globe icon 
+The tutorial can be reset back to the introduction by clicking on the top right globe icon
 and choosing the refresh icon in the displayed window.
 <p>
     <img src="plugins/Tutorial-View/tutorial/img/globe.png" alt="Source Header" width="300">
   </p>
 You can click the home icon to return to the title page of the tutorial as well.
 </p>
+<h2>Extreme-scale Model Exploration with Swift (EMEWS)</h2>
 <p>
 <b id="myb">Modern simulation-based application studies are campaigns</b>
 consisting of large numbers of simulations with many possible
@@ -124,24 +151,29 @@ Here, we focus on agent-based models (ABMs).  Extracting
 knowledge from ABMs requires the use of approximate, heuristic ME methods involving large simulation ensembles. To improve the current state of the art it has been noted elsewhere that: “...
 there is a clear need to provide software frameworks for
 metaheuristics that promote software reuse and reduce developmental
-effort.”
-(<modal-data data="plugins/Tutorial-View/tutorial/refs/boussaid_survey_2013.html">Boussaid 2013</modal-data>) Our design goals are to ease
+effort” (<modal-data data="plugins/Tutorial-View/tutorial/refs/boussaid_survey_2013.html">Boussaid 2013</modal-data>). Our design goals are to ease
 software integration while providing scalability to the largest scale
 (petascale plus) supercomputers, running millions of ABMs, thousands
 at a time. Initial scaling studies of <b id="myb">EMEWS</b> have shown robust scalability
 (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">Ozik et al. 2015</modal-data>). The tools are also easy to install and run on an ordinary
 laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
 obtained from common OS package repositories.
+</p>
 
+<!-- 
 <ul>
 <li> powerful</li>
 <li> efficient (mention that performance was measured in MTAGS and SC submission, and indicate weak scaling results from SC)</li>
 <li> re-usable</li>
 </ul>
+ -->
 
-WOZNIAK TODO <img src="img/EMEWS-loop"/>
-Overview of Extreme-scale Model Exploration with Swift/T (EMEWS) framework.
+<h3> EMEWS workflow structure </h3>
+<p>
+<img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure.png" alt="EMEWS Figure" height="300">
 </p>
+
+
 
 <p>
 This figure illustrates the main components of the <b id="myb">EMEWS</b>
@@ -163,13 +195,15 @@ invocation).
 </p>
 <p>
 <b id="myb">EMEWS</b> thus offers the following contributions to the science and
-practice of simulation ME studies: <b id="myb">1)</b> it offers the capability to run very large, highly concurrent
+practice of simulation ME studies: <!-- 
+<b id="myb">1)</b> it offers the capability to run very large, highly concurrent
   ensembles of simulations of varying types; <b id="myb">2)</b> it supports a wide class of model exploration algorithms,
   including those increasingly available to the community via Python and R libraries; and <b id="myb">3)</b> it offers a software sustainability solution, in that simulation
   studies based around <b id="myb">EMEWS</b> can easily be compared and
   distributed.
+ -->
 
-<ul>
+<ol id="myol">
 <li> It offers the capability to run very large, highly concurrent
   ensembles of simulations of varying types;</li>
 <li> It supports a wide class of model exploration algorithms,
@@ -177,13 +211,17 @@ practice of simulation ME studies: <b id="myb">1)</b> it offers the capability t
 <li> It offers a software sustainability solution, in that simulation
   studies based around <b id="myb">EMEWS</b> can easily be compared and
   distributed.</li>
-</ul>
+</ol>
 </p>
+
 <h2> Tutorial Goals</h2>
 <p>
 Our tutorial will present these contributions in more detail.  The
 examples use cases presented in this paper are generally runnable
-Swift (not pseudocode) and are published on a <a href="https://goo.gl/Wia9Rm">public repository</a>.
+Swift (not pseudocode) and are published on a <a target="_blank" href="https://goo.gl/Wia9Rm">public repository</a>.
+<p>
+</p>
+<b id="myb">TODO</b>: Include mention of downloadable UC1-3 archives.
 </p>
 
 <!--
