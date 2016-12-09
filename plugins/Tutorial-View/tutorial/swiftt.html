@@ -17,7 +17,7 @@
 </style>
 
 <style>
-  #myi {
+  span.myi {
     font-style: italic;
   }
 </style>
@@ -117,8 +117,8 @@ is shown in
 
 <p>
   The key purpose of Swift is to gain concurrency easily and correctly.
-  This is accomplished in Swift through the use of <i id="myi">dataflow</i> instead
-  of <i id="myi">control flow</i>.  In Swift, there is no instruction pointer,
+  This is accomplished in Swift through the use of <span class="myi">dataflow</span> instead
+  of <span class="myi">control flow</span>.  In Swift, there is no instruction pointer,
   execution is triggered wherever possible limited only by data
   availability.  This results in an implicitly parallel programming
   model.  Two modes of concurrency are shown in
@@ -127,7 +127,7 @@ is shown in
   ith Fibonacci number relies on two concurrent recursive
   calls, and iteration over an array of known values allows for parallel
   execution.  Ordering can be forced with the
-  <tt id="mycode"><i id="myi">statement1</i> => <i id="myi">statement2</i></tt> syntax, which creates an artificial
+  <tt id="mycode"><span class="myi">statement1</span> => <span class="myi">statement2</span></tt> syntax, which creates an artificial
   data dependency.
 </p>
 
@@ -161,22 +161,26 @@ is shown in
 </p>
 <p>
   One use of Python from Swift/T is shown in
-  <open-code code="swiftt/F.py">F.py</open-code>
-  <open-code code="swiftt/python-f.swift">python-f.swift</open-code>.
+  <open-code code="swiftt/F.py"><tt id="myfn">F.py</tt></open-code> and
+  <open-code code="swiftt/python-f.swift"><tt id="myfn">python-f.swift</tt></open-code>.
   In this example, a short module is defined in
-  <open-code code="swiftt/F.py">F.py</open-code>
+  <open-code code="swiftt/F.py"><tt id="myfn">F.py</tt></open-code>
   which provides an
-  addition function named <tt id="mycode">f()</tt>.  A call to this function from Swift/T
+  function named <tt id="mycode">f()</tt> that simply performs addition.  A call to this function from Swift/T
   is shown in <open-code code="swiftt/python-f.swift"><tt id="myfn">python-f.swift</tt></open-code> lines
   <highlight-code code="swiftt/python-f.swift" color="rgba(0,0,255,0.3)" from="2" to="3">3-4</highlight-code>.
   The string containing the
-  Python code is populated with the Pythonic <tt id="mycode">%</tt> operator, which fills in
+  Python code is populated with Swift's Python-inspired <tt id="mycode">%</tt> operator, which fills in
   values for <tt id="mycode">x</tt> and <tt id="mycode">y</tt> at the conversion specifiers <tt id="mycode">%i</tt>.  The
   Python function <tt id="mycode">F.f()</tt> receives these values, adds them, and
-  returns the result as a string.  Swift/T receives the result in <tt id="mycode">z</tt>
-  and reports it with the Swift/T builtin <tt id="mycode">trace()</tt> function.  Thus, data can
+  returns the result as a string.  Swift receives the result in <tt id="mycode">z</tt>
+  and reports it with the Swift builtin <tt id="mycode">trace()</tt> function.
+</p>
+<p>
+  Using this technique,
+  massively parallel ensembles of Python tasks can be orchestrated by Swift.  Data can
   easily be passed to and from Python with Pythonic conventions; only
-  stringification is required.  To execute, the user simply
+  stringification is required.  At run time, the user simply
   sets <tt id="mycode">PYTHONPATH</tt> so that the Python interpreter can find
   module <tt id="mycode">F</tt>, and runs <tt id="mycode">swift-t</tt>.
 </p>
@@ -218,7 +222,7 @@ is shown in
   Swift/T has multiple other features to support the needs of workflow
   applications, including support for locations and MPI tasks.  The
   underlying call from Swift to external code (via the shell, a script,
-  or native code) is called a leaf function as its execution is
+  or native code) is called a <span class="myi">leaf function</span> as its execution is
   opaque to Swift.  These features are accessed by
   Swift/T annotations that are applied to the leaf function
   invocation.  A generic annotation takes the form
