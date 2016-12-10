@@ -7,6 +7,22 @@
   }
 </style>
 
+<!-- Code snippets -->
+<style>
+  #mycode {
+  font-family: 'Lucida Console',monospace;
+  font-color: white;
+  background-color: #525254;
+  }
+</style>
+
+<!-- File names -->
+<style>
+  #myfn {
+  font-family: 'Lucida Console',monospace;
+  }
+</style>
+
 <style>
   #myol {
     margin-left: 5%;
@@ -55,19 +71,19 @@ subtemplates can be generated from within that project, adding further
 code and structure to the existing project. EMEWS templates consist of:
 
 <ul>
-  <li>An <tt id="mytt">emews</tt> template that creates the default EMEWS project structure.</li>
-  <li>A <tt id="mytt">sweep</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt id="mycode">emews</tt> template that creates the default EMEWS project structure.</li>
+  <li>A <tt id="mycode">sweep</tt> subtemplate that when run from within an EMEWS project
     creates additional files for running a parameter sweep workflow.</li>
-  <li>An <tt id="mytt">eqpy</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt id="mycode">eqpy</tt> subtemplate that when run from within an EMEWS project
     creates additional files for an EMEWS queues for Python (EQ/Py) based
     workflow.</li>
-  <li>An <tt id="mytt">eqr</tt> subtemplate that when run from within an EMEWS project
+  <li>An <tt id="mycode">eqr</tt> subtemplate that when run from within an EMEWS project
     creates additional files for an EMEWS queues for R (EQ/R) based
     workflow.</li>
 </ul>
 
 The templates are run from the command line.
-<h2>The <tt id="mytt">emews</tt> Template</h2>
+<h2>The <tt id="mycode">emews</tt> Template</h2>
 
 The emews template is run with
 <p>
@@ -77,7 +93,7 @@ lazybones create emews 1.0 MyEMEWSProject
 </pre>
 </p>
 
-This will create the EMEWS project structure in directory <tt id="mytt">MyEMEWSProject</tt>
+This will create the EMEWS project structure in directory <tt id="mycode">MyEMEWSProject</tt>
 using version 1.0 of the template. Note that the directory name can be whatever
 you want. For example,
 
@@ -86,7 +102,7 @@ you want. For example,
 lazybones create emews 1.0 fluModelRuns
 </pre>
 </p>
-will create the default EMEWS project structure in a <tt id="mytt">fluModelRuns</tt>
+will create the default EMEWS project structure in a <tt id="mycode">fluModelRuns</tt>
 directory.
 
 <p>
@@ -112,16 +128,16 @@ fluModelRuns/
 The directories are intended to contain the following:
 
 <ul>
- <li> <tt id="mytt">data</tt> - data used by the model, input data, for example</li>
- <li> <tt id="mytt">etc</tt> - additional code used by EMEWS</li>
- <li> <tt id="mytt">ext</tt> - swift-t extensions such as eqpy, and eqr</li>
- <li> <tt id="mytt">python</tt> - python code (e.g., model exploration algorithms written in python)</li>
- <li> <tt id="mytt">python/test</tt> - tests of the python code</li>
- <li> <tt id="mytt">R</tt> - R code (e.g., model exploration algorithms written in R)</li>
- <li> <tt id="mytt">R/test</tt> - tests of the R code</li>
- <li> <tt id="mytt">scripts</tt> - any necessary scripts (e.g., scripts to launch a model),
+ <li> <tt id="mycode">data</tt> - data used by the model, input data, for example</li>
+ <li> <tt id="mycode">etc</tt> - additional code used by EMEWS</li>
+ <li> <tt id="mycode">ext</tt> - swift-t extensions such as eqpy, and eqr</li>
+ <li> <tt id="mycode">python</tt> - python code (e.g., model exploration algorithms written in python)</li>
+ <li> <tt id="mycode">python/test</tt> - tests of the python code</li>
+ <li> <tt id="mycode">R</tt> - R code (e.g., model exploration algorithms written in R)</li>
+ <li> <tt id="mycode">R/test</tt> - tests of the R code</li>
+ <li> <tt id="mycode">scripts</tt> - any necessary scripts (e.g., scripts to launch a model),
    excluding scripts used to run the workflow itself</li>
- <li> <tt id="mytt">swift</tt> - swift code, including scripts used to launch the workflow</li>
+ <li> <tt id="mycode">swift</tt> - swift code, including scripts used to launch the workflow</li>
 </ul>
 
 <h2>The Subtemplates</h2>
@@ -136,19 +152,19 @@ lazybones generate X
 </pre>
 </p>
 
-where X is the subtemplate name: <tt id="mytt">sweep</tt>, <tt id="mytt">eqpy</tt>, or <tt id="mytt">eqr</tt>.
+where X is the subtemplate name: <tt id="mycode">sweep</tt>, <tt id="mycode">eqpy</tt>, or <tt id="mycode">eqr</tt>.
 Once the subtemplate has been generated, the files can be edited to suit the
 particular project purpose. The files themselves contain comments to guide the
 customization. The subtemplates must be generated from within the directory
-created by the top-level <tt id="mytt">emews</tt> template. Subtemplate generation will query
+created by the top-level <tt id="mycode">emews</tt> template. Subtemplate generation will query
 you for additional information (e.g., the model name) required to
 generate the template.
 <br>
 
-<h3 id="sweep_section">The <tt id="mytt">sweep</tt> subtemplate</h3>
+<h3 id="sweep_section">The <tt id="mycode">sweep</tt> subtemplate</h3>
 
 <p>
-The <tt id="mytt">sweep</tt> subtemplate generates files appropriate for a sweep through
+The <tt id="mycode">sweep</tt> subtemplate generates files appropriate for a sweep through
 a collection of parameters, running the model for each individual set of parameters. By
 default, the parameters are expected to be defined by the user in an input file
 where each line is an individual parameters setting to run. Each line of the file is passed
@@ -160,22 +176,22 @@ pairs that explicitly name each parameter and its value.
 </p>
 
 <p>
-Generating the <tt id="mytt">sweep</tt> template creates the following files:
+Generating the <tt id="mycode">sweep</tt> template creates the following files:
 </p>
 <ul>
-  <li><open-code code="templating/swift/swift_run_sweep.sh"><tt id="mytt">swift/swift_run_sweep.sh</tt></open-code>
+  <li><open-code code="templating/swift/swift_run_sweep.sh"><tt id="myfn">swift/swift_run_sweep.sh</tt></open-code>
     - a bash script used to launch the workflow</li>
   <li><open-code code="templating/swift/swift_run_sweep.swift">
-    <tt id="mytt">swift/swift_run_sweep.swift</tt></open-code>
+    <tt id="myfn">swift/swift_run_sweep.swift</tt></open-code>
     - a swift script that will iterate through an
   input file, passing each line of that input to a model. The model is called
   from an app function.</li>
   <li>(optional)<open-code code="templating/scripts/X.sh">
-    <tt id="mytt">scripts/X.sh</tt></open-code>
+    <tt id="myfn">scripts/X.sh</tt></open-code>
     -  a bash script for executing your model. The actual name of this file is derived from user
   input during the subtemplate generation. The <highlight-code code="templating/swift/swift_run_sweep.swift" color="rgba(255,255,255,0.3)"
   from="7" to="10">app</highlight-code> function in
-  <tt id="mytt">swift/swift_run_sweep.swift</tt> calls this file.</li>
+  <tt id="myfn">swift/swift_run_sweep.swift</tt> calls this file.</li>
 </ul>
 
 <p>
@@ -183,7 +199,7 @@ These files contain lines or sections marked with "TODO" where that line or
 section needs to be edited to customize the file for your model and workflow.
 See the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="top_title">
 Use Case 1 Tutorial "Simple Workflows with ABM"</modal-data> for a fully
-fleshed out workflow created using the <tt id="mytt">sweep</tt> subtemplate.
+fleshed out workflow created using the <tt id="mycode">sweep</tt> subtemplate.
 </p>
 
 <p>
@@ -193,8 +209,8 @@ The <open-code code="templating/swift/swift_run_sweep.sh">swift_run_sweep.sh</op
 </p>
 <p>
 This is a bash script used to launch
-the workflow. The script ultimately calls <tt id="mytt">swift-t</tt> to execute the
-workflow, but prior to that it sets up the <tt id="mytt">swift-t</tt> call by defining
+the workflow. The script ultimately calls <tt id="mycode">swift-t</tt> to execute the
+workflow, but prior to that it sets up the <tt id="mycode">swift-t</tt> call by defining
 various environment variables used either by Swift/T itself, by your Swift/T
 script or by both. The script contains additional information and TODOs
 in its comments as well lines of code that can be uncommented as necessary.
@@ -216,29 +232,29 @@ and edited to turn logging off, if uncommented.</li>
 
 <li>Line
   <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-    from="14" to="14">15</highlight-code> defines an <tt id="mytt">EMEWS_PROJECT_ROOT</tt>
+    from="14" to="14">15</highlight-code> defines an <tt id="mycode">EMEWS_PROJECT_ROOT</tt>
 environment variable that specifies the root directory of the project. This
-is the project parent directory created by running the <tt id="mytt">emews</tt>
+is the project parent directory created by running the <tt id="mycode">emews</tt>
 template.</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="16" to="16">17</highlight-code> sources some utiliity functions that
-  are used later in the script. These are: <tt id="mytt">check_directory_exists</tt>
+  are used later in the script. These are: <tt id="mycode">check_directory_exists</tt>
   which checks if
-the <tt id="mytt">TURBINE_OUTPUT</tt> directory exists and prompts the user to
-continue; and <tt id="mytt">log_script</tt> which logs the relevant environment variables and
-a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
+the <tt id="mycode">TURBINE_OUTPUT</tt> directory exists and prompts the user to
+continue; and <tt id="mycode">log_script</tt> which logs the relevant environment variables and
+a copy of script to the <tt id="mycode">TURBINE_OUTPUT</tt> directory.</li>
 
 <li>Lines
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="18" to="19">19-20</highlight-code> create and export an <tt id="mytt">EXPID</tt>
+  from="18" to="19">19-20</highlight-code> create and export an <tt id="mycode">EXPID</tt>
   (an experiment id) environment variable from the experiment id passed into
-  the script and then defines the <tt id="mytt">TURBINE_OUTPUT</tt> directory using this
-  <tt id="mytt">EXPID</tt>.</li>
+  the script and then defines the <tt id="mycode">TURBINE_OUTPUT</tt> directory using this
+  <tt id="mycode">EXPID</tt>.</li>
 
 <li>Line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="23" to="23">24</highlight-code> defines a <tt id="mytt">PROCS</tt> environment
+  from="23" to="23">24</highlight-code> defines a <tt id="mycode">PROCS</tt> environment
   variable that specifies the number of processes to use when running the
   workflow.</li>
 
@@ -257,7 +273,7 @@ a copy of script to the <tt id="mytt">TURBINE_OUTPUT</tt> directory.</li>
 
 <li>Line
   <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-    from="44" to="44">45</highlight-code> defines a <tt id="mytt">CMD_LINE_ARGS</tt>
+    from="44" to="44">45</highlight-code> defines a <tt id="mycode">CMD_LINE_ARGS</tt>
     variable that by default contains everything passed in to the script. It
     can be edited to be more selective or to include additional arguments.
     Ultimately, this is passed to the Swift/T script and thus all the arguments
@@ -275,12 +291,12 @@ to your scheduler type (e.g., slurm, pbs, etc.)</li>
   from="57" to="57">58</highlight-code> defines an array into which any user defined
   variables that you want to log as part of the experiment meta data can be added.
   By default all the variables described here are logged, but if you add your own,
-  these can be added to this <tt id="mytt">USER_VARS</tt> array for logging.</li>
+  these can be added to this <tt id="mycode">USER_VARS</tt> array for logging.</li>
 
 <li>Line
 <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
   from="59" to="59">60</highlight-code> calls an EMEWS script function that
-  logs the relevant variables and script into the <tt id="mytt">TURBINE_OUTPUT</tt>
+  logs the relevant variables and script into the <tt id="mycode">TURBINE_OUTPUT</tt>
   directory.</li>
 
 <li>Line
@@ -288,16 +304,16 @@ to your scheduler type (e.g., slurm, pbs, etc.)</li>
   from="64" to="64">65</highlight-code> calls swift-t passing it the
   relevant variables and the path of the swift script to be executed. At
 this point the script is either executed immediately or scheduled for execution
-depending on the value of the <tt id="mytt">MACHINE</tt> variable.</li>
+depending on the value of the <tt id="mycode">MACHINE</tt> variable.</li>
 </ul>
 
 <p>
-<open-code code="templating/swift/swift_run_sweep.swift"><tt id="mytt">swift_run_sweep.swift</tt></open-code>
+<open-code code="templating/swift/swift_run_sweep.swift"><tt id="myfn">swift_run_sweep.swift</tt></open-code>
 </p>
 <p>
 This is the swift script that
 performs that actual sweep. The script consists of two calls that retrieve
-the <tt id="mytt">EMEWS_PROJECT_ROOT</tt> and <tt id="mytt">TURBINE_OUTPUT</tt>
+the <tt id="mycode">EMEWS_PROJECT_ROOT</tt> and <tt id="mycode">TURBINE_OUTPUT</tt>
 environment variables (lines <highlight-code code="templating/swift/swift_run_sweep.swift"
 color="rgba(255,255,255,0.3)" from="4" to="5">5-6</highlight-code>),
 three functions, one that calls the model itself
@@ -317,11 +333,11 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
   color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> function
   executes a single model run via a bash script. It calls bash, passing it
   the name of the bash script to run, the parameter line to use, the
-  <tt id="mytt">EMEWS_PROJECT_ROOT</tt> directory, and the
-  path of an <tt id="mytt">instance</tt> directory. The expectation is that each model run
-  will execute in its own directory and <tt id="mytt">instance</tt> is the path of that
-  directory. Standard out and standard error are redirected to an <tt id="mytt">out</tt>
-  and <tt id="mytt">err</tt> file respectively.
+  <tt id="mycode">EMEWS_PROJECT_ROOT</tt> directory, and the
+  path of an <tt id="mycode">instance</tt> directory. The expectation is that each model run
+  will execute in its own directory and <tt id="mycode">instance</tt> is the path of that
+  directory. Standard out and standard error are redirected to an <tt id="mycode">out</tt>
+  and <tt id="mycode">err</tt> file respectively.
   The first utility function,<highlight-code code="templating/swift/swift_run_sweep.swift"
   color="rgba(255,255,255,0.3)" from="13" to="15">make_dir</highlight-code>, simply
   calls the Unix mkdir command to create a specified directory. The second,
@@ -342,10 +358,10 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
     is as follows:
 
     <ol id="myol">
-      <li>Read the bash script that runs the model as a <tt id="mytt">file</tt>
+      <li>Read the bash script that runs the model as a <tt id="mycode">file</tt>
         object.</li>
-        <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
-      <li>Read the the list of a parameters into a <tt id="mytt">file</tt> object.</li>
+        <li>Read the the list of a parameters into a <tt id="mycode">file</tt> object.</li>
+      <li>Read the the list of a parameters into a <tt id="mycode">file</tt> object.</li>
       <li>Split the contents of the file into an array where each line of
         the file is an array element.</li>
       <li>Iterate over the array in parallel, launching a model run
@@ -359,31 +375,31 @@ color="rgba(255,255,255,0.3)" from="24" to="34">25-35</highlight-code>).
 <p>
 More specifically, line <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="24" to="24">25</highlight-code>
-initializes a Swift/T <tt id="mytt">file</tt> variable with the location of the X.sh script file
+initializes a Swift/T <tt id="mycode">file</tt> variable with the location of the X.sh script file
 (where "X" will de derived from user input template generation).
 Then in line  <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="25" to="25">26</highlight-code> the path of the parameter file that contains
-the parameter sets that will be passed as input to the model is defined, also as a <tt id="mytt">file</tt> variable. This line uses
-the swift built-in function <tt id="mytt">argv</tt> to parse command line arguments to the Swift script.
-Recall that the <tt id="mytt">swift_run_sweep.sh</tt> bash script that runs this swift script
+the parameter sets that will be passed as input to the model is defined, also as a <tt id="mycode">file</tt> variable. This line uses
+the swift built-in function <tt id="mycode">argv</tt> to parse command line arguments to the Swift script.
+Recall that the <tt id="myfn">swift_run_sweep.sh</tt> bash script that runs this swift script
 passed the file as a command line argument (line <highlight-code code="templating/swift/swift_run_sweep.sh" color="rgba(255,255,255,0.3)"
-  from="64" to="64">65</highlight-code>). Each line of this <tt id="mytt">upf</tt> file contains a parameter set.
+  from="64" to="64">65</highlight-code>). Each line of this <tt id="mycode">upf</tt> file contains a parameter set.
 </p>
 
 <p>
 Line <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="26" to="26">27</highlight-code>
-reads the <tt id="mytt">upf</tt> file into an array of strings where each line of the file is an element in the array.
-The built-in Swift <tt id="mytt">file_lines</tt> function is used to read the upf file into this array of strings.
-The <tt id="mytt">foreach</tt> loop that begins on line
+reads the <tt id="mycode">upf</tt> file into an array of strings where each line of the file is an element in the array.
+The built-in Swift <tt id="mycode">file_lines</tt> function is used to read the upf file into this array of strings.
+The <tt id="mycode">foreach</tt> loop that begins on line
 <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="27" to="27">28</highlight-code>
-executes its loop iterations in parallel. In the <tt id="mytt">foreach</tt> loop, the variable s is set to an
+executes its loop iterations in parallel. In the <tt id="mycode">foreach</tt> loop, the variable s is set to an
 array element (that is, a single parameter line represented as a string) while the variable i is the index of that array element.
 Lines <highlight-code code="templating/swift/swift_run_sweep.swift"
  color="rgba(255,255,255,0.3)" from="28" to="29">29-30</highlight-code>
 create an instance directory into which each model run will write its output. The make_dir app function
-is used to create the directory. The <tt id="mytt">=></tt> keyword is used to ensure
+is used to create the directory. The <tt id="mycode">=></tt> keyword is used to ensure
 that the directory is created before the actual model
 run that uses that directory is performed.
 </p>
@@ -397,17 +413,17 @@ color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> functi
 Lastly, in line
 <highlight-code code="templating/swift/swift_run_sweep.swift"
 color="rgba(255,255,255,0.3)" from="32" to="32">33</highlight-code>
-the <tt id="mytt">run_model</tt> function that performs the run is called with the
+the <tt id="mycode">run_model</tt> function that performs the run is called with the
 required arguments.
 </p>
 
 <p>
 <span id="X_sh"></span>
-<open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
+<open-code code="templating/scripts/X.sh"><tt id="myfn">scripts/X.sh</tt></open-code>
 </p>
 <p>
-The final file created (optionally) by the <tt id="mytt">sweep</tt> template is
-<open-code code="templating/scripts/X.sh"><tt id="mytt">scripts/X.sh</tt></open-code>
+The final file created (optionally) by the <tt id="mycode">sweep</tt> template is
+<open-code code="templating/scripts/X.sh"><tt id="myfn">scripts/X.sh</tt></open-code>
 where "X" is some file name  derived from user
 input during the subtemplate generation. You do have the option to skip
 the step that creates this file, using your own script file as an
@@ -441,12 +457,12 @@ command to run the model on line
 <li>Lines
   <highlight-code code="templating/scripts/X.sh"
    color="rgba(255,255,255,0.3)" from="29" to="38">30-39</highlight-code>
-   define the <tt id="mytt">param_line</tt>, <tt id="mytt">emews_root</tt>, and <tt id="mytt">instance_directory</tt>
+   define the <tt id="mycode">param_line</tt>, <tt id="mycode">emews_root</tt>, and <tt id="mycode">instance_directory</tt>
    variables from the 1st, 2nd, and 3rd arguments to the script respectively. We saw previously
    in the <highlight-code code="templating/swift/swift_run_sweep.swift"
    color="rgba(255,255,255,0.3)" from="7" to="10">run_model</highlight-code> function
    where the current parameter line,
-   the <tt id="mytt">EMEWS_PROJECT_ROOT</tt> directory and the instance directory
+   the <tt id="mycode">EMEWS_PROJECT_ROOT</tt> directory and the instance directory
    are passed model execution script in that order. The final line in this
    section changes directories to the instance directory, so that the model
    is run from within that directory.</li>
@@ -455,8 +471,8 @@ command to run the model on line
     color="rgba(255,255,255,0.3)" from="41" to="41">42</highlight-code>
     is intended to contain the command to run the model and must be updated
     by the user. For example, if your model was written in Java with a main
-    class of <tt id="mytt">model.FluModel</tt>, and the jar containing that code was
-    in a model directory beneath the emews project root, then the <tt id="mytt">MODEL_CMD</tt>
+    class of <tt id="mycode">model.FluModel</tt>, and the jar containing that code was
+    in a model directory beneath the emews project root, then the <tt id="mycode">MODEL_CMD</tt>
     would look like:
     <pre>MODEL_CMD="java -cp $emews_root/model/flu_model.jar model.FluModel $param_line"</pre>
     If the model was a native executable then it might look like:
@@ -473,12 +489,12 @@ command to run the model on line
 
 <p>
 <span id="eqpy_section"/>
-<h3>The <tt id="mytt">eqpy</tt> Subtemplate</h3>
+<h3>The <tt id="mycode">eqpy</tt> Subtemplate</h3>
 
 </p>
 
 <p>
-The <tt id="mytt">eqpy</tt> subtemplate generates files and code for model
+The <tt id="mycode">eqpy</tt> subtemplate generates files and code for model
 exploration using the EQ/Py EMEWS extension (EMEWS Templates are the preferred
 way of installing and using EQ/Py, however the
 <a target="_blank" href="https://github.com/emews/EQ-Py">EQ/Py code repository</a>
@@ -501,7 +517,7 @@ code is not restricted to be Python-based. See the <modal-data data="plugins/Tut
 Use Case 2 Tutorial "Workflow control with Python"</modal-data> for an EQ/Py workflow where the model code is written in Java.
 </p>
 <br>
-The <tt id="mytt">eqpy</tt> subtemplate installs this extension and adds user customizable code that
+The <tt id="mycode">eqpy</tt> subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a python code algorithm
 using the two queues. By default the coordinated execution of the two follows
 this pattern:
@@ -537,12 +553,12 @@ python side hangs in a "get" waiting for the otherside to "put".
 
 
 <p>
-When run, the <tt id="mytt">eqpy</tt> subtemplate will ask you for the following:
+When run, the <tt id="mycode">eqpy</tt> subtemplate will ask you for the following:
 <ul>
   <li>The model name. This isn't necessarily the literal model name,
   but rather is used as part of script names and within the files.</li>
   <li>Whether or not to create a script for running the model. This
-  is the same script as the <tt id="mytt">X.sh</tt>
+  is the same script as the <tt id="myfn">X.sh</tt>
   <!-- <modal-data ref="templating:X.sh">X.sh</modal-data> -->
 file described in the previous section.</li>
   <li>Your python code's python package name. In the typical
@@ -558,7 +574,7 @@ file described in the previous section.</li>
 </p>
 
 <p>
-The <tt id="mytt">eqpy</tt> subtemplate then install the EQ/Py extension and
+The <tt id="mycode">eqpy</tt> subtemplate then install the EQ/Py extension and
 generates several files to be edited by the user.</p>
 
 <p>
@@ -566,8 +582,8 @@ The subtemplate installs the EQ/Py extension in ext/EQ-Py. The extension consist
 of two files.
 
   <ul>
-    <li><tt id="mytt">ext/EQ-Py/eqpy.py</tt></li>
-    <li><tt id="mytt">ext/EQ-Py/eqpy.swift</tt></li>
+    <li><tt id="myfn">ext/EQ-Py/eqpy.py</tt></li>
+    <li><tt id="myfn">ext/EQ-Py/eqpy.swift</tt></li>
   </ul>
 
 The python file contains the python code that creates the blocking queues
@@ -582,15 +598,15 @@ above) and the names below are the defaults.
 
   <ul>
     <li>Optionally <open-code code="templating/scripts/eqpy_X.sh">
-      <tt id="mytt">eqpy_X.sh</tt></open-code>, where "X" is derived from the
+      <tt id="myfn">eqpy_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
-      <tt id="mytt">sweep</tt> template, so see  <!-- TODO: fix if not right -->
+      <tt id="mycode">sweep</tt> template, so see  <!-- TODO: fix if not right -->
       <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
-      <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
+      <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="myfn">swift_run_eqpy.sh</tt>
       </open-code> - a bash script used to launch the EQ/Py-based workflow.</li>
     <li>
-      <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="mytt">swift_run_eqpy.swift</tt>
+      <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="myfn">swift_run_eqpy.swift</tt>
       </open-code> - a skeleton swift script for model exploration
   runs whose parameters are generated from a python algorithm. This must
   be customized by the user.</li>
@@ -599,11 +615,11 @@ above) and the names below are the defaults.
 
 <p>
   <span id="swift_run_eqpy" />
-  <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="mytt">swift_run_eqpy.sh</tt>
+  <open-code code="templating/swift/swift_run_eqpy.sh"><tt id="myfn">swift_run_eqpy.sh</tt>
   </open-code>
 </p>
 <p>
-This file is very similar to the  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="mytt">swift_run_sweep.sh</tt></modal-data>
+This file is very similar to the  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="mycode">swift_run_sweep.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -616,8 +632,8 @@ additional detail on the EQ/Py specific sections of this file.
 
 <li>Line <highlight-code code="templating/swift/swift_run_eqpy.sh"
  color="rgba(255,255,255,0.3)" from="36" to="36">37</highlight-code> sets
- the PYTHONPATH environment variable to include the <tt id="mytt">$EMEWS_PROJECT_ROOT/python</tt>
- directory and the <tt id="mytt">$EMEWS_PROJECT_ROOT/ext/EQ-Py</tt> directory. Your
+ the PYTHONPATH environment variable to include the <tt id="mycode">$EMEWS_PROJECT_ROOT/python</tt>
+ directory and the <tt id="mycode">$EMEWS_PROJECT_ROOT/ext/EQ-Py</tt> directory. Your
  python code should be in the former while the EQ/Py extension is in the latter.
  Setting the PYTHONPATH allows python to find your code and the extension.</li>
 
@@ -641,8 +657,8 @@ additional detail on the EQ/Py specific sections of this file.
     adds additional values to the CMD_LINE_ARGS variable. When the
     swift script receives the model run parameters from the python
     algorithm, typically some number of trials or variations is performed
-    for each set of parameters. The <tt id="mytt">-nv</tt> argument can be used to
-    specify the number of trials / variations. The <tt id="mytt">seed</tt> argument can
+    for each set of parameters. The <tt id="mycode">-nv</tt> argument can be used to
+    specify the number of trials / variations. The <tt id="mycode">seed</tt> argument can
     be used to set an initial random seed for the python algorithm when
     it is intialized. These are not required but included here for convenience.
   </li>
@@ -650,8 +666,8 @@ additional detail on the EQ/Py specific sections of this file.
   <li>
     Line <highlight-code code="templating/swift/swift_run_eqpy.sh"
      color="rgba(255,255,255,0.3)" from="71" to="71">72</highlight-code> executes
-     the swift script passing it and <tt id="mytt">swift-t</tt> the relevant variables.
-     The new <tt id="mytt">-I</tt> and <tt id="mytt">-r</tt> arguments add an INCLUDE path for
+     the swift script passing it and <tt id="mycode">swift-t</tt> the relevant variables.
+     The new <tt id="mycode">-I</tt> and <tt id="mycode">-r</tt> arguments add an INCLUDE path for
      the EQ/Py extension swift library and an RPATH for the the EQ/Py extension swift extension,
      respectively. These are necessary for swift to use the EQ/Py extension.
   </li>
@@ -659,12 +675,12 @@ additional detail on the EQ/Py specific sections of this file.
 
 <p>
   <span id="swift_run_eqpy_swift"></span>
-  <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="mytt">swift_run_eqpy.swift</tt>
+  <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="myfn">swift_run_eqpy.swift</tt>
   </open-code>
 </p>
 
 <p>
-The <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="mytt">swift_run_eqpy.swift</tt></open-code> p
+The <open-code code="templating/swift/swift_run_eqpy.swift"><tt id="myfn">swift_run_eqpy.swift</tt></open-code> p
 rovides the skeleton structure and placeholders for an EQ/Py-based
 workflow. It needs to be customized by the user, and contains extensive comments
 and TODO tags as guides for the customization. The following describes the
@@ -679,12 +695,12 @@ color="rgba(255,255,255,0.3)" from="171" to="171">main</highlight-code> function
 For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
 <highlight-code code="templating/swift/swift_run_eqpy.sh"
  color="rgba(255,255,255,0.3)" from="39" to="40">40-41</highlight-code> in
- <tt id="mytt">swift_run_eqpy.sh</tt>), the main function starts the coordinated
+ <tt id="myfn">swift_run_eqpy.sh</tt>), the main function starts the coordinated
  sequence of algorithmic parameter production and model runs as described above.
 
 <!--  <modal-data ref="overview">above</modal-data>. -->
  By default the <highlight-code code="templating/swift/swift_run_eqpy.sh"
-  color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="mytt">swift_run_eqpy.sh</tt></highlight-code>
+  color="rgba(255,255,255,0.3)" from="40" to="40"><tt id="myfn">swift_run_eqpy.sh</tt></highlight-code>
   defined only a single rank.
  </p>
 
@@ -694,9 +710,9 @@ color="rgba(255,255,255,0.3)" from="134" to="134">start</highlight-code> functio
 to initialize this sequence. The start function
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="135" to="135">begins</highlight-code>
-with a swift function call, <tt id="mytt">locationFromRank</tt>, that takes an integer rank and
-returns a <tt id="mytt">location</tt> structure which is then assigned to an <tt id="mytt">ME</tt> variable.
-This <tt id="mytt">ME</tt> variable is passed to all the eqpy related functions, providing
+with a swift function call, <tt id="mycode">locationFromRank</tt>, that takes an integer rank and
+returns a <tt id="mycode">location</tt> structure which is then assigned to an <tt id="mycode">ME</tt> variable.
+This <tt id="mycode">ME</tt> variable is passed to all the eqpy related functions, providing
 those functions with the location of the task where the python code is executing.
 This call is followed by a TODO concerned with creating a set of parameters
 with which to initialize the python algorithm (lines
@@ -708,13 +724,13 @@ sequence of algorithmic parameter production and model runs is begun. Line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="145" to="145">146</highlight-code> begins
 this by initailizing EQ/Py: creating the blocking queues and initializing the
-python package <tt id="mytt">my_algorithm</tt>. The <tt id="mytt">EQPy_init_package</tt> call
+python package <tt id="mycode">my_algorithm</tt>. The <tt id="mycode">EQPy_init_package</tt> call
 starts a python instance on the specified location and executes code that imports the specified package
-and then calls a <tt id="mytt">run()</tt> function on that package. Your python code
-will need to implement such a function. <tt id="mytt">EQPy_get</tt> will attempt to get
+and then calls a <tt id="mycode">run()</tt> function on that package. Your python code
+will need to implement such a function. <tt id="mycode">EQPy_get</tt> will attempt to get
 a string value from the EQ/Py output queue, blocking until there is something to
-get. <tt id="mytt">EQPy_put</tt> will put a string value on the EQ/Py input queue.
-(All of the <tt id="mytt">EQPy_*</tt> calls are made available to the Swift script via the
+get. <tt id="mycode">EQPy_put</tt> will put a string value on the EQ/Py input queue.
+(All of the <tt id="mycode">EQPy_*</tt> calls are made available to the Swift script via the
 EQPy import on line <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.)
 </p>
@@ -724,25 +740,25 @@ The sequence of calls then in lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="145" to="147">146-148</highlight-code> consist of:
 <ol id="myol">
-  <li>importing the <tt id="mytt">my_algorithm</tt> package and calling <tt id="mytt">my_algorithm.run()</tt> (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
+  <li>importing the <tt id="mycode">my_algorithm</tt> package and calling <tt id="mycode">my_algorithm.run()</tt> (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="145" to="145">146</highlight-code>)</li>
   <li>waiting for the the python code to put a string value in the EQ/Py output queue (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="146" to="146">147</highlight-code>)</li>
-  <li>putting the <tt id="mytt">algo_params</tt> string into EQ/Py's input queue where it can
+  <li>putting the <tt id="mycode">algo_params</tt> string into EQ/Py's input queue where it can
     be retreived by the the python code to parametrically initialize the algorithm (line <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="147" to="147">148</highlight-code>).</li>
 </ol>
 </p>
 
 <p>
-The call to the <tt id="mytt">loop</tt> function (line
+The call to the <tt id="mycode">loop</tt> function (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="148" to="148">149</highlight-code>) begins
 the loop over the coordinated sequence of algorithmic parameter production and
 model runs. The loop itself looks more complicated than it is,
-primarily due to the complexity involved in writing what is effectively a <tt id="mytt">while</tt> loop in swift's
+primarily due to the complexity involved in writing what is effectively a <tt id="mycode">while</tt> loop in swift's
 relentlessly parallelizing environment. The essential flow
-of the <tt id="mytt">loop</tt> function (lines
+of the <tt id="mycode">loop</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="78" to="129">79-130</highlight-code>) is
 to retrieve a parameters string from the python algorithm (line
@@ -760,14 +776,14 @@ an array where each element corresponds to the parameters for a single
 model run (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="112" to="112">113</highlight-code>).
-A foreach loop then iterates over this array calling the <tt id="mytt">obj</tt> function
+A foreach loop then iterates over this array calling the <tt id="mycode">obj</tt> function
 that initiates model runs for each element of the array, and gathering the
-results of those model runs in a <tt id="mytt">results</tt> array (lines
+results of those model runs in a <tt id="mycode">results</tt> array (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="113" to="117">114-118</highlight-code>).
 Once all the results have been gathered, the floating point results are transformed
 into a string format and passed back to the EQ/Py input queue. This involves
-transforming the <tt id="mytt">results</tt> float array into the <tt id="mytt">rs</tt> string array
+transforming the <tt id="mycode">results</tt> float array into the <tt id="mycode">rs</tt> string array
 and joining this array into one comma
 separated string (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
@@ -782,24 +798,24 @@ the sequence begins again.
 </p>
 
 <p>
-The <tt id="mytt">obj</tt> function (lines
+The <tt id="mycode">obj</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="64" to="76">65-77</highlight-code>) takes a
 parameter string for a model run and the number of trials to be run for
-the parameters in that string and calls <tt id="mytt">create_parameter_combinations</tt>
+the parameters in that string and calls <tt id="mycode">create_parameter_combinations</tt>
 to create an array of parameters strings (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>).
 The intention is that the user implements <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="56" to="56"><tt id="mytt">create_parameter_combinations</tt></highlight-code>
+color="rgba(255,255,255,0.3)" from="56" to="56"><tt id="mycode">create_parameter_combinations</tt></highlight-code>
 to create an array of parameter combinations whose size is equal to the number
-of trials. The <tt id="mytt">obj</tt> function can then iterate over this array in
-a parallel <tt id="mytt">foreach</tt> loop, launching a model run for each of these
+of trials. The <tt id="mycode">obj</tt> function can then iterate over this array in
+a parallel <tt id="mycode">foreach</tt> loop, launching a model run for each of these
 parameter combinations using the
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="40" to="54"> <tt id="mytt">run_obj</tt></highlight-code>
+color="rgba(255,255,255,0.3)" from="40" to="54"> <tt id="mycode">run_obj</tt></highlight-code>
 function, and gathering the results of each run in the
-<tt id="mytt">fresults</tt> array (lines
+<tt id="mycode">fresults</tt> array (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="67" to="70">68-71</highlight-code>).
 Once the model runs have completed the results of those trials are
@@ -809,27 +825,27 @@ color="rgba(255,255,255,0.3)" from="75" to="75">76</highlight-code>).
 </p>
 
 <p>
-The <tt id="mytt">run_obj</tt> function (lines
+The <tt id="mycode">run_obj</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="40" to="54">41-55</highlight-code>)
 launches a single model run using
-the <tt id="mytt">run_model</tt> app function (lines
+the <tt id="mycode">run_model</tt> app function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="28" to="31">29-32</highlight-code>).
-The <tt id="mytt">run_model</tt> function is identical to the <tt id="mytt">run_model</tt>
+The <tt id="mycode">run_model</tt> function is identical to the <tt id="mycode">run_model</tt>
 function described in
-the <tt id="mytt">sweep</tt> subtemplate section, using a bash script to run the
-model. The <tt id="mytt">run_obj</tt> function is also similar to the <tt id="mytt">sweep</tt> code
-that calls <tt id="mytt">run_model</tt>, creating out and err <tt id="mytt">file</tt> objects,
+the <tt id="mycode">sweep</tt> subtemplate section, using a bash script to run the
+model. The <tt id="mycode">run_obj</tt> function is also similar to the <tt id="mycode">sweep</tt> code
+that calls <tt id="mycode">run_model</tt>, creating out and err <tt id="mycode">file</tt> objects,
 creating the path for the model script file, and so on (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="45" to="47">46-48</highlight-code>).
 The major difference is that the results of a model run must now be
 retrieved and used in the summary result that is sent back to the
-python algorithm. Our <tt id="mytt">swift_run_eqpy.swift</tt> contains some example
+python algorithm. Our <tt id="myfn">swift_run_eqpy.swift</tt> contains some example
 code for how this retrieval might be done. It assumes that the model ouput is
 written to a csv file and a column in the last row of that file contains
-the desired value. The <tt id="mytt">get_result</tt> function (lines
+the desired value. The <tt id="myfn">get_result</tt> function (lines
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="33" to="38">34-39</highlight-code>) is an
 example of using an R code snippet (lines
@@ -839,18 +855,18 @@ read and return that value.
 </p>
 
 <p>
-As mentioned previously, the <tt id="mytt">swift_run_eqpy.swift</tt> file created by the
-<tt id="mytt">eqpy</tt> template is meant to be customized by you, the user. The structure
+As mentioned previously, the <tt id="myfn">swift_run_eqpy.swift</tt> file created by the
+<tt id="mycode">eqpy</tt> template is meant to be customized by you, the user. The structure
 should be sufficient for an EQ/Py-based workflow, but the specifics need to be
 customized for your particular use case.
 </p>
 
 <p>
-<h3 id="eqr_section">The <tt id="mytt">eqr</tt> Subtemplate</h3>
+<h3 id="eqr_section">The <tt id="mycode">eqr</tt> Subtemplate</h3>
 </p>
 
 <p>
-The <tt id="mytt">eqr</tt> subtemplate works much the same as the <tt id="mytt">eqpy</tt> template,
+The <tt id="mycode">eqr</tt> subtemplate works much the same as the <tt id="mycode">eqpy</tt> template,
 but for model exploration algorithms written in R. It generates files and code for model
 exploration using the EQ/R EMEWS extension. (EMEWS Templates are the preferred
 way of installing and using EQ/R, however the
@@ -870,11 +886,11 @@ and this is a zoomed in picture showing the R-based ME and Swift script queue co
 </p>
 
 <p>
-The <tt id="mytt">eqr</tt>
+The <tt id="mycode">eqr</tt>
 subtemplate installs this extension and adds user customizable code that
 allows model runs and exploration to be controlled from a R code algorithm
 using the two queues. By default the coordinated execution of the two uses
-the following pattern (identical to that of the <tt id="mytt">eqpy</tt> template).
+the following pattern (identical to that of the <tt id="mycode">eqpy</tt> template).
 
 <span id="eqr_overview"></span>
 <ol id="myol">
@@ -906,7 +922,7 @@ R side hangs in a "get" waiting for the otherside to "put".
 </p>
 
 <p>
-When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
+When run, the <tt id="mycode">eqr</tt> subtemplate will ask you for the following:
 <ul>
   <li>Whether to build and install the EQ/R swift extension as part of the
     template generation. If you answer yes to this, there will be further queries
@@ -920,43 +936,43 @@ When run, the <tt id="mytt">eqr</tt> subtemplate will ask you for the following:
   <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">X.sh</modal-data>
 file described in the sweep section.</li>
   <li>The file name for your R model exploration code. This defaults
-  to <tt id="mytt">my_algorithm.R</tt>. This file is sourced as part of EQ/R
+  to <tt id="mycode">my_algorithm.R</tt>. This file is sourced as part of EQ/R
   initialization and so it must contain code that will be run when sourced.</li>
   <li>Whether or not your R algorithm produces parameters
     for a single run (unlikely), or sets of parameters for multiple runs.</li>
   <li>A name for the swift workflow script. This defaults to
-    <tt id="mytt">swift_run_eqr.swift</tt>.</li>
+    <tt id="myfn">swift_run_eqr.swift</tt>.</li>
   <li>A name for the bash script for launching the swift script. This
-    defaults to <tt id="mytt">swift_run_eqr.sh</tt>.</li>
+    defaults to <tt id="myfn">swift_run_eqr.sh</tt>.</li>
 </ul>
 </p>
 
 <p>
 The EQ/R extension includes native code that requires compilation using a
-C++ compiler. The <tt id="mytt">eqr</tt> subtemplate will install an
-autotools-based installation in <tt id="mytt">ext/EQ-R/eqr/</tt>.
+C++ compiler. The <tt id="mycode">eqr</tt> subtemplate will install an
+autotools-based installation in <tt id="mycode">ext/EQ-R/eqr/</tt>.
 If you choose to run the build and install of the extension from within template
-generation, the template will generate a <tt id="mytt">build.sh</tt> file within that directory,
-and then execute this <tt id="mytt">build.sh</tt> file. <tt id="mytt">build.sh</tt> automates
-the autotools-based installation, calling <tt id="mytt">bootstrap</tt>, <tt id="mytt">configure</tt>
-with the appropriate arguments, and then <tt id="mytt">make install</tt>. If there
+generation, the template will generate a <tt id="myfn">build.sh</tt> file within that directory,
+and then execute this <tt id="myfn">build.sh</tt> file. <tt id="myfn">build.sh</tt> automates
+the autotools-based installation, calling <tt id="mycode">bootstrap</tt>, <tt id="mycode">configure</tt>
+with the appropriate arguments, and then <tt id="mycode">make install</tt>. If there
 are any errors during this, or you wish to compile the EQ/R extension
-manually, see <tt id="mytt">ext/EQ-R/eqr/COMPILING.txt</tt>.
+manually, see <tt id="mycode">ext/EQ-R/eqr/COMPILING.txt</tt>.
 </p>
 
 <p>
 A successful EQ/R build and install will install the following files:
 
   <ul>
-    <li><tt id="mytt">ext/EQ-R/EQR.swift</tt></li>
-    <li><tt id="mytt">ext/EQ-R/libeqr.so</tt></li>
-    <li><tt id="mytt">ext/EQ-R/pkgIndex.tcl</tt></li>
+    <li><tt id="myfn">ext/EQ-R/EQR.swift</tt></li>
+    <li><tt id="myfn">ext/EQ-R/libeqr.so</tt></li>
+    <li><tt id="myfn">ext/EQ-R/pkgIndex.tcl</tt></li>
   </ul>
 
 The swift file contains the swift code for initializing EQ/R with an
 R file and communicating with the R environment via the queues. The native
-library <tt id="mytt">libeqr.so</tt> contains the native code that implements
-the queues and exposes them to swift and the R environment. <tt id="mytt">pkgIndex.tcl</tt>
+library <tt id="mycode">libeqr.so</tt> contains the native code that implements
+the queues and exposes them to swift and the R environment. <tt id="mycode">pkgIndex.tcl</tt>
 is required in order for swift to be able to use the native code library.
 These should not need to be edited by you, the user.
 </p>
@@ -968,15 +984,15 @@ above) and the names below are the defaults.
 
   <ul>
     <li>Optionally <open-code code="templating/scripts/eqr_X.sh">
-      <tt id="mytt">eqr_X.sh</tt></open-code>, where "X" is derived from the
+      <tt id="myfn">eqr_X.sh</tt></open-code>, where "X" is derived from the
       model name input. This file is identical to that produced by the
-      <tt id="mytt">sweep</tt> template, so see
+      <tt id="mycode">sweep</tt> template, so see
       <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="X_sh">scripts/X.sh</modal-data> for more details.</li>
     <li>
-      <open-code code="templating/swift/swift_run_eqr.sh"><tt id="mytt">swift_run_eqr.sh</tt>
+      <open-code code="templating/swift/swift_run_eqr.sh"><tt id="myfn">swift_run_eqr.sh</tt>
       </open-code> - a bash script used to launch the EQ/R-based workflow.</li>
     <li>
-      <open-code code="templating/swift/swift_run_eqr.swift"><tt id="mytt">swift_run_eqr.swift</tt>
+      <open-code code="templating/swift/swift_run_eqr.swift"><tt id="myfn">swift_run_eqr.swift</tt>
       </open-code> - a skeleton swift script for model exploration
       runs whose parameters are generated from a R algorithm. This must be customized
       by the user.</li>
@@ -985,12 +1001,12 @@ above) and the names below are the defaults.
 
 <p>
   <span id="swift_run_eqr" />
-  <open-code code="templating/swift/swift_run_eqr.sh"><tt id="mytt">swift_run_eqr.sh</tt>
+  <open-code code="templating/swift/swift_run_eqr.sh"><tt id="myfn">swift_run_eqr.sh</tt>
   </open-code>
 </p>
 <p>
 This file is nearly identical to
-<modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_eqpy"><tt id="mytt">swift_run_eqpy.sh</tt></modal-data>
+<modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_eqpy"><tt id="myfn">swift_run_eqpy.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -1016,26 +1032,26 @@ additional detail on the EQ/R specific sections of this file.
       <highlight-code code="templating/swift/swift_run_eqr.sh"
       color="rgba(255,255,255,0.3)" from="70" to="71">71-72</highlight-code>
       assigns the swift file to execute to a variable and then swift-t runs
-      that file. The <tt id="mytt">-I</tt> and <tt id="mytt">-r</tt> arguments now
+      that file. The <tt id="mycode">-I</tt> and <tt id="mycode">-r</tt> arguments now
       point to the EQ/R location.</li>
 </ul>
 
 <p>
 
-  <open-code code="templating/swift/swift_run_eqr.swift"><tt id="mytt">swift_run_eqr.swift</tt>
+  <open-code code="templating/swift/swift_run_eqr.swift"><tt id="myfn">swift_run_eqr.swift</tt>
   </open-code>
 </p>
 
 <p>
-The <open-code code="templating/swift/swift_run_eqr.swift"><tt id="mytt">swift_run_eqr.swift</tt></open-code>
+The <open-code code="templating/swift/swift_run_eqr.swift"><tt id="myfn">swift_run_eqr.swift</tt></open-code>
 provides the skeleton structure and placeholders for an EQ/R-based
 workflow. It needs to be customized by the user, and contains extensive comments
 and TODO tags as guides for the customization. The file is nearly identical
 to the analogous
 <open-code code="templating/swift/swift_run_eqpy.swift">
-  <tt id="mytt">swift_run_eqpy.swift</tt></open-code> file for an EQ/Py-based
+  <tt id="myfn">swift_run_eqpy.swift</tt></open-code> file for an EQ/Py-based
   workflow. The files do differ in the queue related calls made in the
-  <tt id="mytt">start</tt> and <tt id="mytt">loop</tt> functions. The following describes the
+  <tt id="mycode">start</tt> and <tt id="mycode">loop</tt> functions. The following describes the
   general structure, the flow of the code, and points out some important details.
   Additional details can found in the script's comments and TODOs.
   </p>
@@ -1048,13 +1064,13 @@ to the analogous
   For each task rank in the RESIDENT_WORK_RANKS array (defined in lines
   <highlight-code code="templating/swift/swift_run_eqr.sh"
    color="rgba(255,255,255,0.3)" from="39" to="40">40-41</highlight-code> in
-   <tt id="mytt">swift_run_eqr.sh</tt>), the main function starts the coordinated
+   <tt id="myfn">swift_run_eqr.sh</tt>), the main function starts the coordinated
    sequence of algorithmic parameter production and model runs as described
 
    <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqr_overview">above</modal-data>.
    By default <highlight-code code="templating/swift/swift_run_eqr.sh"
     color="rgba(255,255,255,0.3)" from="40" to="40">
-    <tt id="mytt">swift_run_eqr.sh</tt></highlight-code>
+    <tt id="myfn">swift_run_eqr.sh</tt></highlight-code>
     defines only a single rank.
    </p>
 
@@ -1064,10 +1080,10 @@ to the analogous
   to initialize this sequence. The start function
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="126" to="126">begins</highlight-code>
-  with a swift function call, <tt id="mytt">locationFromRank</tt>, that takes an integer rank and
-  returns a <tt id="mytt">location</tt> structure which is then assigned to a
-  <tt id="mytt">ME</tt> variable.
-  This <tt id="mytt">ME</tt> variable is passed to all the EQ/R related functions, providing
+  with a swift function call, <tt id="mycode">locationFromRank</tt>, that takes an integer rank and
+  returns a <tt id="mycode">location</tt> structure which is then assigned to a
+  <tt id="mycode">ME</tt> variable.
+  This <tt id="mycode">ME</tt> variable is passed to all the EQ/R related functions, providing
   those functions with the location of the task where the R code is executing.
   This call is followed by a TODO concerned with creating a set of parameters
   with which to initialize the R algorithm (lines
@@ -1079,13 +1095,13 @@ to the analogous
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="136" to="136">137</highlight-code> begins
   this by initailizing EQ/R: creating the blocking queues and sourcing
-  the R code file, <tt id="mytt">my_algorithm.R</tt>, in the R environment.
-  The <tt id="mytt">EQR_init_script</tt> call
+  the R code file, <tt id="mycode">my_algorithm.R</tt>, in the R environment.
+  The <tt id="mycode">EQR_init_script</tt> call
   starts an R instance on the specified location and sources the specified R
   file in that R environment, executing the code in that file.
-  <tt id="mytt">EQR_get</tt> will attempt to get
+  <tt id="mycode">EQR_get</tt> will attempt to get
   a string value from the EQ/R output queue, blocking until there is something to
-  get. <tt id="mytt">EQR_put</tt> will put a string value on the EQ/R input queue.
+  get. <tt id="mycode">EQR_put</tt> will put a string value on the EQ/R input queue.
   </p>
 
   <p>
@@ -1093,27 +1109,27 @@ to the analogous
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="136" to="138">137-139</highlight-code> consist of:
   <ol id="myol">
-    <li>sourcing the <tt id="mytt">my_algorithm.R</tt> file</li>
+    <li>sourcing the <tt id="mycode">my_algorithm.R</tt> file</li>
     <li>waiting for that sourced R code to put a string value in the EQ/R output queue</li>
-    <li>putting the <tt id="mytt">algo_params</tt> string into EQ/Rs input queue where it can
+    <li>putting the <tt id="mycode">algo_params</tt> string into EQ/Rs input queue where it can
       be retreived by the the R code to parametrically initialize the
       model exploration algorithm.</li>
   </ol>
-  Skipping the call to the <tt id="mytt">loop</tt> function for a
+  Skipping the call to the <tt id="mycode">loop</tt> function for a
   moment, lines <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="140" to="141">141-142</highlight-code>
   properly cleanup the EQ/R extension.
   </p>
 
   <p>
-  The call to the <tt id="mytt">loop</tt> function (line
+  The call to the <tt id="mycode">loop</tt> function (line
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="139" to="139">140</highlight-code>) begins
   the loop over the coordinated sequence of algorithmic parameter production and
   model runs. The loops itself looks more complicated than it is,
   primarily due to the complexity involved in writing such a loop in swift's
   relentlessly parallelizing environment. Regardless, the essential flow
-  of the <tt id="mytt">loop</tt> function (lines
+  of the <tt id="mycode">loop</tt> function (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="73" to="123">74-124</highlight-code>) is
   to retrieve a parameters string from the R algorithm (line
@@ -1131,9 +1147,9 @@ to the analogous
   model run (line
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="106" to="106">107</highlight-code>).
-  A foreach loop then iterates over this array calling the <tt id="mytt">obj</tt> function
+  A foreach loop then iterates over this array calling the <tt id="mycode">obj</tt> function
   that initiates model runs for each element of the array, and gathering the
-  results of those model runs in a <tt id="mytt">results</tt> variable (lines
+  results of those model runs in a <tt id="mycode">results</tt> variable (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="107" to="111">108-112</highlight-code>).
   Once all the results have been gathered, the floating point results are
@@ -1151,26 +1167,26 @@ to the analogous
   </p>
 
   <p>
-  The <tt id="mytt">obj</tt> function (lines
+  The <tt id="mycode">obj</tt> function (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="59" to="71">60-72</highlight-code>) takes a
   parameter string for a model run and the number of trials to be run for
-  the parameters in that string and calls <tt id="mytt">create_parameter_combinations</tt>
+  the parameters in that string and calls <tt id="mycode">create_parameter_combinations</tt>
   to create an array of parameters strings (line
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="61" to="61">62</highlight-code>).
-  The intention is that the user implements <tt id="mytt">create_parameter_combinations</tt>
+  The intention is that the user implements <tt id="mycode">create_parameter_combinations</tt>
   (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.5)" from="52" to="56">53-57</highlight-code>)
   to create an array of parameter combinations whose size is equal to the number
-  of trials. The <tt id="mytt">obj</tt> function will then iterate over this array in
-  a parallel <tt id="mytt">foreach</tt> loop, launching a model run for each of these
+  of trials. The <tt id="mycode">obj</tt> function will then iterate over this array in
+  a parallel <tt id="mycode">foreach</tt> loop, launching a model run for each of these
   parameter combinations using the
   <highlight-code code="templating/swift/swift_run_eqr.swift"
-  color="rgba(255,255,255,0.3)" from="35" to="49"> <tt id="mytt">run_obj</tt></highlight-code>
+  color="rgba(255,255,255,0.3)" from="35" to="49"> <tt id="mycode">run_obj</tt></highlight-code>
   function, and gathering the results of each run in the
-  <tt id="mytt">fresults</tt> array (lines
+  <tt id="mycode">fresults</tt> array (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="62" to="65">63-66</highlight-code>).
   Once the model runs have completed the results of those trials are
@@ -1180,27 +1196,27 @@ to the analogous
   </p>
 
   <p>
-  The <tt id="mytt">run_obj</tt> function (lines
+  The <tt id="mycode">run_obj</tt> function (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="35" to="49">36-50</highlight-code>)
   launches a single model run using
-  the <tt id="mytt">run_model</tt> app function (lines
+  the <tt id="mycode">run_model</tt> app function (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="23" to="26">24-27</highlight-code>).
-  The <tt id="mytt">run_model</tt> function is identical to the <tt id="mytt">run_model</tt>
+  The <tt id="mycode">run_model</tt> function is identical to the <tt id="mycode">run_model</tt>
   function described in
-  the <tt id="mytt">sweep</tt> subtemplate section, using a bash script to run the
-  model. The <tt id="mytt">run_obj</tt> is also similar to the <tt id="mytt">sweep</tt> code
-  that calls <tt id="mytt">run_model</tt>, creating out and err <tt id="mytt">file</tt> objects,
+  the <tt id="mycode">sweep</tt> subtemplate section, using a bash script to run the
+  model. The <tt id="mycode">run_obj</tt> is also similar to the <tt id="mycode">sweep</tt> code
+  that calls <tt id="mycode">run_model</tt>, creating out and err <tt id="mycode">file</tt> objects,
   creating the path for the model script file, and so on (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="40" to="42">41-43</highlight-code>).
   The major difference is that the results of a model run must now be
   retrieved and used in the summary result that is sent back to the
-  R algorithm. Our <tt id="mytt">swift_run_eqr.swift</tt> contains some example
+  R algorithm. Our <tt id="myfn">swift_run_eqr.swift</tt> contains some example
   code for how this retrieval might be done. It assumes that the model ouput is
   written to a csv file and a column in the last row of that file contains
-  the desired value. The <tt id="mytt">get_result</tt> function (lines
+  the desired value. The <tt id="mycode">get_result</tt> function (lines
   <highlight-code code="templating/swift/swift_run_eqr.swift"
   color="rgba(255,255,255,0.3)" from="28" to="33">29-34</highlight-code>) is an
   example of using some R code (lines
@@ -1210,8 +1226,8 @@ to the analogous
   </p>
 
   <p>
-  As mentioned previously, the <tt id="mytt">swift_run_eqr.swift</tt> file created by the
-  <tt id="mytt">eqr</tt> template is meant to be customized by you, the user. The structure
+  As mentioned previously, the <tt id="myfn">swift_run_eqr.swift</tt> file created by the
+  <tt id="mycode">eqr</tt> template is meant to be customized by you, the user. The structure
   should be sufficient for an EQ/R-based workflow, but the specifics need to be
   customized for your particular use case.
   </p>

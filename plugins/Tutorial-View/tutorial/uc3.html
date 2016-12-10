@@ -6,6 +6,22 @@
   }
 </style>
 
+<!-- Code snippets -->
+<style>
+  #mycode {
+  font-family: 'Lucida Console',monospace;
+  font-color: white;
+  background-color: #525254;
+  }
+</style>
+
+<!-- File names -->
+<style>
+  #myfn {
+  font-family: 'Lucida Console',monospace;
+  }
+</style>
+
 <style>
   #myol {
     margin-left: 5%;
@@ -26,11 +42,13 @@
 </style>
 
 <p>
+  The full source code for this tutorial use case be downloaded here:
+  <a href="http://www.mcs.anl.gov/~emews/files/UC3.zip">UC3.zip</a>.
+</p>
+
+<p>
 In this use case, we will show how to integrate a multi-process distributed
-native code model written in C++ into a Swift/T workflow. 
-The full source code for this tutorial use case be downloaded here:
-<a href="http://www.mcs.anl.gov/~emews/files/UC2.zip">UC2.zip</a>.
-The model is a variant
+native code model written in C++ into a Swift/T workflow. The model is a variant
 of the Java Zombies model, written in C++ and using MPI and
 <modal-data data="plugins/Tutorial-View/tutorial/refs/collier_parallel_2012.html">the Repast HPC
 toolkit</modal-data> to distribute the model across multiple
@@ -84,21 +102,21 @@ The steps for integrating an MPI distributed application, such as HPC Zombies,
 <h3>Modifing the Application Code</h3>
 <p>
 The first step in integrating the HPC Zombies model with Swift/T is to compile
-it as library, replacing the standalone application's <tt id="mytt">main()</tt>
+it as library, replacing the standalone application's <tt id="mycode">main()</tt>
 function with a function that can run the model with some particular set of parameters.
 In the HPC Zombies case, we have defined this new function in
- <open-code code="uc3/hpc_zombies/src/run.h"><tt id="mytt">run.h</tt></open-code>
+ <open-code code="uc3/hpc_zombies/src/run.h"><tt id="myfn">run.h</tt></open-code>
  and
- <open-code code="uc3/hpc_zombies/src/run.cpp"><tt id="mytt">run.cpp</tt></open-code>.
+ <open-code code="uc3/hpc_zombies/src/run.cpp"><tt id="myfn">run.cpp</tt></open-code>.
  The
  <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
-   from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function has
+   from="20" to="20"><tt id="mycode">zombies_model_run</tt></highlight-code> function has
    three arguments: the MPI communicator in which the
    model runs, the filename of a Repast HPC config file, and the parameters for
    the current run. The function returns a string that contains the number of
    humans and zombies at each time step.
    The MPI communicator argument is required for all MPI distributed models
-   to be integrated with swift while the <tt id="mytt">parameters</tt> will be found
+   to be integrated with swift while the <tt id="mycode">parameters</tt> will be found
    in any model that receives model run parameters from a swift script. The
    format of that string is, of course, model dependent. When
    this function is called, it starts a model run using these arguments. Note
@@ -118,7 +136,7 @@ tool processes an interface file and produces the glue code binding as a
 source code file. In this case, the C++ code we want to be able to call from Tcl
 is our
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
-  from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function
+  from="20" to="20"><tt id="mycode">zombies_model_run</tt></highlight-code> function
 and thus we need to generate the glue code binding for it.
 The interface file is used to specify the C/C++ code that will be bound and
 contains SWIG directives and the relevant C/C++ headers. The following
@@ -134,22 +152,22 @@ required SWIG module directive. The include directive in line
 from="2" to="2">3</highlight-code> is used to add
 the built-in SWIG interface file for C++ strings. This is required because the
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
-  from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function
+  from="20" to="20"><tt id="mycode">zombies_model_run</tt></highlight-code> function
 uses C++ standard library strings. Line
 <highlight-code code="uc3/hpc_zombies/swift/zombies_model.i" color="rgba(255,255,255,0.3)"
 from="3" to="3">4</highlight-code> is
 similar, but in this case the function declaration in our
-<open-code code="uc3/hpc_zombies/src/run.h"><tt id="mytt">run.h</tt></open-code>
+<open-code code="uc3/hpc_zombies/src/run.h"><tt id="myfn">run.h</tt></open-code>
 header are added to the interface file. SWIG will then produce glue code that
-allows that function to be called from Tcl. The code between <tt id="mytt">%{</tt> and
-<tt id="mytt">%}</tt> in lines
+allows that function to be called from Tcl. The code between <tt id="mycode">%{</tt> and
+<tt id="mycode">%}</tt> in lines
 <highlight-code code="uc3/hpc_zombies/swift/zombies_model.i" color="rgba(255,255,255,0.3)"
 from="5" to="8">6-9</highlight-code> is added as-is directly to the source code
 file that SWIG produces, and is typically
 used to add headers or typedefs without which the resulting source code would
 not compile. The final line is a SWIG typedef directive that allows it to parse
 the
-<open-code code="uc3/hpc_zombies/src/run.h"><tt id="mytt">run.h</tt></open-code>
+<open-code code="uc3/hpc_zombies/src/run.h"><tt id="myfn">run.h</tt></open-code>
 file without halting on the MPI_Comm declaration. This interface
 file can be easily adapted to any model or scientific application that uses MPI
 by changing the name of the library header file.
@@ -160,51 +178,51 @@ The
 <open-code code="uc3/hpc_zombies/swift/zombies_model.i">zombies_model.i</open-code>
 file is run
 through SWIG and the resulting source code is compiled together with the HPC Zombies
-model library code, creating a shared library with a <tt id="mytt">zombie_model_run</tt>
+model library code, creating a shared library with a <tt id="mycode">zombie_model_run</tt>
 function that is callable from Tcl. The HPC Zombies Makefile includes
 a target,
 <highlight-code code="uc3/hpc_zombies/Makefile.tmplt" color="rgba(255,255,255,0.3)"
 from="113" to=115>../src/zombies_model_wrapper.cpp</highlight-code> that
 automates the creation of the glue code (i.e., the
-<tt id="mytt">zombies_model_wrapper.cpp</tt> file) as a Makefile target.
+<tt id="myfn">zombies_model_wrapper.cpp</tt> file) as a Makefile target.
 </p>
 
 <h3>Creating the Swift/T extension Tcl package</h3>
 <p>
 Once the glue code has been generated, we now need to a create Swift/T extension
 Tcl package. The Tcl package consists of the compiled shared library,
-including the glue code, a <tt id="mytt">pkgIndex.tcl</tt> file, and a
-<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="mytt">zombies_model.tcl</tt></open-code>
+including the glue code, a <tt id="myfn">pkgIndex.tcl</tt> file, and a
+<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="myfn">zombies_model.tcl</tt></open-code>
 Tcl script. The glue code generated in the previous step exposes the
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
-  from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function in the
+  from="20" to="20"><tt id="mycode">zombies_model_run</tt></highlight-code> function in the
 shared library as a Tcl function, and the code in
-<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="mytt">zombies_model.tcl</tt></open-code>
+<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="myfn">zombies_model.tcl</tt></open-code>
 allows that Tcl function to be correctly called from within a swift script.
-A Tcl package is defined by its <tt id="mytt">pkgIndex.tcl</tt>file that specifies the libraries
+A Tcl package is defined by its <tt id="myfn">pkgIndex.tcl</tt>file that specifies the libraries
 that need to be loaded as part of the package and the Tcl code that is in the
-package. Tcl has a built-in function <tt id="mytt">::pkg::create</tt> that can be used to
-create a <tt id="mytt">pkgIndex.tcl</tt> given a package name, version, the name of the library
+package. Tcl has a built-in function <tt id="mycode">::pkg::create</tt> that can be used to
+create a <tt id="myfn">pkgIndex.tcl</tt> given a package name, version, the name of the library
 to load, and the Tcl code file name. The HPC Zombies
 <highlight-code code="uc3/hpc_zombies/Makefile.tmplt" color="rgba(255,255,255,0.3)"
 from="106" to=111>zombies_tcl_lib</highlight-code> Makefile target uses some simple
 Tcl code,
-<open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="mytt">make-package.tcl</tt></open-code>
-to call this function to create the <tt id="mytt">zombies_model</tt> Tcl package. The
-<open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="mytt">make-package.tcl</tt></open-code>
+<open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="myfn">make-package.tcl</tt></open-code>
+to call this function to create the <tt id="mycode">zombies_model</tt> Tcl package. The
+<open-code code="uc3/hpc_zombies/swift/make-package.tcl"><tt id="myfn">make-package.tcl</tt></open-code>
 script is completely generic, getting its parameters from environment variables
 set in the Makefile
 <highlight-code code="uc3/hpc_zombies/Makefile.tmplt" color="rgba(255,255,255,0.3)"
-  from="109" to="111"><tt id="mytt">target</tt></highlight-code>. As such, it can be used for other models / applications
+  from="109" to="111"><tt id="mycode">target</tt></highlight-code>. As such, it can be used for other models / applications
 as is.
 </p>
 
 <p>
 The
-<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="mytt">zombies_model.tcl</tt></open-code>
+<open-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"><tt id="myfn">zombies_model.tcl</tt></open-code>
 script contains two procedures that integrate the generic Tcl package with
 Swift/T. The script begins by specifying that this script requires the
-Swift/T turbine package and that the two producers are in the <tt id="mytt">zombies_model</tt>
+Swift/T turbine package and that the two producers are in the <tt id="mycode">zombies_model</tt>
 namespace (lines
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"
 color="rgba(255,255,255,0.3)"from="0" to="2">1-3</highlight-code>). As a
@@ -218,58 +236,58 @@ the procedure integrates with Swift/T's concurrent dataflow, and a body that cal
 appropriate function in the shared library. The dataflow interface for HPC
 Zombies is defined in lines
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-  from="4" to="6">5-7</highlight-code>. Here, the <tt id="mytt">rule</tt> command
+  from="4" to="6">5-7</highlight-code>. Here, the <tt id="mycode">rule</tt> command
   in line
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl"
 color="rgba(255,255,255,0.3)" from="5" to="5">6</highlight-code> registers
-dataflow execution: when all input IDs <tt id="mytt">ins</tt> are available, the body procedure,
+dataflow execution: when all input IDs <tt id="mycode">ins</tt> are available, the body procedure,
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-      from="8" to="20"><tt id="mytt">zombies_model_body</tt></highlight-code>,
+      from="8" to="20"><tt id="mycode">zombies_model_body</tt></highlight-code>,
 will be released to the Swift/T load balancer and executed on
-an available subset of workers. The <tt id="mytt">args</tt> argument are Swift-specific task settings,
-including the <tt id="mytt">@par</tt> parallel settings, and are not accessed by the user.
+an available subset of workers. The <tt id="mycode">args</tt> argument are Swift-specific task settings,
+including the <tt id="mycode">@par</tt> parallel settings, and are not accessed by the user.
 </p>
 
 <p>
 Ultimately, we want the body function to call our
 <highlight-code code="uc3/hpc_zombies/src/run.h" color="rgba(255,255,255,0.3)"
-  from="20" to="20"><tt id="mytt">zombies_model_run</tt></highlight-code> function which we've
+  from="20" to="20"><tt id="mycode">zombies_model_run</tt></highlight-code> function which we've
   made accessible to Tcl via the SWIG generated glue code. The overall flow
   of the body function then is to:
 
 <ol id="myol">
   <li>Retrieve the configuration file, parameters, and MPI communicator
     arguments.</li>
-  <li>Call our <tt id="mytt">zombies_model_run</tt> function, passing it those arguments.</li>
-  <li>Retrieve and return the result of the <tt id="mytt">zombies_model_run</tt> function.</li>
+  <li>Call our <tt id="mycode">zombies_model_run</tt> function, passing it those arguments.</li>
+  <li>Retrieve and return the result of the <tt id="mycode">zombies_model_run</tt> function.</li>
 </ol>
 </p>
 
 <p>
 The body function begins by retrieving the input parameter
-  values from Swift by applying the provided <tt id="mytt">retrieve_string</tt> function
+  values from Swift by applying the provided <tt id="mycode">retrieve_string</tt> function
   on the IDs (lines
   <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-    from="9" to="10"><tt id="mytt">10-11</tt></highlight-code>), obtaining the configuration
+    from="9" to="10"><tt id="mycode">10-11</tt></highlight-code>), obtaining the configuration
 file name and the sample model parameters. The
 other required arguments is the MPI communicator. Line
   <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-    from="12" to="12"><tt id="mytt">12</tt></highlight-code> gets the MPI subcommunicator
+    from="12" to="12"><tt id="mycode">12</tt></highlight-code> gets the MPI subcommunicator
     for the
 <modal-data data="plugins/Tutorial-View/tutorial/swiftt.html"
-ref="parallel_task">parallel task</modal-data>. The communicator <tt id="mytt">comm</tt>
-will be of the size specified by the Swift/T <tt id="mytt">@par</tt> annotation. Line
+ref="parallel_task">parallel task</modal-data>. The communicator <tt id="mycode">comm</tt>
+will be of the size specified by the Swift/T <tt id="mycode">@par</tt> annotation. Line
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-  from="13" to="13"><tt id="mytt">14</tt></highlight-code> gets the current MPI rank
+  from="13" to="13"><tt id="mycode">14</tt></highlight-code> gets the current MPI rank
   in that communicator using built-in Swift/t functions. Our HPC Zombies library
   function is then called in line
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-  from="15" to="15"><tt id="mytt">16</tt></highlight-code>, and returns a string containing
-  the model output that is stored in <tt id="mytt">z_value</tt>. Only one process need
-  store the output <tt id="mytt">z</tt> in Swift memory; we use rank 0
+  from="15" to="15"><tt id="mycode">16</tt></highlight-code>, and returns a string containing
+  the model output that is stored in <tt id="mycode">z_value</tt>. Only one process need
+  store the output <tt id="mycode">z</tt> in Swift memory; we use rank 0
   (lines
   <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
-    from="16" to="18"><tt id="mytt">17-19</tt></highlight-code>). (This interface / body
+    from="16" to="18"><tt id="mycode">17-19</tt></highlight-code>). (This interface / body
     pattern can easily be adapted for any MPI application, adjusting for
     any differences in the wrapped library function arguments and additional
     input/output parameters.)
@@ -278,22 +296,22 @@ will be of the size specified by the Swift/T <tt id="mytt">@par</tt> annotation.
 <h3>Creating the Swift/T Binding</h3>
 <p>
 The final step is to create the Swift bindings to the Swift/T
-extension <tt id="mytt">zombies_model</tt> Tcl package created in the
+extension <tt id="mycode">zombies_model</tt> Tcl package created in the
 previous step. These Swift bindings define a swift function,
-<tt id="mytt">zombies_model_run</tt> that calls the dataflow interface procedure
+<tt id="mycode">zombies_model_run</tt> that calls the dataflow interface procedure
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
   from="4" to="6">zombies_model</highlight-code>.
 The Swift bindings are defined in the
 <open-code code="uc3/swift/zombies_model.swift">zombies_model.swift</open-code>
 swift script file. The script defines a single function:
-<highlight-code code="uc3/swift/zombies_model.swift" from="0" to="0"><tt id="mytt">zombies_model_run</tt></highlight-code>.
-The function is annotated with <tt id="mytt">@par</tt>, allowing it to be called as a parallel
-function, and with <tt id="mytt">@dispatch=WORKER</tt> directing the function to run on
+<highlight-code code="uc3/swift/zombies_model.swift" from="0" to="0"><tt id="mycode">zombies_model_run</tt></highlight-code>.
+The function is annotated with <tt id="mycode">@par</tt>, allowing it to be called as a parallel
+function, and with <tt id="mycode">@dispatch=WORKER</tt> directing the function to run on
 a worker node. The function itself returns a string that contains the number of
 humans and zombies at each time step. For arguments, the function takes the
 config file file name and a string containing the parameters for the run. As
 we have seen above, the model will ultimately parse the individual parameters
-from this <tt id="mytt">params</tt> string. The final 3 parts of the function definition
+from this <tt id="mycode">params</tt> string. The final 3 parts of the function definition
 are the Tcl package name, the required package version, and the Tcl function to
 call in the package, namely our dataflow procedure
 <highlight-code code="uc3/hpc_zombies/swift/lib/zombies_model.tcl" color="rgba(255,255,255,0.3)"
@@ -349,20 +367,20 @@ via the clustering. The following is the overall EMEWS workflow structure for th
 </p>
 
 
-<h3><open-code code="uc3/swift/uc3.sh"><tt id="mytt">uc3.sh</tt></open-code></h3>
+<h3><open-code code="uc3/swift/uc3.sh"><tt id="myfn">uc3.sh</tt></open-code></h3>
 <p>
   The workflow is launched with a shell script created using the
   <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-  ref="eqr_section"><tt id="mytt">eqr</tt></modal-data> template and then customized
+  ref="eqr_section"><tt id="mycode">eqr</tt></modal-data> template and then customized
   for the HPC Zombies model. The details of the script have been well covered
   in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-  ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> template tutorial, and only the
+  ref="eqr_section"><tt id="mycode">EQ/R</tt></modal-data> template tutorial, and only the
   customizations are described below.
 
   <ul>
     <li>Line
       <highlight-code code="uc3/swift/uc3.sh" color="rgba(255,255,255,0.3)"
-        from="22" to="22">23</highlight-code> defines a <tt id="mytt">PROCS</tt>
+        from="22" to="22">23</highlight-code> defines a <tt id="mycode">PROCS</tt>
         variable that
         specifies the number of processes required. In this case, this must
         be at least 7. The HPC Zombies model is distributed over 4 processes;
@@ -399,20 +417,20 @@ via the clustering. The following is the overall EMEWS workflow structure for th
     <li>Line
       <highlight-code code="uc3/swift/uc3.sh" color="rgba(255,255,255,0.3)"
         from="77" to="77">78</highlight-code> executes the swift script. In
-        addition to the default <tt id="mytt">-I $EQR</tt> and <tt id="mytt">-r $EQR</tt> arguments,
-        the line also includes <tt id="mytt">-I $ZOMBIES</tt> and <tt id="mytt">-r $ZOMBIES</tt>
+        addition to the default <tt id="mycode">-I $EQR</tt> and <tt id="mycode">-r $EQR</tt> arguments,
+        the line also includes <tt id="mycode">-I $ZOMBIES</tt> and <tt id="mycode">-r $ZOMBIES</tt>
         in order that Swift/T can sucessfully import and load the Zombies extension.</li>
   </ul>
 </p>
 
-<h3><open-code code="uc3/swift/uc3.swift"><tt id="mytt">uc3.swift</tt></open-code></h3>
+<h3><open-code code="uc3/swift/uc3.swift"><tt id="myfn">uc3.swift</tt></open-code></h3>
 <p>
   The workflow is defined in the swift script,
-  <open-code code="uc3/swift/uc3.swift"><tt id="mytt">uc3.swift</tt></open-code>.
-  The script was created using the <tt id="mytt">eqr</tt> template and then customized
+  <open-code code="uc3/swift/uc3.swift"><tt id="myfn">uc3.swift</tt></open-code>.
+  The script was created using the <tt id="mycode">eqr</tt> template and then customized
   for the HPC Zombies model. The details of the script have been well covered
   in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-  ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> template tutorial, and only the
+  ref="eqr_section"><tt id="mycode">EQ/R</tt></modal-data> template tutorial, and only the
   customizations are described below.
 </p>
 <p>
@@ -422,25 +440,25 @@ via the clustering. The following is the overall EMEWS workflow structure for th
     <li>The model is no longer launched from a bash script, but rather directly
       from inside swift as a swift extension. Consequently, the
       <highlight-code code="templating/swift/swift_run_eqr.swift"
-      color="rgba(255,255,255,0.3)" from="23" to="26"><tt id="mytt">run_model</tt>
+      color="rgba(255,255,255,0.3)" from="23" to="26"><tt id="mycode">run_model</tt>
     </highlight-code> app function has been removed.</li>
 
-    <li>With the <tt id="mytt">run_model</tt> app function removed, the
+    <li>With the <tt id="mycode">run_model</tt> app function removed, the
       <highlight-code code="templating/swift/swift_run_eqr.swift"
-      color="rgba(255,255,255,0.3)" from="35" to="49"><tt id="mytt">run_obj</tt>
+      color="rgba(255,255,255,0.3)" from="35" to="49"><tt id="mycode">run_obj</tt>
     </highlight-code> function that prepares the parameters and then calls
-    <tt id="mytt">run_model</tt> is no longer necessary and has been removed.</li>
+    <tt id="mycode">run_model</tt> is no longer necessary and has been removed.</li>
 
     <li>The R active learning algorithm produces the entire set of parameters
       for the model to run. Consequently, the
       <highlight-code code="templating/swift/swift_run_eqr.swift"
-      color="rgba(255,255,255,0.3)" from="51" to="51"><tt id="mytt">create_parameter_combinations</tt>
+      color="rgba(255,255,255,0.3)" from="51" to="51"><tt id="mycode">create_parameter_combinations</tt>
     </highlight-code> is unnecessary and has been removed.</li>
 
     <li>The HPC Zombie model results are returned directly as a string from the
       Zombies extension. Consequently, the example results-gathering code,
       <highlight-code code="templating/swift/swift_run_eqr.swift"
-      color="rgba(255,255,255,0.3)" from="28" to="33"><tt id="mytt">get_result</tt></highlight-code>,
+      color="rgba(255,255,255,0.3)" from="28" to="33"><tt id="mycode">get_result</tt></highlight-code>,
       has been removed.</li>
   </ul>
 </p>
@@ -451,7 +469,7 @@ via the clustering. The following is the overall EMEWS workflow structure for th
     from="109" to="112">main</highlight-code> function which is unaltered from
     the
     <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-    ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> default. The main
+    ref="eqr_section"><tt id="mycode">EQ/R</tt></modal-data> default. The main
     function calls the <highlight-code code="uc3/swift/uc3.swift"
     color="rgba(255,255,255,0.3)"
       from="87" to="97">start</highlight-code> function to begin the
@@ -459,51 +477,51 @@ via the clustering. The following is the overall EMEWS workflow structure for th
       lines
       <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
         from="89" to="92">90-93</highlight-code>, the
-      <tt id="mytt">start</tt> function intializes EQ/R (sourcing the <tt id="mytt">algo.R</tt> file
-      from the path in the <tt id="mytt">algorithm</tt> variable),
-      initializes the active learning algorithm using the <tt id="mytt">algo_params</tt>
+      <tt id="mycode">start</tt> function intializes EQ/R (sourcing the <tt id="mycode">algo.R</tt> file
+      from the path in the <tt id="mycode">algorithm</tt> variable),
+      initializes the active learning algorithm using the <tt id="mycode">algo_params</tt>
       string, and starts loop over the coordinated
       sequence of algorithmic parameter production and model runs. More
       details on these calls can be found in the
       <modal-data data="plugins/Tutorial-View/tutorial/templating.html"
-      ref="eqr_section"><tt id="mytt">EQ/R</tt></modal-data> section of the
-      templating tutorial. The <tt id="mytt">algorithm</tt> variable is defined on
+      ref="eqr_section"><tt id="mycode">EQ/R</tt></modal-data> section of the
+      templating tutorial. The <tt id="mycode">algorithm</tt> variable is defined on
       line <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-        from="15" to="15">16</highlight-code> and the <tt id="mytt">algo_params</tt>
+        from="15" to="15">16</highlight-code> and the <tt id="mycode">algo_params</tt>
         string in lines
         <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
           from="27" to="42">28-43</highlight-code>.
 </p>
 
 <p>
-<tt id="mytt">EQR_get</tt> (line
+<tt id="mycode">EQR_get</tt> (line
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
   from="90" to="90">91</highlight-code>) will block until there is a corresponding
-  <tt id="mytt">OUT_put</tt> call in the R algorithm code. Similarly, an <tt id="mytt">IN_get</tt> call
-  in the R code will block until there is a corresponding <tt id="mytt">EQR_put</tt> call
+  <tt id="mycode">OUT_put</tt> call in the R algorithm code. Similarly, an <tt id="mycode">IN_get</tt> call
+  in the R code will block until there is a corresponding <tt id="mycode">EQR_put</tt> call
   in the swift code  We can see the R code sequence of calls that correspond to lines
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
     from="90" to="91">91-92</highlight-code>,
-  in <open-code code="uc3/R/algo.R"><tt id="mytt">algo.R</tt></open-code> in
+  in <open-code code="uc3/R/algo.R"><tt id="mycode">algo.R</tt></open-code> in
   lines
   <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
-    from="204" to="205">205-206</highlight-code>. The <tt id="mytt">EQR_get</tt> on
+    from="204" to="205">205-206</highlight-code>. The <tt id="mycode">EQR_get</tt> on
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-      from="90" to="90">91</highlight-code> gets the <tt id="mytt">"Params"</tt>
-      string that was <tt id="mytt">OUT_put</tt> on line
+      from="90" to="90">91</highlight-code> gets the <tt id="mycode">"Params"</tt>
+      string that was <tt id="mycode">OUT_put</tt> on line
       <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
-        from="204" to="204">205</highlight-code> in <tt id="mytt">algo.R</tt>. The
-    <tt id="mytt">IN_get</tt> on line
+        from="204" to="204">205</highlight-code> in <tt id="mycode">algo.R</tt>. The
+    <tt id="mycode">IN_get</tt> on line
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
-      from="205" to="205">206</highlight-code> in <tt id="mytt">algo.R</tt>
-      gets the <tt id="mytt">algo_params</tt> string that is <tt id="mytt">EQR_put</tt> in line
+      from="205" to="205">206</highlight-code> in <tt id="mycode">algo.R</tt>
+      gets the <tt id="mycode">algo_params</tt> string that is <tt id="mycode">EQR_put</tt> in line
       <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-        from="91" to="91">92</highlight-code> in <tt id="mytt">uc3.swift</tt>.
-    <tt id="mytt">algo.R</tt> parses this string as a list that can be passed as
+        from="91" to="91">92</highlight-code> in <tt id="myfn">uc3.swift</tt>.
+    <tt id="mycode">algo.R</tt> parses this string as a list that can be passed as
     named arguments to a R function in line
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="207" to="207">208</highlight-code> and then calls the
-      <tt id="mytt">main_function</tt> passing it that list which starts the active learning
+      <tt id="mycode">main_function</tt> passing it that list which starts the active learning
       algorithm (line
       <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
         from="208" to="208">209</highlight-code>).
@@ -513,13 +531,13 @@ via the clustering. The following is the overall EMEWS workflow structure for th
 The
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
   from="55" to="55">loop</highlight-code> function iteratively
-  retrieves sets of model run parameters from <tt id="mytt">algo.R</tt> using
-  <tt id="mytt">EQR_get</tt> and runs the HPC Zombies model via the <tt id="mytt">obj</tt>
+  retrieves sets of model run parameters from <tt id="mycode">algo.R</tt> using
+  <tt id="mycode">EQR_get</tt> and runs the HPC Zombies model via the <tt id="mycode">obj</tt>
   function (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
     from="77" to="77">78</highlight-code>), or exits when it receives
-    the <tt id="mytt">"FINAL"</tt> flag. The R <tt id="mytt">OUT_put</tt> calls corresponding to
-    the swift <tt id="mytt">EQR_get</tt> calls in the <tt id="mytt">loop</tt> function are on lines
+    the <tt id="mycode">"FINAL"</tt> flag. The R <tt id="mycode">OUT_put</tt> calls corresponding to
+    the swift <tt id="mycode">EQR_get</tt> calls in the <tt id="mycode">loop</tt> function are on lines
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
       from="82" to="82">83</highlight-code>,
     <highlight-code code="uc3/R/algo.R" color="rgba(255,255,255,0.3)"
@@ -530,67 +548,67 @@ The
       from="211" to="211">212</highlight-code> respectively. The first of these
       passes the initial set of random parameters selected by the algorithm. The
       second passes the random set and those selected by the clustering. The final
-      two pass the <tt id="mytt">"FINAL"</tt> flag and a message about the location
-      of the final serialized classifier. Unlike the default <tt id="mytt">eqr</tt> version,
-      our <tt id="mytt">obj</tt> function returns strings and joins those with a
-      <tt id="mytt">";"</tt> eliminating the need for the second foreach
+      two pass the <tt id="mycode">"FINAL"</tt> flag and a message about the location
+      of the final serialized classifier. Unlike the default <tt id="mycode">eqr</tt> version,
+      our <tt id="mycode">obj</tt> function returns strings and joins those with a
+      <tt id="mycode">";"</tt> eliminating the need for the second foreach
       loop that is present in the default template created
       <highlight-code code="templating/swift/swift_run_eqr.swift"
       color="rgba(255,255,255,0.3)" from="114" to="117">version</highlight-code>.
 </p>
 
 <p>
-The <tt id="mytt">loop</tt> function runs the model by calling the
+The <tt id="mycode">loop</tt> function runs the model by calling the
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-  from="77" to="77"><tt id="mytt">obj</tt></highlight-code> function within a
-  parallel <tt id="mytt">foreach</tt> loop, passing each model run a set of parameters.
-  The <tt id="mytt">obj</tt> function first creates a complete parameter string
+  from="77" to="77"><tt id="mycode">obj</tt></highlight-code> function within a
+  parallel <tt id="mycode">foreach</tt> loop, passing each model run a set of parameters.
+  The <tt id="mycode">obj</tt> function first creates a complete parameter string
   by combining the dynamic parameters received from the active learning
   algorithm with some "baseline" constant parameters
   (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="47" to="47"><tt id="mytt">48</tt></highlight-code>)
+    from="47" to="47"><tt id="mycode">48</tt></highlight-code>)
   that are read from a file (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="44" to="44"><tt id="mytt">45</tt></highlight-code>). The HPC Zombies
+    from="44" to="44"><tt id="mycode">45</tt></highlight-code>). The HPC Zombies
     model requires that all its parameters are passed at run time. The active
     learning algorithm only produces a subset of those. Consequently, the
     active learning produced parameters need to be combined with the remaining
     required parameters.
-  This <tt id="mytt">full_parameters</tt> string together with the path to the config file
-  is then passed to our <tt id="mytt">zombies_model_run</tt> function (line
+  This <tt id="mycode">full_parameters</tt> string together with the path to the config file
+  is then passed to our <tt id="mycode">zombies_model_run</tt> function (line
   <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-    from="49" to="49"><tt id="mytt">50</tt></highlight-code>), that is,
+    from="49" to="49"><tt id="mycode">50</tt></highlight-code>), that is,
     function we created in our swift bindings to run the model.
-    The <tt id="mytt">zombies_model_run</tt> call is annotated with <tt id="mytt">@par=4</tt>,
+    The <tt id="mycode">zombies_model_run</tt> call is annotated with <tt id="mycode">@par=4</tt>,
     running the function as a parallel task in an MPI communicator of size 4,
     the number required to correctly run the HPC Zombies model. The
-    results of the model run are stored in the <tt id="mytt">z</tt> variable. In
+    results of the model run are stored in the <tt id="mycode">z</tt> variable. In
     line <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-      from="50" to="50"><tt id="mytt">51</tt></highlight-code> <tt id="mytt">calc_obj</tt> is called.
-    <tt id="mytt">calc_obj</tt> is defined in <open-code code="uc3/swift/R_obj.swift">R_obj.swift</open-code>.
-    It calculates the sum of squared errors between the model results (<tt id="mytt">z</tt>)
-    and the synthetic expected output (<tt id="mytt">str_zombie_data</tt>).
-    The function's return value <tt id="mytt">fitness</tt> is set to this sum of squared errors.
-    Both the <tt id="mytt">zombies_model_run</tt> and the <tt id="mytt">calc_obj</tt> function are
+      from="50" to="50"><tt id="mycode">51</tt></highlight-code> <tt id="mycode">calc_obj</tt> is called.
+    <tt id="mycode">calc_obj</tt> is defined in <open-code code="uc3/swift/R_obj.swift">R_obj.swift</open-code>.
+    It calculates the sum of squared errors between the model results (<tt id="mycode">z</tt>)
+    and the synthetic expected output (<tt id="mycode">str_zombie_data</tt>).
+    The function's return value <tt id="mycode">fitness</tt> is set to this sum of squared errors.
+    Both the <tt id="mycode">zombies_model_run</tt> and the <tt id="mycode">calc_obj</tt> function are
     included via swift imports on lines
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-      from="7" to="7"><tt id="mytt">8</tt></highlight-code> and
+      from="7" to="7"><tt id="mycode">8</tt></highlight-code> and
     <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-      from="8" to="8"><tt id="mytt">9</tt></highlight-code> respectively.
+      from="8" to="8"><tt id="mycode">9</tt></highlight-code> respectively.
 </p>
 <p>
 
-The return values of all the parallel calls to <tt id="mytt">obj</tt> are
-gathered in the <tt id="mytt">results</tt> array in the loop function, and
+The return values of all the parallel calls to <tt id="mycode">obj</tt> are
+gathered in the <tt id="mycode">results</tt> array in the loop function, and
 then joined into a single string and passed to the R algorithm using
-<tt id="mytt">EQR_put</tt> (lines
+<tt id="mycode">EQR_put</tt> (lines
 <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-  from="80" to="81"><tt id="mytt">81-82</tt></highlight-code>).
+  from="80" to="81"><tt id="mycode">81-82</tt></highlight-code>).
 </p>
 
 <p>
-<tt id="mytt">uc3.swift</tt> contains a few other changes from the default not
+<tt id="myfn">uc3.swift</tt> contains a few other changes from the default not
 included in the above description. These are described below.
   <ul>
 
@@ -605,19 +623,19 @@ included in the above description. These are described below.
 
    <li>Lines
      <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-       from="22" to="24">23-25</highlight-code> retrieve the <tt id="mytt">config</tt>,
-       <tt id="mytt">num_clusters</tt>, and <tt id="mytt">num_random_sampling</tt> command line
+       from="22" to="24">23-25</highlight-code> retrieve the <tt id="mycode">config</tt>,
+       <tt id="mycode">num_clusters</tt>, and <tt id="mycode">num_random_sampling</tt> command line
        arguments to the script. Note that the config file is optional.</li>
 
    <li>Lines
      <highlight-code code="uc3/swift/uc3.swift" color="rgba(255,255,255,0.3)"
-       from="27" to="42">28-43</highlight-code> define the <tt id="mytt">algo_params</tt>
+       from="27" to="42">28-43</highlight-code> define the <tt id="mycode">algo_params</tt>
        string that is passed to the R active learing algorithm to
        initialize it.</li>
 </ul>
 </p>
 
-The substantive changes to the default <tt id="mytt">eqr</tt> were primarily concerned
+The substantive changes to the default <tt id="mycode">eqr</tt> were primarily concerned
 with running the model, given that the model itself is now a Swift/T
 extension. Consequently, all the swift code that concerned with running the
 model could be removed and gathering results could be removed. As
