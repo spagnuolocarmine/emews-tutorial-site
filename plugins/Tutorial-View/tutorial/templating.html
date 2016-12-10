@@ -619,7 +619,7 @@ above) and the names below are the defaults.
   </open-code>
 </p>
 <p>
-This file is very similar to the  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="mycode">swift_run_sweep.sh</tt></modal-data>
+This file is very similar to the  <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="myfn">swift_run_sweep.sh</tt></modal-data>
 described above. Its function is identical: a bash script used to
 launch the workflow. The script ultimately calls swift-t to execute the workflow,
 but prior to that it sets up the swift-t call by defining various environment
@@ -807,7 +807,7 @@ to create an array of parameters strings (line
 <highlight-code code="templating/swift/swift_run_eqpy.swift"
 color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>).
 The intention is that the user implements <highlight-code code="templating/swift/swift_run_eqpy.swift"
-color="rgba(255,255,255,0.3)" from="56" to="56"><tt id="mycode">create_parameter_combinations</tt></highlight-code>
+color="rgba(255,255,255,0.3)" from="56" to="56"><tt id="myfn">create_parameter_combinations</tt></highlight-code>
 to create an array of parameter combinations whose size is equal to the number
 of trials. The <tt id="mycode">obj</tt> function can then iterate over this array in
 a parallel <tt id="mycode">foreach</tt> loop, launching a model run for each of these
@@ -971,8 +971,8 @@ A successful EQ/R build and install will install the following files:
 
 The swift file contains the swift code for initializing EQ/R with an
 R file and communicating with the R environment via the queues. The native
-library <tt id="mycode">libeqr.so</tt> contains the native code that implements
-the queues and exposes them to swift and the R environment. <tt id="mycode">pkgIndex.tcl</tt>
+library <tt id="myfn">libeqr.so</tt> contains the native code that implements
+the queues and exposes them to swift and the R environment. <tt id="myfn">pkgIndex.tcl</tt>
 is required in order for swift to be able to use the native code library.
 These should not need to be edited by you, the user.
 </p>
