@@ -69,7 +69,7 @@ fi
 # the optional timeout.
 set +e
 
-echo "$param_line"
+
 $TIMEOUT_CMD $JAVA -Xmx1536m -XX:-UseLargePages -cp "$cPath" repast.simphony.batch.InstanceRunner \
    -pxml "$pxml" \
    -scenario "$scenario" \
