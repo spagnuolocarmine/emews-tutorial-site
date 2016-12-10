@@ -48,6 +48,11 @@
 </style>
 
 <p>
+  The full source code for this tutorial use case be downloaded here:
+  <a href="http://www.mcs.anl.gov/~emews/files/UC2.zip">UC2.zip</a>.
+</p>
+
+<p>
 
   Due to the highly non-linear relationship between ABM input parameters and model outputs,
   as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs
@@ -61,7 +66,7 @@ In (<modal-data data="plugins/Tutorial-View/tutorial/refs/ozik_many_2015.html">O
   queue-based interfaces for passing parameters and
   simulation results, where a metaheuristic method, a genetic algorithm (GA),
   is
-  used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. 
+  used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework.
   In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. The following is the overall EMEWS workflow structure for this use case.
 </p>
 <p>
@@ -73,7 +78,7 @@ We use a GA model exploration module developed with the Python DEAP library (<mo
 </p>
 
 <h2> EQ/Py with EMEWS </h2>
-<!-- 
+<!--
 <p>
   Resident tasks, which retain state, are accessed via their worker location so that the
 algorithm state can be repeatedly accessed.
@@ -100,7 +105,7 @@ algorithm state can be repeatedly accessed.
 
 <p>
 As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py section</modal-data> of the EMEWS Template tutorial, the EQ/Py extension provides an interface for interacting with Python-based resident tasks
-at specific locations. The code that we present in this use case is directly adapted from the EQ/Py subtemplate, so readers who have completed the EMEWS Templates tutorial will already be familiar with the directory structure and template code. 
+at specific locations. The code that we present in this use case is directly adapted from the EQ/Py subtemplate, so readers who have completed the EMEWS Templates tutorial will already be familiar with the directory structure and template code.
 
 <h2> EQ/Py swift script </h2>
 <p>
@@ -109,15 +114,15 @@ The <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-
 
 <ul>
 <li>Starting from lines <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="148" to="152">149-153</highlight-code> in the main function, we've modified the command line arguments that are sent to the swift script. </li>
- 
+
 <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="134" to="136"><tt id="mycode">run_prerequisites</tt></highlight-code> Swift function was implemented, using the same functionality as <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="utility_functions">cp_message_center in UC1</modal-data>. </li>
- 
+
  <li>The arguments passed to the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="103" to="104"><tt id="mycode">start</tt></highlight-code> function were modified to reflect the new information that is passed in via the command line.</li>
 
  <li>The <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="114" to="114"><tt id="mycode">algo_params</tt></highlight-code> string variable, which contains the information for initializing the Python resident task, was modified.</li>
 
 <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="54" to="54"><tt id="mycode">loop</tt></highlight-code> function the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="55" to="57"><tt id="mycode">param_names</tt></highlight-code> string variable is added to track which parameters are being explored by the GA. This allows us to specify the subset of model parameters to explore.
- 
+
  <li> In the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="42" to="42"><tt id="mycode">obj</tt></highlight-code> function we call the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="44" to="44"><tt id="mycode">create_upfs</tt></highlight-code> function (defined in a separate swift file <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44">R_utils.swift</highlight-code>, discussed below) to generate stochastic variations of individual parameter combinations. These are stored in the string variable <tt id="mycode">upfs</tt> as semicolon separated sets of parameters. The string array <tt id="mycode">parameter_combos</tt> is created by <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="45" to="45">splitting</highlight-code> <tt id="mycode">upfs</tt> using semicolons as delimiters. Once the parameter combinations are <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="48" to="48">evaluated</highlight-code>, their average is <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="51" to="51">calculated</highlight-code>.
 </li>
 
@@ -133,25 +138,25 @@ The <open-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)">R_ut
 <!-- <h4> <tt id="mytt">calc_obj</tt> </h4> -->
 <p>The <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mycode">calc_obj</tt></highlight-code> function is implemented just like the counting of humans was implemented in the <modal-data data="plugins/Tutorial-View/tutorial/uc1.html" ref="gather_results">Gathering the Results</modal-data> section of the Use Case 1 Tutorial. The only difference is that all of the relevant code is captured within the <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="9" to="14"><tt id="mycode">calc_obj</tt></highlight-code> function and that it is tested with the
 <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="20" to="31"><tt id="mycode">test2</tt></highlight-code> function in R_utils_tests.swift. </p>
-<p>In a multi-module and multi-language setting like EMEWS, it is crucial for separate modules to be tested individually before all of the components are assembled into a single workflow. For testing Swift code, the <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="24" to="24"><tt id="mycode">assert</tt></highlight-code> keyword is used to ensure that the expected results are returned from executing the code being tested. 
+<p>In a multi-module and multi-language setting like EMEWS, it is crucial for separate modules to be tested individually before all of the components are assembled into a single workflow. For testing Swift code, the <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="24" to="24"><tt id="mycode">assert</tt></highlight-code> keyword is used to ensure that the expected results are returned from executing the code being tested.
 The <tt id="mycode">test2</tt> function contains three separate tests to exercise the <tt id="mycode">calc_obj</tt> function. Each of these tests is passed a different path to a test data folder ("data", "data/d1", and "data/d2"), each containing three separate counts.csv files (<open-code code="uc2/swift/test/data/counts.csv"  color="rgba(255,255,255,0.3)">data/counts.csv</open-code>, <open-code code="uc2/swift/test/data/d1/counts.csv" color="rgba(255,255,255,0.3)">data/d1/counts.csv</open-code>, and <open-code code="uc2/swift/test/data/d2/counts.csv" color="rgba(255,255,255,0.3)">data/d2/counts.csv</open-code>). The test is run using the <open-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.3)">R_utils_tests.sh</open-code> bash file. For this test, since we're using the R capabilities of Swift, we need to specify the correct <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.5)" from="1" to="1"><tt id="mycode">R_HOME</tt></highlight-code> and <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.5)" from="2" to="2"><tt id="mycode">LD_LIBRARY_PATH</tt></highlight-code> environment variables. Line <highlight-code code="uc2/swift/test/R_utils_tests.sh" color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> contains the call to the swift-t executable, specifying that the preprocessor should not be run (-p) and that additional necessary Swift files can be found one directory up (-I ..). For more details on Swift/T command line options, see the Usage section of the <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_usage">Swift/T website</a>. If all the <tt id="mycode">assert</tt>s pass, the script will run without error. If any of them fail, the message specified in the second argument of the failed <tt id="mycode">assert</tt> (e.g., "test2: unexpected result for calc_obj") will be displayed.
  </p>
- 
+
  <p>The <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mycode">create_upfs</tt></highlight-code> function is specific to creating stochastic variations for individual parameter combinations when running Repast Simphony models. The logic for the function is implemented in an R function, also called <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="19" to="35"><tt id="mycode">create_upfs</tt></highlight-code>. A Repast Simphony parameters.xml file is read in using the <tt id="mycode">read_xml</tt> function from the R xml2 package on line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="21" to="21">22</highlight-code>. The full parameter names and default values are both collected into a named vector <tt id="mycode">all_params_values</tt> in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="22" to="25">23-26</highlight-code>. The parameter names to vary, along with their values are used to overwrite the default values in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="27" to="29">28-30</highlight-code>. Finally, random seed values from 0 to <tt id="mytt">stoch_variations-1</tt> are applied to create <tt id="mycode">stoch_variations</tt> parameter combinations in lines <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="30" to="34">31-35</highlight-code>. Once the R function is defined, it is called in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="37" to="37">38</highlight-code>, where the arguments to the function are set in the Swift code in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="42" to="42">43</highlight-code> and the results are obtained in line <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="43" to="43">44</highlight-code>.
 </p>
 <p>The <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="6" to="17"><tt id="mycode">test1</tt></highlight-code> function in R_utils_tests.swift is used to test <highlight-code code="uc2/swift/R_utils.swift" color="rgba(255,255,255,0.3)" from="40" to="44"><tt id="mycode">create_upfs</tt></highlight-code>. The test uses a test parameters file <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="8" to="8"><tt id="myf">data/test_parameters.xml</tt></highlight-code> and a subset of <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="9" to="9">parameter names</highlight-code> and corresponding <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="10" to="10">values</highlight-code> to create 3 stochastic parameter variations. The expected result is checked in line <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="16" to="16">17</highlight-code>. As an added note, since <tt id="myfn">R_utils_tests.swift</tt> is a Swift script, the <highlight-code code="uc2/swift/test/R_utils_tests.swift" color="rgba(255,255,255,0.3)" from="33" to="34">calls</highlight-code> to the two test functions are run in parallel.
  </p>
- 
+
  <h2> Python DEAP model exploration code </h2>
  <p>
  The <open-code code="uc2/python/deap_ga.py"><tt id="myfn">deap_ga.py</tt></open-code> file is the Python model exploration code that controls the workflow, communicating with the <open-code code="uc2/swift/swift_run_eqpy.swift">swift_run_eqpy.swift</open-code> file via EQ/Py queues. The EQ/Py functionality is imported in line <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="11" to="11">12</highlight-code>.
  </p>
-  <p> 
+  <p>
  As was discussed in the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="eqpy_section">EQ/Py Subtemplate section</modal-data> of the EMEWS Templates tutorial, the python algorithm's <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="82" to="82"><tt id="mycode">run</tt></highlight-code> function is invoked when <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="115" to="115"><tt id="mycode">EQPy_init_package</tt></highlight-code> is called in <tt id="myfn">swift_run_eqpy.swift</tt>. At this point the model exploration (ME) code takes control of the workflow. The parameters for initializing the ME code is obtained by first calling <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="89" to="89"><tt id="mycode">eqpy.OUT_put</tt></highlight-code> with "Params" as the argument. This puts the "Params" string in the EQ/Py output queue. This is obtained from the output queue by <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="116" to="116"><tt id="mycode">EQPy_get</tt></highlight-code>. (Note that while the "Params" value passed at this stage was an unused dummy value, this handshake could be used to pass different types of information to and from the ME algorithm prior to the iterative steps that form the central ME functionality, which we discuss below.) The ME parameters are passed to the EQ/Py input queue via the <highlight-code code="uc2/swift/swift_run_eqpy.swift" color="rgba(255,255,255,0.3)" from="117" to="117"><tt id="mycode">EQPy_put</tt></highlight-code> call and are obtained from the EQ/Py input queue with a call to <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="90" to="90"><tt id="mycode">eqpy.IN_get</tt></highlight-code>. The Python variables <tt id="mycode">num_iter, num_pop, seed, csv_file_name</tt> are <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="93" to="93">initialized</highlight-code> by taking advantage of the Python <tt id="mycode">eval</tt> method. This simplifies passing information to the Python ME algorithm by allowing literal representations of the Python code, in this case the variable values, to be sent through the EQ/Py input queue from Swift.
  The next part of the <highlight-code code="uc2/python/deap_ga.py" color="rgba(255,255,255,0.3)" from="94" to="96"><tt id="mycode">run</tt></highlight-code> method involves setting the random seed and reading in data about the JZombies model parameters, parameter names, parameter types, their low and high values, from <open-code code="uc2/data/params_for_deap.csv"><tt id="myfn">params_for_deap.csv</tt></open-code> and storing them as a <a target="_blank" href="http://pandas.pydata.org">Pandas</a> dataframe.
 </p>
  <p>
-  The DEAP framework (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) makes defining and running evolutionary algorithms like GAs easy. 
+  The DEAP framework (<modal-data data="plugins/Tutorial-View/tutorial/refs/fortin_deap_2012.html">Fortin et al. 2012</modal-data>) makes defining and running evolutionary algorithms like GAs easy.
 Our GA creates an initial population <tt id="mycode">p<span class="sub">0</span></tt> of parameter combinations, or individuals, of size <tt id="mycode">num_pop</tt> and
 proceeds to iteratively generate populations <tt id="mycode">p<span class="sub">i</span></tt>, for each
 generation <tt id="mycode">i</tt>, based on the evaluated performance of individuals in
@@ -176,4 +181,3 @@ TODO: complete the start function and the main function
 <p>
 TODO: Python testing
 </p>
-
