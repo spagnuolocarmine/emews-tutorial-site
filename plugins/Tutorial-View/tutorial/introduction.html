@@ -203,7 +203,7 @@ The ME algorithm can be expressed in Python, R, C, C++,
 Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
 a high-level queue-like interface with (currently) two
 implementations: EQ/Py and EQ/R (EMEWS Queues for
-Python and R). The interface defines the two functions <tt id="mycode">OUT_put</tt> and <tt id="mycode">IN_get</tt> for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allow the Swift script to obtain
+Python and R). The interface defines the two functions <tt id="mycode">OUT_put</tt> and <tt id="mycode">IN_get</tt> for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
 candidate model parameter inputs (<tt id="mycode">EQX_get</tt>) and return model outputs to the ME (<tt id="mycode">EQX_put</tt>).  The simulation models are distributed by the Swift/T runtime over a
 potentially large computer system, but smaller systems that run one
 model at a time are also supported.  The simulations can be
