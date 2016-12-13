@@ -66,6 +66,8 @@
               <hr style="width:100%;">
               <li><br><br>For questions about EMEWS or to access archived questions, please subscribe to the
 <a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">EMEWS mailing list</b></a>. </li>
+
+
           </ul>
           </div>
 
@@ -80,8 +82,12 @@
             <li class="contacts">
               <a href="http://web.unisa.it/home"><img width="40%" style="margin-left:0px;" src="plugins/Welcome-Page/img/logounisa.png" alt="unisa"></a>
               <a href="http://www.uchicago.edu/"><img width="37%" style="margin-left:0px;" src="plugins/Welcome-Page/img/logochicago.png" alt="uchicago"></a></li>
+</ul>
 
         </div>
+<span style="font-size:12px; float:right; font-weight:normal >"><br><br>Research reported in this website was supported by the National Institute of General Medical Sciences of the National Institutes of Health under award number R01GM115839.
+The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
+</span>
 
     </div>
 
