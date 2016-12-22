@@ -54,7 +54,7 @@
 
 
           <div class="contacts" style="margin-top:20px; font-size:17px">
-          <span style=" font-size:20px; ">Contacts</span>
+          <span style=" font-size:20px; ">Authors</span>
           <ul class="contacts" style="margin-top:20px;">
               <li> Jonathan Ozik <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
 <hr style="width:100%;">
@@ -66,6 +66,7 @@
               <hr style="width:100%;">
               <li><br><br>For questions about EMEWS or to access archived questions, please subscribe to the
 <a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">EMEWS mailing list</b></a>. </li>
+              <li><br><br>To cite EMEWS, please use: <br> Ozik, J., N. Collier, J. M. Wozniak and C. Spagnuolo. 2016. "From Desktop to Large-Scale Model Exploration with Swift/T." In Proceedings of the 2016 Winter Simulation Conference.</li>
 
 
           </ul>
