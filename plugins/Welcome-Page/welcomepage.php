@@ -57,13 +57,13 @@
           <span style=" font-size:20px; ">Authors</span>
           <ul class="contacts" style="margin-top:20px;">
               <li> Jonathan Ozik <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
-<hr style="width:100%;">
+<hr style="margin-top:20px;width:100%;">
               <li>Nicholson Collier  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
-<hr style="width:100%;">
+<hr style="margin-top:20px;width:100%;">
               <li>Justin Wozniak  <br><span style="float:right;margin-left:10px;font-weight:normal;">Argonne National Laboratory</span> </li>
-<hr style="width:100%;">
+<hr style="margin-top:20px;width:100%;">
               <li>Carmine Spagnuolo  <br><span style="float:right;margin-left:10px;font-weight:normal;">Univeristà degli Studi di Salerno</span> </li>
-              <hr style="width:100%;">
+              <hr style="margin-top:20px;width:100%;">
               <li><br><br>For questions about EMEWS or to access archived questions, please subscribe to the
 <a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">EMEWS mailing list</b></a>. </li>
               <li><br><br>To cite EMEWS, please use: <br> Ozik, J., N. Collier, J. M. Wozniak and C. Spagnuolo. 2016. "From Desktop to Large-Scale Model Exploration with Swift/T." In Proceedings of the 2016 Winter Simulation Conference.</li>
@@ -97,7 +97,7 @@ The content is solely the responsibility of the authors and does not necessarily
             <span style="font-size:12px; float:left; font-weight:normal >">This site is based on <a href="http://codiad.com/">Codiad</a> a web-based IDE framework.</span>
            <hr style="width:100%;">
            <span style="font-size:12px; float:left; font-weight:normal >">Copyright © 2016 Argonne National Laboratory. All rights reserved. </span>
-           <span style="font-size:12px; float:right; font-weight:normal >">Website developed by 
+           <span style="font-size:12px; float:right; font-weight:normal >">Website developed by
              <a href="http://www.carminespagnuolo.eu">Carmine Spagnuolo</a></span>
         </div>
     </div>
