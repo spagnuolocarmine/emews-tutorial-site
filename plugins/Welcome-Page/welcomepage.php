@@ -86,8 +86,7 @@
 </ul>
 
         </div>
-<span style="font-size:12px; float:right; font-weight:normal >"><br><br>Research reported in this website was supported by the National Institute of General Medical Sciences of the National Institutes of Health under award number R01GM115839.
-The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
+<span style="font-size:12px; float:right; font-weight:normal >"><br><br>Research reported in this website was supported by the National Institute of General Medical Sciences (R01GM115839), National Institute on Drug Abuse (R01DA039934), and National Institute on Aging (R01AG047869) of the National Institutes of Health. This material is based upon work supported by the National Science Foundation under Grant DEB1516428. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health or the National Science Foundation.
 </span>
 
     </div>
