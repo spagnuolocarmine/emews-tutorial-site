@@ -79,7 +79,7 @@
         <div class="contacts">
          <ul class="contacts">
             <li class="contacts">
-              <a href="http://www.anl.gov/"><img width="80%" src="plugins/Welcome-Page/img/anl2.png" alt="ANL"></a></li>
+              <a href="http://www.anl.gov/"><img width="80%" src="plugins/Welcome-Page/img/Argonne_wireframe_white_transparent.png" alt="ANL"></a></li>
             <li class="contacts">
               <a href="http://web.unisa.it/home"><img width="40%" style="margin-left:0px;" src="plugins/Welcome-Page/img/logounisa.png" alt="unisa"></a>
               <a href="http://www.uchicago.edu/"><img width="37%" style="margin-left:0px;" src="plugins/Welcome-Page/img/logochicago.png" alt="uchicago"></a></li>
