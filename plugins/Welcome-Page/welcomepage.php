@@ -37,7 +37,7 @@
          <img height="150px" style="margin-bottom:-80px;" src="plugins/Welcome-Page/img/emu_white.png" alt="emu">
          <span style=" font-size:60px;  margin-left:10px; font-weight: bold; position:relative; >">EMEWS </span>
          <br><hr style="width:100%;margin-left:90px;  margin-bottom:15px;">
-         <span style=" margin-left:90px;font-size:20px; position:relative; >"> Extreme-scale Model Exploration with Swift/T</span>
+         <span style=" margin-left:90px;font-size:20px; position:relative; >"> Extreme-scale Model Exploration with Swift</span>
 
       </div>
   </div>

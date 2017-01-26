@@ -5,7 +5,7 @@
 <p style="margin-top:20px;  font-size:17px; text-align: justify;">
     As high-performance computing resources have become increasingly available,
     new modes of computational processing and experimentation have become possible.
-     This tutorial presents the Extreme-scale Model Exploration with <a target="_blank" href="http://swift-lang.org/Swift-T/">Swift/T</a> (EMEWS)
+     This tutorial presents the Extreme-scale Model Exploration with Swift (EMEWS)
      framework for combining existing capabilities for model exploration approaches
      (e.g., model calibration, metaheuristics, data assimilation) and simulations
      (or any “black box” application code) with the <a target="_blank" href="http://swift-lang.org/Swift-T/">Swift/T</a>
