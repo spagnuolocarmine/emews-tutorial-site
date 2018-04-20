@@ -1,4 +1,4 @@
-package require turbine 0.1
+package require turbine
 
 namespace eval zombies_model {
 

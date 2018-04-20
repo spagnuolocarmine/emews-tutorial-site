@@ -59,6 +59,11 @@
 </p>
 
 <p>
+<b id="myb">Note: For running this use case, an R+Python enabled Swift/T installation is required.</b>
+See <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_from_source">here</a> for installation details.
+</p>
+
+<p>
 
   Due to the highly non-linear relationship between ABM input parameters and model outputs,
   as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs
@@ -186,9 +191,7 @@ Before the Python ME code is integrated into the complete Swift workflow, it is 
 </p>
 <p>
 Here we focus on the <tt id="mycode">test_run</tt> function which, as the name implies, tests the <tt id="mycode">deap_ga.run</tt> function. Our intent is to test only the functionality of the Python code and we do this using the <tt id="mycode">monkeypatch</tt> pytest fixture to stub out the <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="32" to="32"><tt id="mycode">eqpy.OUT_put</tt></highlight-code> and <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="33" to="33"><tt id="mycode">eqpy.IN_get</tt></highlight-code> functions. This involves defining methods that minimally satisfy the return values of the real <tt id="mycode">eqpy.OUT_put</tt> and <tt id="mycode">eqpy.IN_get</tt> functions. For <tt id="mycode">eqpy.OUT_put</tt> this is relatively simple, as the function only takes arguments and doesn't return any. We define a <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="18" to="21"><tt id="mycode">mockput</tt></highlight-code> function to record the size of the string data received, split along semicolons, and record it in the <tt id="mycode">test_run.data_size</tt> variable. (Note that while the word "mock" is used throughout the test, we are defining stubs rather than mocking the behavior of the collaborators of run. Mocking in this example would involve verifying that the methods <tt id="mycode">eqpy.OUT_put</tt> and <tt id="mycode">eqpy.IN_get</tt> are called and in the expected sequence. Interested readers can look at <a target="_blank" href="http://martinfowler.com/articles/mocksArentStubs.html">Mocks Aren't Stubs</a> for more information.) Stubbing <tt id="mycode">eqpy.IN_get</tt> is a little more complicated since <tt id="myb">a)</tt> it returns values and <tt id="myb">b)</tt> we have to include the "handshake" behavior for initializing the ME parameters before the regular EQ/Py dynamics begins. To do this we create the <tt id="mycode">Mock</tt> object <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="31" to="31"><tt id="mycode">mockget</tt></highlight-code> and supply it with a <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="22" to="29"><tt id="mycode">side_effects</tt></highlight-code> function. The <tt id="mycode">side_effects</tt> function keeps track of how many times <tt id="mycode">mockget</tt> (i.e., <tt id="mycode">eqpy.IN_get</tt>) is called and behaves differently depending on if it is being called for the first time or any subsequent time. The first time it is called it returns ME initialization parameters (line <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="25" to="25">26</highlight-code>) and all other times it returns a string-formatted appropriate number of random fitness results (lines <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="27" to="29">28-30</highlight-code>). Finally, the <highlight-code code="uc2/python/test/test_deap_ga.py" color="rgba(255,255,255,0.3)" from="34" to="34"><tt id="mycode">deap_ga.run</tt></highlight-code> function is invoked. The test can be run from the <tt id="myfn">python/test</tt> directory with the command:
-<pre>PYTHONPATH=..:../../ext/EQ-Py/ py.test test_deap_ga.py</pre> 
+<pre>PYTHONPATH=..:../../ext/EQ-Py/ py.test test_deap_ga.py</pre>
 
 Any mistakes affecting the flow of <tt id="mycode">deap_ga.run</tt> should generate an error without needing to run the full EMEWS machinery.
 </p>
-
-
