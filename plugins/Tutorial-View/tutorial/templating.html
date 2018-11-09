@@ -58,6 +58,9 @@ EMEWS templates have the following prerequisites that need to be installed.
       <pre>sdk install lazybones
 mkdir ~/.lazybones</pre>
     </p></li>
+    <li>If you are using Java version 9 or later, you'll need to do the following:<p>
+        <pre>export LAZYBONES_OPTS="-Dgroovy.json.faststringutils.disable=true"</pre>
+      </p></li>
   <li>Install the EMEWS templates using lazybones. From the command line,
     do <p>
     <pre>lazybones config add bintrayRepositories emews/emews-templates
