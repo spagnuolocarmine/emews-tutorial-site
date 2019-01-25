@@ -954,12 +954,10 @@ file described in the sweep section.</li>
 
 <p>
 The EQ/R extension includes native code that requires compilation using a
-C++ compiler. This can be installed via Spack by following instructions on the  
-<a target="_blank" href="https://github.com/emews/EQ-R#spack-install">EQ/R site</a>.
-Alternatively, the <tt id="mycode">eqr</tt> subtemplate will include an
+C++ compiler. The <tt id="mycode">eqr</tt> subtemplate will include an
 autotools-based installation in <tt id="mycode">ext/EQ-R/eqr/</tt>. This can be manually
 installed following the instructions in <tt id="mycode">ext/EQ-R/eqr/COMPILING.txt</tt>.
-There is an additional option to run the build and install of the extension from within template
+Alternatively, there is an option to run the build and install of the extension from within template
 generation. The template will generate a <tt id="myfn">build.sh</tt> file within that directory,
 and then execute this <tt id="myfn">build.sh</tt> file. <tt id="myfn">build.sh</tt> automates
 the autotools-based installation, calling <tt id="mycode">bootstrap</tt>, <tt id="mycode">configure</tt>
@@ -975,6 +973,9 @@ A successful EQ/R build and install will install the following files:
     <li><tt id="myfn">ext/EQ-R/libeqr.so</tt></li>
     <li><tt id="myfn">ext/EQ-R/pkgIndex.tcl</tt></li>
   </ul>
+
+Note: EQ/R can also be installed via Spack by following instructions on the  
+<a target="_blank" href="https://github.com/emews/EQ-R#spack-install">EQ/R site</a>.
 
 The swift file contains the swift code for initializing EQ/R with an
 R file and communicating with the R environment via the queues. The native
