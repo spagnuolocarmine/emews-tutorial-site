@@ -48,21 +48,36 @@ The Swift/T Guide is found here:
 
 <h2>Installation</h2>
 <p>
+  Swift/T can be most easily installed through the Spack package manager. If you don't have Spack installed, do the following, which will install Spack and set up Spack shell support: 
+  <pre>
+$ git clone https://github.com/spack/spack.git
+$ . spack/share/spack/setup-env.sh</pre>
 
-Swift/T may be installed following one of these methods:
+Different flavors of Swift/T can be installed depending on the type of EMEWS workflow you need.
+
+  <ul>
+    <li>For the most general flavor (Python and R-enabled):
+      <ul>
+        <li><tt id="mycode">$ spack install stc+python+r</tt></li>
+      </ul>
+    </li>
+  </ul>
+
+  Look <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_spack_tips">here</a> for information and tips to reduce the number of dependencies that need to be built by Spack by using already installed software. 
+<p>
+Swift/T may also be installed with the following methods:
 
 <ul>
-  <li> A <tt id="mycode">swift-t-settings.sh</tt> script that automates the configure/make process (<b id="myb">recommended</b>). See <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_from_source">here</a> for details.</li>
-  <li> Spack (<b id="myb">recommended</b>). See <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#spack">here</a> for details and <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_spack_tips">here</a> for helpful tips.</li>
+  <li> A <tt id="mycode">swift-t-settings.sh</tt> script that automates the configure/make process. See <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_from_source">here</a> for details.</li>
   <li> A configure/make source build (recommended for exotic systems). See <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#build_manual">here</a> for details.</li>
   <li> Debian (Ubuntu) packages </li>
   <li> Anaconda </li>
 </ul>
-
-<b id="myb">Important Note: For running all of the use cases in this tutorial, R (UC1, UC3) and R+Python (UC2) enabled Swift/T installations are required. Currently these can be built only with the first three methods listed above.</b>
+</p>
+<b id="myb">Important Note: For running all of the use cases in this tutorial, R (UC1, UC3) and R+Python (UC2) enabled Swift/T installations are required. Currently these can be built only with the first three methods (Spack, swift-t-settings.sh, and configure/make source) listed above.</b>
 
 <p>
-Swift/T installation notes are found here:
+Additional Swift/T installation notes are found here:
 <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_installation">Swift/T Installation</a>
 </p>
 

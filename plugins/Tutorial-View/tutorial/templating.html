@@ -954,15 +954,17 @@ file described in the sweep section.</li>
 
 <p>
 The EQ/R extension includes native code that requires compilation using a
-C++ compiler. The <tt id="mycode">eqr</tt> subtemplate will install an
-autotools-based installation in <tt id="mycode">ext/EQ-R/eqr/</tt>.
-If you choose to run the build and install of the extension from within template
-generation, the template will generate a <tt id="myfn">build.sh</tt> file within that directory,
+C++ compiler. This can be installed via Spack by following instructions on the  
+<a target="_blank" href="https://github.com/emews/EQ-R#spack-install">EQ/R site</a>.
+Alternatively, the <tt id="mycode">eqr</tt> subtemplate will include an
+autotools-based installation in <tt id="mycode">ext/EQ-R/eqr/</tt>. This can be manually
+installed following the instructions in <tt id="mycode">ext/EQ-R/eqr/COMPILING.txt</tt>.
+There is an additional option to run the build and install of the extension from within template
+generation. The template will generate a <tt id="myfn">build.sh</tt> file within that directory,
 and then execute this <tt id="myfn">build.sh</tt> file. <tt id="myfn">build.sh</tt> automates
 the autotools-based installation, calling <tt id="mycode">bootstrap</tt>, <tt id="mycode">configure</tt>
 with the appropriate arguments, and then <tt id="mycode">make install</tt>. If there
-are any errors during this, or you wish to compile the EQ/R extension
-manually, see <tt id="mycode">ext/EQ-R/eqr/COMPILING.txt</tt>.
+are any errors during this, see <tt id="mycode">ext/EQ-R/eqr/COMPILING.txt</tt>.
 </p>
 
 <p>
