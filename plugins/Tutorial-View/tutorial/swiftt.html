@@ -53,16 +53,26 @@ The Swift/T Guide is found here:
 $ git clone https://github.com/spack/spack.git
 $ . spack/share/spack/setup-env.sh</pre>
 
-Different flavors of Swift/T can be installed depending on the type of EMEWS workflow you need.
 
-  <ul>
-    <li>For the most general flavor (Python and R-enabled):
-      <ul>
-        <li><tt id="mycode">$ spack install stc ^turbine+python+r</tt></li>
-      </ul>
-    </li>
-  </ul>
+Different flavors of Swift/T can be installed depending on the type of EMEWS workflow you need. The Python and R-enabled Swift/T variant is recommended:
+          <ul>
+                  <li> You'll need an R with RInside and Rcpp packages installed. It can be installed and activated with Spack:</li>
+                    <pre>
+$ spack install r-rinside 
+$ spack activate r-rinside </pre>
 
+                <li> Then Swift/T is installed:  <pre>$ spack install stc ^turbine+python+r</pre></li>
+
+            </li>
+            <!-- <li>However, more simple variants are available as well: 
+                <ul>
+                    <li><code>$ spack install stc+python</code></li>
+                    <li><code>$ spack install stc+r</code></li>
+                    <li><code>$ spack install stc</code></li>
+                  </ul>
+            </li> -->
+          </ul>
+          
   Look <a target="_blank" href="http://swift-lang.github.io/swift-t/guide.html#_spack_tips">here</a> for information and tips to reduce the number of dependencies that need to be built by Spack by using already installed software. 
 <p>
 Swift/T may also be installed with the following methods:
