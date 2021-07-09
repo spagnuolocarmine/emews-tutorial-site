@@ -14,6 +14,6 @@ foreach i in [0:9] {
 }
 
 A = join(results, ",");
-code = "m = mean(c(%s)))" % A;
+code = "m = mean(c(%s))" % A;
 mean = R(code, "toString(m)");
 printf(mean);
