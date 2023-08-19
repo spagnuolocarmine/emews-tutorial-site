@@ -51,7 +51,9 @@
     //////////////////////////////////////////////////////////////////
 
     $Filemanager = new Filemanager($_GET,$_POST,$_FILES);
-    $Filemanager->project = @$_SESSION['project']['path'];
+    //error_log(@$_SESSION['project']);
+    //$Filemanager->project = @$_SESSION['project']['path'];
+    $Filemanager->project = @$_SESSION['project'];
 
     switch($action){
         case 'index': $Filemanager->index(); break;

@@ -11,10 +11,13 @@
 //////////////////////////////////////////////////////////////////
 
 // PATH TO CODIAD
-define("BASE_PATH", "/Library/WebServer/Documents/emews-tutorial-site");
+#define("BASE_PATH", "/disks/www/www.mcs.anl.gov/userdirs/emews/tutorial");
+define("BASE_PATH", "/var/www/www.mcs.anl.gov/userdirs/emews/tutorial");
 
 // BASE URL TO CODIAD (without trailing slash)
-define("BASE_URL", "127.0.0.1");
+#define("BASE_URL", "https://www.mcs.anl.gov/~emews/tutorial");
+define("BASE_URL", "https://web.cels.anl.gov/projects/emews/tutorial");
+
 
 // THEME : default, modern or clear (look at /themes)
 define("THEME", "default");
